@@ -1,0 +1,1529 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bd-ff-body: 'Plus Jakarta Sans', sans-serif;
+  --clr-common-body: #ffffff;
+  --clr-common-heading: #1A1A1A;
+  --clr-common-body-text: #4A4A4A;
+  --clr-brand-gold: #B18B5E;
+  --accent-color-primary: #B18B5E;
+  --clr-brand-gold-light: rgba(177, 139, 94, 0.08);
+  --clr-whatsapp: #25D366;
+  --clr-whatsapp-dark: #1EBE57;
+  --clr-premium-dark: #1A1A1A;
+  --clr-premium-shadow: rgba(0, 0, 0, 0.05);
+  --clr-premium-shadow-hover: rgba(0, 0, 0, 0.09);
+}
+
+/* Global Font Overrides */
+body {
+  font-family: var(--bd-ff-body) !important;
+  background-color: var(--clr-common-body) !important;
+  color: var(--clr-common-body-text) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
+  font-family: var(--bd-ff-body) !important;
+  color: var(--clr-common-heading) !important;
+}
+
+/* Soft Shadow & Floating Effect on Product Cards */
+.product-card {
+  background: #ffffff !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 4px 12px var(--clr-premium-shadow) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left !important;
+}
+
+.product-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 28px var(--clr-premium-shadow-hover) !important;
+}
+
+/* Edge-to-Edge Single Background Image Wrapper */
+.product-img-wrapper {
+  background-color: #F4F4F4 !important;
+  border-radius: 16px 16px 0 0 !important;
+  margin: -20px -20px 16px -20px !important;
+  height: 200px !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden;
+  padding: 24px !important; /* Uniform spacing so product images never touch card edges */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02) !important;
+  position: relative;
+}
+
+.product-card img {
+  background: transparent !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important; /* Strict uniform fitting */
+  transition: transform 0.5s ease !important;
+}
+
+.product-card:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* Product Card Title & Price Spacing (Left-aligned & Grouped) */
+.product-card h6 {
+  margin-top: 8px !important; /* Add padding directly above title */
+  margin-bottom: 8px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important; /* Stronger visual anchor */
+  line-height: 1.4 !important;
+  text-align: left !important;
+}
+
+/* Align and reverse price elements (so new price is on left, old price is on right) */
+.product-card h6 + div.d-flex,
+.product-card h6 + a + div.d-flex,
+.product-card .price-wrapper {
+  display: flex !important;
+  flex-direction: row-reverse !important;
+  justify-content: flex-end !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  margin-bottom: 20px !important; /* More breathing room directly below price */
+  width: 100% !important;
+}
+
+.product-card b, .product-card p b {
+  color: var(--clr-premium-dark) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+.product-card strike, .product-card small strike {
+  color: #8E8E93 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+}
+
+/* Push button to bottom */
+.product-card div[style*="margin-top"] {
+  margin-top: auto !important;
+  padding-top: 12px !important;
+}
+
+/* Tactile Store Button */
+.store-btn {
+  background-color: #E5E7EB !important;
+  color: var(--clr-premium-dark) !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 8px 20px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+.store-btn:hover {
+  background-color: #D1D5DB !important;
+  color: var(--clr-premium-dark) !important;
+  transform: translateY(-1px);
+}
+
+/* Premium Discount Tags - White text on black pill */
+.cus-product-badge, .deal-offer-badge, .offer-single-product {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  background-color: var(--clr-premium-dark) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  z-index: 2;
+}
+
+/* Solid WhatsApp Call To Action Buttons (for single product page) */
+.wtsp-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background-color: var(--clr-whatsapp) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 10px 20px !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+.wtsp-btn:hover {
+  background-color: var(--clr-whatsapp-dark) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Premium Navigation Button (for product cards) */
+.enquire-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background-color: var(--clr-brand-gold) !important; /* Brand gold */
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 12.5px !important; /* Scaled down from 14px */
+  border: none !important;
+  border-radius: 26px !important; /* Adjusted border radius */
+  padding: 7px 16px !important; /* Scaled down from 10px 20px */
+  width: 100% !important;
+  white-space: nowrap !important;
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer;
+}
+
+.enquire-btn:hover {
+  background-color: #99754C !important; /* Darker gold */
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(177, 139, 94, 0.15) !important;
+}
+
+/* Scale buttons down on small mobile screens to prevent text wrapping */
+@media (max-width: 374px) {
+  .wtsp-btn {
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+    gap: 5px !important;
+  }
+  .enquire-btn {
+    font-size: 10.5px !important;
+    padding: 5px 10px !important;
+    gap: 4px !important;
+  }
+}
+@media (min-width: 375px) and (max-width: 575px) {
+  .wtsp-btn {
+    font-size: 12px !important;
+    padding: 9px 14px !important;
+    gap: 6px !important;
+  }
+  .enquire-btn {
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+    gap: 5px !important;
+  }
+}
+
+/* Scroll-hint outer wrapper — positions the gradient + chevron overlay */
+.category-scroll-hint {
+  position: relative;
+}
+
+.category-scroll-hint::after {
+  content: '›';
+  position: absolute;
+  top: 0;
+  right: -12px !important; /* Move mask further into the gutter */
+  bottom: 0;
+  width: 48px !important; /* Narrower mask to keep Coffee Tables fully visible */
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, #ffffff 40%) !important;
+  border-right: 12px solid #ffffff !important; /* Solid white edge shield */
+  /* Align to flex-start + padding-top to hit circle vertical center:
+     --sm circles are 56px tall, wrapper has 4px top padding → circle center = 32px.
+     With font-size 22px the glyph visual center ≈ 10px, so padding-top = 32-10 = 22px */
+  display: flex;
+  align-items: flex-start;
+  padding-top: 22px;
+  justify-content: flex-end;
+  padding-right: 8px; /* Move arrow chevron closer to the edge */
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  color: #6B7280;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+
+/* Hide hint once user reaches the end */
+.category-scroll-hint.scroll-end::after {
+  opacity: 0;
+}
+
+.premium-categories-wrapper {
+  margin-top: 15px !important; /* Push categories down away from swiper dots */
+  padding: 15px 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important; /* Explicitly disable vertical scrolling to prevent scrollbar line artifacts */
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;  /* IE/Edge */
+}
+.premium-categories-wrapper::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari */
+}
+
+.premium-categories-container {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+  padding: 4px;
+  padding-right: 35px !important; /* Scroll gutter to push upcoming items to the right */
+  min-width: max-content;
+}
+
+@media (min-width: 992px) {
+  .premium-categories-container {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.premium-category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  width: 90px;
+  transition: transform 0.3s ease;
+}
+
+.premium-category-item:hover {
+  transform: translateY(-4px);
+}
+
+.premium-category-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px var(--clr-premium-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.premium-category-item:hover .premium-category-circle {
+  box-shadow: 0 8px 20px var(--clr-premium-shadow-hover);
+  background-color: var(--clr-brand-gold-light);
+}
+
+.premium-category-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.premium-category-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--clr-common-heading);
+  margin-top: 4px;
+}
+
+/* Active / selected state for category items */
+.premium-category-item.active .premium-category-circle {
+  background-color: var(--clr-brand-gold-light);
+  box-shadow: 0 0 0 2.5px var(--clr-brand-gold), 0 8px 20px var(--clr-premium-shadow-hover);
+}
+
+.premium-category-item.active .premium-category-name {
+  color: var(--clr-brand-gold);
+  font-weight: 700;
+}
+
+.premium-category-item.active {
+  transform: translateY(-4px);
+}
+
+/* Compact variant - used above the hero banner.
+   Items get a fixed, equal width instead of sizing to their own label -
+   otherwise longer names ("Coffee Tables") widen just their own column,
+   throwing off the visual spacing between icons even though the flex gap
+   stays constant. With a fixed width, two-word names simply wrap onto a
+   second line (they still fit - no single label word is wider than the
+   column) and every icon stays evenly spaced regardless of label length. */
+.premium-categories-wrapper--sm {
+  margin-top: 0 !important;
+  margin-bottom: 6px !important;
+  padding: 4px 0 !important;
+}
+
+.premium-categories-wrapper--sm .premium-categories-container {
+  gap: 14px;
+  padding: 4px 2px;
+}
+
+.premium-categories-wrapper--sm .premium-category-item {
+  width: 70px;
+}
+
+.premium-categories-wrapper--sm .premium-category-circle {
+  width: 56px;
+  height: 56px;
+  padding: 11px;
+  margin-bottom: 5px;
+}
+
+.premium-categories-wrapper--sm .premium-category-name {
+  font-size: 11px;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+@media (max-width: 480px) {
+  .premium-categories-wrapper--sm .premium-categories-container {
+    gap: 10px;
+  }
+
+  .premium-categories-wrapper--sm .premium-category-item {
+    width: 62px;
+  }
+
+  .premium-categories-wrapper--sm .premium-category-circle {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    margin-bottom: 4px;
+  }
+
+  .premium-categories-wrapper--sm .premium-category-name {
+    font-size: 10px;
+  }
+}
+
+/* Header category strip (text-only, Flipkart-style chips) - lives inside the
+   header itself so it becomes part of the same fixed block once the header
+   goes sticky. Collapsed to zero height normally; the header's own ".sticky"
+   toggle (added by main.js on scroll) reveals it - no separate scroll
+   listener needed, and no way for it to overlap the header since it IS the
+   header. The full icon+label category row elsewhere on the page is
+   untouched and simply scrolls away with the rest of the content. */
+.header-categories-strip {
+  position: relative;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+.header-4.sticky .header-categories-strip {
+  max-height: 46px;
+  opacity: 1;
+}
+
+/* .header-4.sticky already applies 15px (18px on mobile/tablet) of side
+   padding to everything inside the fixed header, matching the logo/search
+   row above - so the strip itself adds no side padding of its own, keeping
+   the chips aligned with the logo instead of double-inset.
+   On mobile/tablet, .header-4.sticky's own bottom padding is trimmed via
+   .has-category-strip (see below) instead of relying on the strip's own
+   bottom padding, so the gap below the chips doesn't stack on top of it. */
+.header-categories-strip__inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto !important;
+  overflow-y: hidden !important; /* Prevent Y-axis scrollbar line artifacts */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  padding: 10px 0 4px;
+}
+
+/* Trim the header's own bottom padding when the category strip is present,
+   so spacing below the chips stays tight instead of stacking with the
+   strip's own padding (that combo was the "bulky" gap under the chips).
+   Top padding (above the logo) is left untouched. */
+@media (max-width: 991px) {
+  .header-4.sticky.has-category-strip {
+    padding-bottom: 6px !important;
+  }
+}
+
+.header-categories-strip__inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* Right-edge fade to hint the row is horizontally scrollable */
+.header-categories-strip::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 32px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff 85%);
+  pointer-events: none;
+}
+
+.header-categories-strip__inner a {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--clr-common-body);
+  color: var(--clr-common-heading);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.header-categories-strip__inner a:hover,
+.header-categories-strip__inner a:active {
+  background: var(--clr-brand-gold);
+  border-color: var(--clr-brand-gold);
+  color: #ffffff;
+}
+
+@media (min-width: 992px) {
+  .header-4.sticky .header-categories-strip {
+    max-height: 62px;
+  }
+  .header-categories-strip__inner {
+    gap: 10px;
+    padding: 12px 0 12px;
+  }
+  .header-categories-strip__inner a {
+    font-size: 12.5px;
+    padding: 7px 16px;
+  }
+  .header-categories-strip::after {
+    width: 48px;
+  }
+}
+
+@media (max-width: 575px) {
+  .header-categories-strip__inner {
+    padding: 8px 0 3px;
+    gap: 5px;
+  }
+  .header-categories-strip__inner a {
+    font-size: 10.5px;
+    padding: 5px 10px;
+  }
+  .header-categories-strip::after {
+    width: 24px;
+  }
+}
+
+/* Service Section Overrides */
+.furniture-service {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+
+.premium-service-card {
+  background: #FAF7F2 !important; /* Clean light gold-ivory wash */
+  border-radius: 14px !important;
+  padding: 14px 20px !important; /* Compact padding for horizontal list badge look */
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  border: 1px solid rgba(177, 139, 94, 0.16) !important; /* Delicate gold outline */
+  position: relative;
+}
+
+.premium-service-card:hover {
+  transform: translateY(-3px);
+  background-color: #F4EBE0 !important; /* Soft warm gold-sand on hover */
+  border-color: rgba(177, 139, 94, 0.4) !important;
+}
+
+/* Elegant right-side gold chevron to signal interactivity */
+.premium-service-card::after {
+  content: '›';
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--clr-brand-gold);
+  margin-left: auto; /* Push to far right */
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  line-height: 1;
+}
+
+.premium-service-card:hover::after {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+.premium-service-icon {
+  width: 42px !important;
+  height: 42px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(177, 139, 94, 0.22) !important;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(177, 139, 94, 0.05);
+}
+
+.premium-service-icon img {
+  width: 20px !important;
+  height: 20px !important;
+  object-fit: contain;
+}
+
+.premium-service-content h5 {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  margin-bottom: 2px !important;
+  color: var(--clr-common-heading) !important;
+  line-height: 1.3;
+}
+
+.premium-service-content p {
+  font-size: 11px !important;
+  margin-bottom: 0 !important;
+  color: #8E8E93 !important; /* Professional muted grey */
+  line-height: 1.35;
+}
+
+/* Floating Action Button (FAB) */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  background-color: var(--clr-whatsapp);
+  color: #ffffff !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  color: #ffffff !important;
+}
+
+/* Hide on mobile viewports since WhatsApp is accessible via the bottom bar navigation */
+@media (max-width: 767px) {
+  .whatsapp-fab {
+    display: none !important;
+  }
+}
+
+/* Bottom Navigation Styling with Indicator Dots */
+.mobile-bottom-menu {
+  display: none !important; /* Hide on desktop by default */
+}
+
+@media (max-width: 767px) {
+  .mobile-bottom-menu {
+    height: 62px !important;
+    background: #ffffff !important;
+    display: flex !important; /* Only show on mobile/tablet viewports */
+    align-items: center !important;
+    justify-content: space-around !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    padding-bottom: env(safe-area-inset-bottom) !important; /* iOS home bar padding support */
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+  }
+}
+
+.mobile-bottom-menu .menu-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8E8E93 !important;
+  text-decoration: none !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  padding: 4px 0 !important;
+  height: 100% !important;
+  flex: 1 !important;
+  position: relative !important;
+}
+
+.mobile-bottom-menu .menu-item i {
+  font-size: 18px !important;
+  margin-bottom: 2px !important;
+  color: #8E8E93 !important;
+  transition: all 0.2s ease !important;
+}
+
+.mobile-bottom-menu .menu-item span {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Active State Styles */
+.mobile-bottom-menu .menu-item.active {
+  color: var(--clr-brand-gold) !important;
+  font-weight: 600 !important;
+}
+
+.mobile-bottom-menu .menu-item.active i {
+  color: var(--clr-brand-gold) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Override templates deals-icon gradient for visual consistency */
+.mobile-bottom-menu .deals-icon i {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: initial !important;
+  color: #8E8E93 !important;
+}
+
+.mobile-bottom-menu .deals-icon.active i {
+  color: var(--clr-brand-gold) !important;
+}
+
+/* WhatsApp brand green (subtle visual accent) */
+.mobile-bottom-menu #nav-chat i {
+  color: #25D366 !important;
+}
+
+.mobile-bottom-menu #nav-chat.active {
+  color: #25D366 !important;
+}
+
+/* Active State Indicator dot underneath */
+.mobile-bottom-menu .menu-item::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 2px !important;
+  width: 4px !important;
+  height: 4px !important;
+  border-radius: 50% !important;
+  background-color: transparent !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.mobile-bottom-menu .menu-item.active::after {
+  background-color: var(--clr-brand-gold) !important;
+}
+
+.mobile-bottom-menu #nav-chat.active::after {
+  background-color: #25D366 !important;
+}
+
+/* Premium Deals Hero Section */
+.deals-hero-premium {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 48px 40px !important; /* Optimised PC padding (shrunk height) */
+  margin-bottom: 30px !important;
+  box-shadow: 0 10px 30px var(--clr-premium-shadow);
+}
+
+.deals-hero-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(177, 139, 94, 0.85) 100%) !important; /* Premium dark charcoal to bronze gold tint (fully blends medical icon text) */
+  z-index: 1;
+}
+
+.deals-hero-content {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  max-width: 550px;
+}
+
+.deals-hero-content h1 {
+  color: #ffffff !important;
+  font-size: 40px !important; /* Slightly smaller desktop font size */
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.deals-hero-content p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px !important;
+  margin-bottom: 20px;
+}
+
+.deals-hero-badge {
+  display: inline-block;
+  background-color: var(--clr-brand-gold);
+  color: #ffffff !important; /* Legible white tag text */
+  font-weight: 700;
+  padding: 6px 16px !important;
+  border-radius: 30px;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(177, 139, 94, 0.3);
+  margin-bottom: 14px !important;
+}
+
+/* Policy Page Styling */
+.policy-page {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px var(--clr-premium-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.policy-block {
+  margin-bottom: 30px;
+}
+
+.policy-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--clr-premium-dark);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--clr-brand-gold-light);
+  padding-bottom: 8px;
+}
+
+.policy-intro {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--clr-common-body-text);
+  margin-bottom: 25px;
+}
+
+/* Spacing and Utilities */
+.pt-100 { padding-top: 80px !important; }
+.pb-120 { padding-bottom: 100px !important; }
+.mb-30 { margin-bottom: 24px !important; }
+
+/* Modernized Search Bar */
+.header-search {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.header-search form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff !important;
+  border-radius: 26px !important;
+  border: 1px solid rgba(177, 139, 94, 0.35) !important; /* Gold border matching social icons */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+  overflow: hidden;
+  padding-left: 44px !important; /* Increased from 38px to create space between icon and text */
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+.header-search form:hover {
+  border-color: rgba(177, 139, 94, 0.65) !important;
+}
+.header-search form:focus-within {
+  border-color: var(--clr-brand-gold) !important;
+  box-shadow: 0 0 0 3.5px rgba(177, 139, 94, 0.15), 0 2px 8px rgba(0, 0, 0, 0.02) !important; /* Gold focus wash glow */
+}
+.header-search input {
+  border: none !important;
+  background: transparent !important;
+  height: 38px !important;
+  line-height: 38px !important; /* Center text vertically */
+  padding: 0 14px 0 0 !important;
+  font-size: 13px !important;
+  color: var(--clr-common-heading) !important;
+  width: 100% !important;
+  text-align: left !important; /* Forces search text left and next to icon */
+}
+.header-search input::placeholder {
+  color: rgba(177, 139, 94, 0.55) !important; /* Soft brand-gold placeholder */
+  opacity: 1 !important;
+}
+.header-search button {
+  position: absolute !important;
+  left: 14px !important;
+  right: auto !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  height: 100% !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  width: auto !important;
+  border-radius: 0 !important;
+}
+.header-search button svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+.header-search button svg path {
+  stroke: var(--clr-brand-gold) !important; /* Brand gold icon color */
+}
+
+@media (max-width: 575px) {
+  .header-search form {
+    padding-left: 40px !important; /* Increased from 34px on mobile */
+  }
+  .header-search input {
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 12.5px !important;
+  }
+  .header-search button {
+    left: 12px !important;
+  }
+  .header-search button svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+}
+
+/* Hero Banner Swiper Refinements */
+.furniture-off__item {
+  border-radius: 20px !important;
+  padding-left: 60px !important; /* Direct visual grid vertical alignment line */
+  padding-right: 40px !important;
+  padding-top: 36px !important;
+  padding-bottom: 36px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+.furniture-off__item h4 {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  margin-bottom: 14px !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+.furniture-off__item .fo-discount {
+  background-color: var(--clr-brand-gold) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px !important;
+  border-radius: 30px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  margin-left: 0 !important;
+}
+.furniture-off__item .solid-btn {
+  border-radius: 30px !important; /* Round the BUY NOW button corners */
+  padding: 10px 24px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  height: auto !important;
+  line-height: 1.5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-left: 0 !important;
+  margin-top: 16px !important; /* Tightened from the default 30px .mt-30 utility */
+}
+
+/* Swiper Pagination Dots Micro-interaction */
+.offerSwiper .swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background: #C4C4C4 !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  margin: 0 5px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.offerSwiper .swiper-pagination-bullet-active {
+  width: 24px !important;
+  border-radius: 4px !important;
+  background: var(--clr-brand-gold) !important;
+}
+.offerSwiper {
+  padding-bottom: 26px !important; /* Proper vertical container space for dots */
+}
+.offerSwiper .swiper-pagination {
+  position: absolute !important;
+  bottom: 10px !important; /* Anchor dots cleanly in the padded area */
+  left: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+}
+
+/* Mobile-friendly Header Search adjustments */
+.header-layout-4 {
+  padding-left: 40px !important;
+  padding-right: 24px !important; /* Pulls search bar closer to the right edge of the screen */
+}
+
+.header-main-4 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.header-left {
+  flex-shrink: 0 !important;
+}
+
+.header-right {
+  flex-grow: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  margin-left: 20px !important;
+  max-width: 380px !important; /* Clean desktop size */
+}
+
+@media (max-width: 991px) {
+  .header-layout-4 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .header-right {
+    max-width: none !important; /* Expand to fill space on mobile/tablet */
+    margin-right: 35px !important; /* Reduced from 60px to push search bar further right */
+  }
+  .furniture-off__item {
+    padding-left: 36px !important; /* Visual alignment visual line */
+    background-position: right center !important; /* Anchor chair image to the right */
+  }
+  .furniture-off__item h4 {
+    font-size: 22px !important; /* Slightly smaller text for tablet */
+  }
+
+  /* Deals Page Hero Overrides for Tablet */
+  .deals-hero-premium {
+    padding: 38px 30px !important;
+    margin-bottom: 25px !important;
+  }
+  .deals-hero-content h1 {
+    font-size: 32px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .header-layout-4 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .header-right {
+    max-width: none !important;
+    margin-right: 28px !important; /* Reduced from 50px to optimize space and align near hamburger */
+    margin-left: 10px !important;
+  }
+  .furniture-off__item {
+    padding-left: 24px !important; /* Tighter padding for mobile screens */
+    padding-right: 20px !important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+    background-position: right center !important; /* Force chair image on the right edge */
+  }
+  .furniture-off__item h4 {
+    font-size: 18px !important; /* Prevent overlap with the chair image */
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+  }
+  .furniture-off__item .fo-discount {
+    margin-bottom: 8px !important;
+  }
+  .furniture-off__item .solid-btn {
+    margin-top: 10px !important;
+  }
+
+  /* Service Section Stacked List Overrides for Mobile */
+  .furniture-service .row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+  .furniture-service .row > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .premium-service-card {
+    padding: 14px 16px !important;
+    gap: 14px !important;
+    border-radius: 12px !important;
+    flex-direction: row !important; /* Keep horizontal icon-left layout */
+    text-align: left !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .premium-service-icon {
+    width: 42px !important;
+    height: 42px !important;
+    margin-bottom: 0 !important;
+  }
+  .premium-service-icon img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .premium-service-content h5 {
+    font-size: 13px !important;
+    margin-bottom: 1px !important;
+    font-weight: 700 !important;
+  }
+  .premium-service-content p {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Deals Page Hero Overrides for Mobile */
+  .deals-hero-premium {
+    padding: 30px 20px !important; /* Shrunk padding for mobile */
+    margin-bottom: 20px !important;
+  }
+  .deals-hero-content h1 {
+    font-size: 26px !important; /* Smaller title on mobile view */
+    margin-bottom: 8px !important;
+  }
+  .deals-hero-content p {
+    font-size: 13px !important;
+    margin-bottom: 15px !important;
+  }
+  .deals-hero-badge {
+    padding: 4px 12px !important;
+    font-size: 10px !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+/* Footer Section Overrides */
+.footer-bg {
+  background-color: #121110 !important; /* Premium warm dark charcoal */
+  border-top: 1px solid rgba(177, 139, 94, 0.15) !important; /* Gold accent line */
+}
+
+/* Reduce excessive top/bottom footer padding to eliminate empty blank spaces */
+.footer-area {
+  padding-top: 65px !important;
+  padding-bottom: 30px !important;
+}
+
+@media (max-width: 767px) {
+  .footer-area {
+    padding-top: 45px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+/* Elegant footer logo dimensions */
+.footer-logo img {
+  max-width: 155px !important; /* Increased from 120px */
+  height: auto !important;
+}
+
+.footer-widget-title h4 {
+  color: #ffffff !important; /* Force high-contrast white header text */
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  margin-bottom: 22px !important;
+  position: relative;
+  display: inline-block;
+}
+
+/* Subtle gold line under headings */
+.footer-widget-title h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 20px;
+  height: 1.5px;
+  background-color: var(--clr-brand-gold);
+}
+
+.footer-widget-4 p {
+  color: #A39E96 !important; /* Elegant warm gray/sand text */
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  margin-top: 10px !important;
+}
+
+.footer-link ul li {
+  margin-bottom: 10px !important; /* Better list spacing */
+}
+
+.footer-link ul li a {
+  color: #A39E96 !important;
+  font-size: 14px !important;
+  transition: all 0.25s ease !important;
+}
+
+.footer-link ul li a:hover {
+  color: var(--clr-brand-gold) !important;
+  padding-left: 4px !important; /* Clean sliding micro-animation */
+}
+
+/* Contact info adjustments */
+.footer-info-item {
+  display: flex !important;
+  align-items: center !important; /* Center icon circles vertically with text */
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.footer-info-icon {
+  margin-right: 0 !important; /* Remove template's mr-20 gap to prevent double spacing */
+}
+
+/* Redesigned contact badge icons */
+.furniture-icon {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 36px !important;
+  text-align: center;
+  color: var(--clr-brand-gold) !important; /* Brand gold icon */
+  background-color: rgba(177, 139, 94, 0.12) !important; /* Warm gold wash */
+  border: 1px solid rgba(177, 139, 94, 0.3) !important; /* Light gold border */
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+}
+
+.footer-info-text {
+  margin-left: 14px !important; /* Tightened from template spacing */
+}
+
+.footer-info-text a {
+  color: #E5E7EB !important; /* High contrast clean grey text */
+  font-size: 13.5px !important;
+  transition: color 0.2s ease !important;
+}
+
+.footer-info-text a:hover {
+  color: var(--clr-brand-gold) !important;
+}
+
+/* Modernized social media outline buttons in gold */
+.theme-social a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background-color: transparent !important;
+  border: 1px solid rgba(177, 139, 94, 0.25) !important; /* Gold border */
+  color: var(--clr-brand-gold) !important; /* Gold icons */
+  font-size: 13px !important;
+  margin-right: 10px !important;
+  transition: all 0.3s ease !important;
+}
+
+.theme-social a:hover {
+  background-color: var(--clr-brand-gold) !important; /* Solid gold fill */
+  border-color: var(--clr-brand-gold) !important;
+  color: #ffffff !important; /* White icon on hover */
+  transform: translateY(-2px) !important;
+}
+
+/* ============================================
+   Standardised Product Card Grid Layout
+   Overrides Bootstrap row/col for card grids.
+   Provides consistent gaps on all breakpoints.
+   ============================================ */
+
+/* Base grid: 2 columns on mobile (default) */
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 14px 10px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Reset ALL child elements inside product-grid */
+.product-grid > .product-grid-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure product-card fills the grid cell fully */
+.product-grid .product-card {
+  height: 100% !important;
+}
+
+/* Tablet: 3 columns */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px 16px !important;
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 24px 20px !important;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1400px) {
+  .product-grid {
+    gap: 28px 24px !important;
+  }
+}
+
+/* ============================================
+   Mobile Card Optimisations (≤575px)
+   Tighter internals for narrow cards.
+   ============================================ */
+@media (max-width: 575px) {
+  .product-card {
+    padding: 12px !important;
+    border-radius: 14px !important;
+  }
+  .product-img-wrapper {
+    margin: -12px -12px 10px -12px !important;
+    height: 150px !important;
+    padding: 16px !important;
+    border-radius: 14px 14px 0 0 !important;
+  }
+  .product-card h6 {
+    font-size: 13px !important;
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+  }
+  .product-card h6 + div.d-flex,
+  .product-card h6 + a + div.d-flex,
+  .product-card .price-wrapper {
+    margin-bottom: 0px !important;
+    gap: 5px !important;
+  }
+  .product-card b, .product-card p b {
+    font-size: 15px !important;
+  }
+  .product-card strike, .product-card small strike {
+    font-size: 11px !important;
+  }
+  .product-card div[style*="margin-top"] {
+    padding-top: 8px !important;
+  }
+}
+
+/* Responsive footer grid adjustments */
+@media (max-width: 767px) {
+  .footer-grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* 2 equal columns on tablets */
+    gap: 30px 20px !important;
+    text-align: left !important;
+  }
+  .footer-grid-3 > div:nth-child(1) {
+    grid-column: span 2 !important; /* Logo widget takes full width */
+  }
+  .footer-grid-3 > div:nth-child(2),
+  .footer-grid-3 > div:nth-child(3) {
+    grid-column: span 1 !important; /* Company and Contact widgets split 50/50 */
+  }
+}
+
+@media (max-width: 575px) {
+  .footer-grid-3 {
+    display: flex !important;
+    flex-direction: column !important; /* Stack all columns vertically on mobile phones */
+    gap: 32px !important;
+  }
+  .footer-grid-3 > div:nth-child(1),
+  .footer-grid-3 > div:nth-child(2),
+  .footer-grid-3 > div:nth-child(3) {
+    grid-column: span 1 !important;
+  }
+  .footer-col-4 {
+    padding-left: 0 !important; /* Reset the 50px desktop padding squeeze on mobile */
+  }
+  .footer-info-item {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+/* ── Product Details Section Refinements ─────────────────────────────── */
+
+/* Position the 20% OFF discount badge on the top-right corner of the main image */
+.product__details-thumb-tab-content {
+  position: relative !important;
+}
+
+.product__details-thumb-tab-content .offer-single-product {
+  left: auto !important;
+  right: 15px !important;
+  top: 15px !important;
+}
+
+/* Redesign product details tab navigation to horizontal */
+.product__details-additional-info .row {
+  display: flex !important;
+  flex-direction: column !important; /* Stack: tabs on top, content below */
+  gap: 20px !important;
+}
+
+.product__details-additional-info .row > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 15px !important; /* Restore bootstrap gutter spacing */
+  padding-right: 15px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.product__details-more-tab .nav-tabs {
+  display: flex !important;
+  flex-direction: row !important; /* Force tabs side-by-side */
+  gap: 28px !important;
+  border-bottom: 1px solid #EBEBEB !important; /* Line across the tab row */
+  padding-bottom: 0 !important;
+  margin-bottom: 10px !important;
+}
+
+.product__details-more-tab .nav-link {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 10px 4px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #8E8E93 !important; /* Muted grey for inactive tabs */
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+  margin-bottom: 0 !important;
+  position: relative;
+  transition: color 0.25s ease !important;
+}
+
+.product__details-more-tab .nav-link:hover {
+  color: var(--clr-brand-gold) !important;
+}
+
+.product__details-more-tab .nav-link.active {
+  color: var(--clr-premium-dark) !important; /* Active text color */
+}
+
+/* Active indicator line (gold) underneath active tab link */
+.product__details-more-tab .nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px; /* Align with border-bottom line of nav-tabs */
+  width: 100%;
+  height: 2.5px;
+  background-color: var(--clr-brand-gold) !important;
+}
+
+/* Tighten the tab content vertical spacing */
+.product__details-more-tab-content {
+  margin-top: 0 !important;
+  padding-top: 8px !important;
+}
+
+/* Elegant brand-gold styling for product details category tags */
+.product__details-tag a {
+  background-color: rgba(177, 139, 94, 0.08) !important; /* Soft gold wash background */
+  border: 1px solid rgba(177, 139, 94, 0.35) !important; /* Gold border */
+  color: var(--clr-brand-gold) !important; /* Brand gold text */
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important; /* Pill style */
+  display: inline-block !important;
+  transition: all 0.2s ease !important;
+}
+
+.product__details-tag a:hover {
+  background-color: var(--clr-brand-gold) !important; /* Solid gold background on hover */
+  color: #ffffff !important; /* White text on hover */
+  border-color: var(--clr-brand-gold) !important;
+}
+
+/* Styling for FontAwesome icons inside category circles (e.g. "For You" heart) */
+.premium-category-circle i {
+  color: #4A4A4A !important; /* Matches default outline color of catalog icons */
+  font-size: 22px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: color 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Hover state transitions icon to brand gold and scales up slightly */
+.premium-category-item:hover .premium-category-circle i {
+  color: var(--clr-brand-gold) !important;
+  transform: scale(1.08);
+}
+
+/* Selected active state transitions icon to brand gold */
+.premium-category-item.active .premium-category-circle i {
+  color: var(--clr-brand-gold) !important;
+}
+
