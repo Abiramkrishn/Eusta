@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eusta — Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* Background gradient orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(177,139,94,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(177,139,94,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(177,139,94,0.12);
+      border: 1px solid rgba(177,139,94,0.3);
+      border-radius: 50px;
+      padding: 8px 20px;
+      margin-bottom: 2rem;
+    }
+    .logo-badge span {
+      color: #B18B5E;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #B18B5E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+      margin-bottom: 3.5rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(177,139,94,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 20px;
+    }
+    .card:hover {
+      border-color: rgba(177,139,94,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(177,139,94,0.12);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(177,139,94,0.12);
+      border: 1px solid rgba(177,139,94,0.25);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.3s ease;
+    }
+    .card:hover .card-icon {
+      background: rgba(177,139,94,0.22);
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #B18B5E;
+      margin-bottom: 0.4rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      color: rgba(255,255,255,0.4);
+    }
+    .card:hover .card-arrow {
+      background: rgba(177,139,94,0.2);
+      color: #B18B5E;
+      transform: translate(2px, -2px);
+    }
+
+    .footer {
+      color: rgba(255,255,255,0.2);
+      font-size: 13px;
+    }
+    .footer a {
+      color: rgba(177,139,94,0.6);
+      text-decoration: none;
+    }
+    .footer a:hover { color: #B18B5E; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-badge">
+      <span>🌿 Eusta Platform</span>
+    </div>
+
+    <h1>Welcome to Eusta</h1>
+    <p class="subtitle">A complete multi-panel platform. Choose your section below to get started.</p>
+
+    <div class="cards">
+      <a href="user/index.html" class="card">
+        <div class="card-icon">🛍️</div>
+        <div class="card-label">Storefront</div>
+        <h3>User Side</h3>
+        <p>Browse products, view deals, and explore the full Eusta shopping experience.</p>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <a href="admin/index.html" class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-label">Management</div>
+        <h3>Admin Panel</h3>
+        <p>Manage products, categories, contacts, and platform settings.</p>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <a href="super-admin/index.html" class="card">
+        <div class="card-icon">🛡️</div>
+        <div class="card-label">Control</div>
+        <h3>Super Admin</h3>
+        <p>Full platform oversight — user management, analytics, and system controls.</p>
+        <div class="card-arrow">↗</div>
+      </a>
+    </div>
+
+    <p class="footer">
+      Built with care &nbsp;·&nbsp; <a href="https://github.com/Abiramkrishn/Eusta">GitHub Repo</a>
+    </p>
+  </div>
+</body>
+</html>
