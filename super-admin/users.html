@@ -433,87 +433,69 @@
     </div>
     <!-- View User Details Modal -->
     <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content custom-modal-content" style="border-radius: 16px; overflow: hidden;">
-          <!-- Header -->
-          <div class="modal-header custom-modal-header py-3" style="background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%); border-bottom: none;">
-            <h5 class="modal-title custom-modal-title text-white" id="viewUserModalLabel">Business Details</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+      <div class="modal-dialog modal-dialog-centered" style="max-width: 520px;">
+        <div class="modal-content" style="border-radius:16px; border:1px solid #ede9e0; box-shadow:0 20px 60px rgba(0,0,0,0.12); background:#fff; overflow:hidden;">
 
-          <div class="modal-body p-0">
-
-            <!-- Profile Banner -->
-            <div class="d-flex align-items-center gap-4 p-4" style="background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%); border-radius: 0;">
+          <!-- Compact Profile Header -->
+          <div style="background:#FAF9F6; border-bottom:1px solid #ede9e0; padding:20px 24px;">
+            <div class="d-flex align-items-center gap-3">
               <div class="position-relative flex-shrink-0">
-                <img id="viewUserAvatar" src="" class="rounded-circle border border-3" style="border-color: #B18B5E !important; width:80px; height:80px; object-fit:cover;" alt="Avatar">
-                <span id="viewUserStatusBadge" class="position-absolute bottom-0 end-0 translate-middle p-2 border border-2 border-white rounded-circle"></span>
+                <img id="viewUserAvatar" src="" class="rounded-circle" style="width:56px;height:56px;object-fit:cover;border:2.5px solid #B18B5E;" alt="">
+                <span id="viewUserStatusDot" class="position-absolute" style="width:13px;height:13px;border-radius:50%;border:2px solid #fff;bottom:0;right:0;"></span>
               </div>
-              <div>
-                <h4 id="viewUserName" class="fw-bold mb-1 text-white"></h4>
-                <span id="viewUserId" class="badge px-3 py-1" style="background: rgba(177,139,94,0.25); color: #B18B5E; border: 1px solid rgba(177,139,94,0.4); border-radius: 20px; font-size: 12px;"></span>
-                <div id="viewUserStatusLabel" class="mt-2"></div>
-              </div>
-            </div>
-
-            <!-- Details Grid -->
-            <div class="p-4">
-              <p class="text-uppercase fw-bold mb-3" style="font-size: 10px; letter-spacing: 1px; color: #B18B5E;">Contact Information</p>
-              <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                  <div class="p-3 rounded-3" style="background: #f8f7f4; border: 1px solid #ede9e0;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Email Address</small>
-                    <span id="viewUserEmail" class="fw-semibold text-dark d-block mt-1" style="font-size:14px;"></span>
-                  </div>
+              <div class="flex-grow-1">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <h6 id="viewUserName" class="fw-bold mb-0" style="font-size:16px;color:#1a1a2e;"></h6>
+                  <span id="viewUserId" style="font-size:11px;font-weight:600;color:#B18B5E;background:rgba(177,139,94,0.1);border:1px solid rgba(177,139,94,0.25);border-radius:20px;padding:2px 10px;"></span>
+                  <span id="viewUserStatusChip"></span>
                 </div>
-                <div class="col-md-6">
-                  <div class="p-3 rounded-3" style="background: #f8f7f4; border: 1px solid #ede9e0;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Phone Number</small>
-                    <span id="viewUserPhone" class="fw-semibold text-dark d-block mt-1" style="font-size:14px;"></span>
-                  </div>
+                <div class="d-flex gap-1 mt-1" style="font-size:12px;color:#8a8a8a;">
+                  <i class="bi bi-envelope me-1"></i><span id="viewUserEmailSmall"></span>
+                  <span class="mx-1">·</span>
+                  <i class="bi bi-telephone me-1"></i><span id="viewUserPhoneSmall"></span>
                 </div>
               </div>
-
-              <p class="text-uppercase fw-bold mb-3" style="font-size: 10px; letter-spacing: 1px; color: #B18B5E;">Subscription Details</p>
-              <div class="row g-3 mb-4">
-                <div class="col-md-3 col-6">
-                  <div class="p-3 rounded-3 text-center" style="background: #f8f7f4; border: 1px solid #ede9e0;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Plan</small>
-                    <span id="viewUserPlan" class="fw-bold d-block mt-1" style="font-size:14px; color: #B18B5E;"></span>
-                  </div>
-                </div>
-                <div class="col-md-3 col-6">
-                  <div class="p-3 rounded-3 text-center" style="background: #f8f7f4; border: 1px solid #ede9e0;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Status</small>
-                    <span id="viewUserStatus" class="fw-bold d-block mt-1" style="font-size:14px;"></span>
-                  </div>
-                </div>
-                <div class="col-md-3 col-6">
-                  <div class="p-3 rounded-3 text-center" style="background: #f8f7f4; border: 1px solid #ede9e0;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Joined Date</small>
-                    <span id="viewUserJoined" class="fw-semibold text-dark d-block mt-1" style="font-size:13px;"></span>
-                  </div>
-                </div>
-                <div class="col-md-3 col-6">
-                  <div class="p-3 rounded-3 text-center" style="background: #fff5f5; border: 1px solid #fde8e8;">
-                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 0.5px;">Expiry Date</small>
-                    <span id="viewUserExpiry" class="fw-bold text-danger d-block mt-1" style="font-size:13px;"></span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Payment History -->
-              <p class="text-uppercase fw-bold mb-3" style="font-size: 10px; letter-spacing: 1px; color: #B18B5E;">Payment History</p>
-              <div id="viewUserPaymentHistory" style="max-height: 200px; overflow-y: auto;">
-                <!-- Dynamically populated -->
-              </div>
+              <button type="button" class="btn-close flex-shrink-0" data-bs-dismiss="modal" style="opacity:0.4;"></button>
             </div>
           </div>
 
-          <div class="modal-footer bg-transparent border-top px-4 py-3">
-            <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary px-4" id="viewUserEditBtn">Edit Business</button>
+          <!-- Stat Chips Row -->
+          <div class="d-flex border-bottom" style="border-color:#ede9e0 !important;">
+            <div class="flex-fill text-center py-3 px-2" style="border-right:1px solid #ede9e0;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.8px;color:#B18B5E;text-transform:uppercase;margin-bottom:4px;">Plan</div>
+              <div id="viewUserPlan" style="font-size:13px;font-weight:700;color:#1a1a2e;"></div>
+            </div>
+            <div class="flex-fill text-center py-3 px-2" style="border-right:1px solid #ede9e0;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.8px;color:#B18B5E;text-transform:uppercase;margin-bottom:4px;">Status</div>
+              <div id="viewUserStatus" style="font-size:13px;font-weight:700;"></div>
+            </div>
+            <div class="flex-fill text-center py-3 px-2" style="border-right:1px solid #ede9e0;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.8px;color:#B18B5E;text-transform:uppercase;margin-bottom:4px;">Joined</div>
+              <div id="viewUserJoined" style="font-size:12px;font-weight:600;color:#1a1a2e;"></div>
+            </div>
+            <div class="flex-fill text-center py-3 px-2">
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.8px;color:#dc3545;text-transform:uppercase;margin-bottom:4px;">Expires</div>
+              <div id="viewUserExpiry" style="font-size:12px;font-weight:700;color:#dc3545;"></div>
+            </div>
           </div>
+
+          <!-- Payment History -->
+          <div style="padding:16px 24px 8px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.9px;color:#B18B5E;text-transform:uppercase;margin-bottom:10px;">Payment History</div>
+            <div id="viewUserPaymentHistory"></div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="d-flex align-items-center justify-content-between px-4 py-3" style="border-top:1px solid #ede9e0; background:#FAF9F6;">
+            <button type="button" class="btn btn-light border px-3 py-2" data-bs-dismiss="modal" style="border-radius:10px;font-size:13px;font-weight:600;">Close</button>
+            <div class="d-flex gap-2">
+              <a id="viewUserSiteBtn" href="#" target="_blank" class="btn px-3 py-2 d-flex align-items-center gap-2" style="border-radius:10px;font-size:13px;font-weight:600;background:#f0faf4;color:#198754;border:1px solid #c3e6cb;">
+                <i class="bi bi-box-arrow-up-right"></i> View Site
+              </a>
+              <button type="button" class="btn btn-primary px-3 py-2" id="viewUserEditBtn" style="border-radius:10px;font-size:13px;font-weight:600;">Edit Business</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -686,67 +668,72 @@
           }
           return history.reverse();
         }
-
         // Open View Details Modal
         function openViewModal(id) {
           const user = users.find(u => u.id == id);
           if (!user) return;
 
           const bName = user.businessName || user.name || "—";
+          const isActive = user.status.toLowerCase() === "active";
+          const expiry = getExpirationDate(user.joinedDate, user.plan);
+
+          // Profile header
           document.getElementById("viewUserAvatar").src = `assets/images/avatars/${user.avatar}`;
           document.getElementById("viewUserName").textContent = bName;
           document.getElementById("viewUserId").textContent = `#${user.id}`;
-          document.getElementById("viewUserEmail").textContent = user.email;
-          document.getElementById("viewUserPhone").textContent = user.phone;
-          document.getElementById("viewUserPlan").textContent = user.plan;
-          document.getElementById("viewUserJoined").textContent = user.joinedDate;
+          document.getElementById("viewUserEmailSmall").textContent = user.email;
+          document.getElementById("viewUserPhoneSmall").textContent = user.phone;
 
-          const expiry = getExpirationDate(user.joinedDate, user.plan);
+          // Status dot
+          document.getElementById("viewUserStatusDot").style.background = isActive ? "#198754" : "#dc3545";
+
+          // Status chip
+          document.getElementById("viewUserStatusChip").innerHTML = isActive
+            ? `<span style="font-size:10px;font-weight:600;color:#198754;background:rgba(25,135,84,0.1);border:1px solid rgba(25,135,84,0.2);border-radius:20px;padding:2px 8px;"><i class="bi bi-check-circle-fill me-1"></i>Active</span>`
+            : `<span style="font-size:10px;font-weight:600;color:#dc3545;background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.2);border-radius:20px;padding:2px 8px;"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>`;
+
+          // Stat chips
+          document.getElementById("viewUserPlan").textContent = user.plan;
+          document.getElementById("viewUserStatus").innerHTML = isActive
+            ? `<span style="color:#198754;">Active</span>`
+            : `<span style="color:#dc3545;">Inactive</span>`;
+          document.getElementById("viewUserJoined").textContent = user.joinedDate;
           document.getElementById("viewUserExpiry").textContent = expiry;
 
-          // Status label
-          const isActive = user.status.toLowerCase() === "active";
-          const badge = document.getElementById("viewUserStatusBadge");
-          badge.className = `position-absolute bottom-0 end-0 translate-middle p-2 ${isActive ? 'bg-success' : 'bg-danger'} border border-2 border-white rounded-circle`;
-          document.getElementById("viewUserStatus").innerHTML = isActive
-            ? `<span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1" style="border-radius:20px;"><i class="bi bi-check-circle-fill me-1"></i>Active</span>`
-            : `<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1" style="border-radius:20px;"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>`;
-          document.getElementById("viewUserStatusLabel").innerHTML = isActive
-            ? `<span class="badge" style="background:rgba(25,135,84,0.2);color:#198754;border-radius:20px;font-size:11px;padding:4px 10px;">● Active Account</span>`
-            : `<span class="badge" style="background:rgba(220,53,69,0.2);color:#dc3545;border-radius:20px;font-size:11px;padding:4px 10px;">● Inactive Account</span>`;
+          // View Site link
+          document.getElementById("viewUserSiteBtn").href = `../user/index.html?client=${user.id}`;
 
-          // Payment History
+          // Payment History - compact, max 3 rows, no inner scroll
           const payments = generatePaymentHistory(user);
           const historyEl = document.getElementById("viewUserPaymentHistory");
           if (payments.length === 0) {
-            historyEl.innerHTML = `<p class="text-muted text-center py-2" style="font-size:13px;">No payment records found.</p>`;
+            historyEl.innerHTML = `<p class="text-muted text-center py-1 mb-0" style="font-size:12px;">No payment records found.</p>`;
           } else {
-            historyEl.innerHTML = payments.map((p, i) => `
-              <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded-3" style="background: ${i===0?'#f0faf4':'#f8f7f4'}; border: 1px solid ${i===0?'#c3e6cb':'#ede9e0'};">
-                <div class="d-flex align-items-center gap-3">
-                  <div style="width:36px;height:36px;border-radius:10px;background:${i===0?'#d4edda':'#ede9e0'};display:flex;align-items:center;justify-content:center;">
-                    <i class="bi bi-receipt" style="color:${i===0?'#198754':'#B18B5E'};"></i>
-                  </div>
+            historyEl.innerHTML = payments.slice(0, 3).map((p, i) => `
+              <div class="d-flex align-items-center justify-content-between mb-2" style="padding:10px 12px;border-radius:10px;background:${p.status==='Current'?'#f0faf4':'#f8f7f4'};border:1px solid ${p.status==='Current'?'#c3e6cb':'#ede9e0'};">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-receipt" style="font-size:13px;color:${p.status==='Current'?'#198754':'#B18B5E'};"></i>
                   <div>
-                    <div class="fw-semibold" style="font-size:13px;">${p.plan} Subscription</div>
-                    <div class="text-muted" style="font-size:11px;">${p.date}</div>
+                    <div style="font-size:12px;font-weight:600;color:#1a1a2e;line-height:1.2;">${p.plan}</div>
+                    <div style="font-size:10px;color:#9a9a9a;">${p.date}</div>
                   </div>
                 </div>
                 <div class="text-end">
-                  <div class="fw-bold" style="font-size:14px;color:#1a1a2e;">₹${p.amount.toLocaleString('en-IN')}</div>
-                  <span class="badge" style="font-size:10px;border-radius:20px;background:${p.status==='Current'?'rgba(25,135,84,0.15)':'rgba(177,139,94,0.15)'};color:${p.status==='Current'?'#198754':'#B18B5E'};">${p.status}</span>
+                  <div style="font-size:13px;font-weight:700;color:#1a1a2e;">₹${p.amount.toLocaleString('en-IN')}</div>
+                  <span style="font-size:10px;font-weight:600;border-radius:20px;padding:1px 7px;background:${p.status==='Current'?'rgba(25,135,84,0.12)':'rgba(177,139,94,0.12)'};color:${p.status==='Current'?'#198754':'#B18B5E'}">${p.status}</span>
                 </div>
               </div>
             `).join("");
           }
 
-          // Edit button in modal
+          // Edit button
           document.getElementById("viewUserEditBtn").onclick = function() {
             viewModal.hide();
             setTimeout(() => openEditModal(id), 300);
           };
 
           viewModal.show();
+        }
         }
 
         // Render function
