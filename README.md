@@ -7,14 +7,17 @@ A full-stack web project with three sections:
 ```
 Eusta/
 ├── user/           → User-facing storefront (product listings, deals, etc.)
-├── super-admin/    → Super Admin panel (dashboard, user management, settings)
-└── admin/          → Admin panel (coming soon)
+├── admin/          → Admin panel (categories, products, contacts, settings)
+└── super-admin/    → Super Admin panel (dashboard, user management, settings)
 ```
 
 ## Running Locally
 
 ### User side
 Open `user/index.html` in your browser.
+
+### Admin side
+Open `admin/index.html` in your browser.
 
 ### Super Admin side
 ```bash

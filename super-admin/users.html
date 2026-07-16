@@ -107,6 +107,66 @@
                 .active .material-symbols-outlined {
                   color: #000000 !important;
                 }
+                .btn-icon {
+                  width: 32px;
+                  height: 32px;
+                  padding: 0;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 6px;
+                }
+                
+                .table-responsive {
+                  overflow: visible !important;
+                }
+                
+                /* Custom Dropdown Hover Style matching Gold Theme */
+                .dropdown-item:hover {
+                  background-color: rgba(177, 139, 94, 0.08) !important;
+                  color: #B18B5E !important;
+                }
+                .dropdown-item:hover i {
+                  color: #B18B5E !important;
+                }
+                
+                /* Custom Modal Styling for Gold Theme Integration */
+                .custom-modal-content {
+                  background-color: #ffffff;
+                  border: 1px solid rgba(177, 139, 94, 0.2) !important;
+                  border-radius: 20px !important;
+                  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08) !important;
+                }
+                .custom-modal-header {
+                  border-bottom: 1px solid rgba(177, 139, 94, 0.08) !important;
+                  padding: 14px 20px !important;
+                  background-color: #FAF7F2;
+                  border-top-left-radius: 20px;
+                  border-top-right-radius: 20px;
+                }
+                .custom-modal-title {
+                  font-weight: 700 !important;
+                  color: var(--clr-premium-dark) !important;
+                  font-family: var(--bd-ff-body) !important;
+                  font-size: 18px !important;
+                }
+                .custom-modal-footer {
+                  border-top: 1px solid rgba(177, 139, 94, 0.08) !important;
+                  padding: 12px 20px !important;
+                }
+                .custom-modal-label {
+                  font-weight: 600;
+                  color: var(--clr-common-body-text);
+                  font-size: 11px;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                }
+                .custom-modal-content .form-control, 
+                .custom-modal-content .form-select {
+                  padding: 8px 12px !important;
+                  font-size: 13px !important;
+                  border-radius: 8px !important;
+                }
               </style>
 
               <ul class="metismenu" id="menu">
@@ -207,44 +267,49 @@
         <div class="row g-3 mb-3">
           <div class="col-auto">
             <div class="position-relative">
-              <input class="form-control px-5" type="search" placeholder="Search Users">
+              <input class="form-control px-5" id="searchUsersInput" type="search" placeholder="Search Users">
               <span class="material-symbols-outlined position-absolute ms-3 translate-middle-y start-0 top-50 fs-5">search</span>
             </div>
           </div>
           <div class="col-auto flex-grow-1 overflow-auto">
             <div class="btn-group position-static">
               <div class="btn-group position-static">
-                <button type="button" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
-                  Sort By
+                <button type="button" id="sortByBtn" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
+                  Sort By: Newest
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="javascript:;">Newest</a></li>
-                  <li><a class="dropdown-item" href="javascript:;">Oldest</a></li>
+                  <li><a class="dropdown-item sort-item" data-value="newest" href="javascript:;">Newest</a></li>
+                  <li><a class="dropdown-item sort-item" data-value="oldest" href="javascript:;">Oldest</a></li>
                 </ul>
               </div>
               <div class="btn-group position-static">
-                <button type="button" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
-                  Status
+                <button type="button" id="statusFilterBtn" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
+                  Status: All
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="javascript:;">Active</a></li>
-                  <li><a class="dropdown-item" href="javascript:;">Inactive</a></li>
+                  <li><a class="dropdown-item status-item" data-value="all" href="javascript:;">All Statuses</a></li>
+                  <li><a class="dropdown-item status-item" data-value="active" href="javascript:;">Active</a></li>
+                  <li><a class="dropdown-item status-item" data-value="inactive" href="javascript:;">Inactive</a></li>
                 </ul>
               </div>
               <div class="btn-group position-static">
-                <button type="button" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
-                  Payment
+                <button type="button" id="planFilterBtn" class="btn border btn-light dropdown-toggle px-4" data-bs-toggle="dropdown" aria-expanded="false">
+                  Plan: All
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="javascript:;">Paid</a></li>
-                  <li><a class="dropdown-item" href="javascript:;">Pending</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="all" href="javascript:;">All Plans</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="1 Month" href="javascript:;">1 Month</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="2 Months" href="javascript:;">2 Months</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="3 Months" href="javascript:;">3 Months</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="6 Months" href="javascript:;">6 Months</a></li>
+                  <li><a class="dropdown-item plan-item" data-value="12 Months" href="javascript:;">12 Months</a></li>
                 </ul>
               </div>
             </div>  
           </div>
           <div class="col-auto">
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-               <button class="btn btn-primary px-4"><i class="bi bi-plus-lg me-2"></i>Add User</button>
+               <button class="btn btn-primary px-4" id="addUserBtn"><i class="bi bi-plus-lg me-2"></i>Add User</button>
             </div>
           </div>
         </div>
@@ -265,157 +330,12 @@
                     <th>Email</th>
                     <th>Plan</th>
                     <th>Status</th>
-                    <th>Joined Date</th>
+                    <th>Expiry Date</th>
+                    <th>Actions</th>
                   </tr>
                  </thead>
-                 <tbody>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#101</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/01.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">Andrew Carry</p>
-                      </a>
-                     </td>
-                     <td>9087654321</td>
-                     <td>andrew.c@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">6 Months</span></td>
-                     <td><span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span></td>
-                     <td>Nov 12, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#102</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/02.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">Sarah Jenkins</p>
-                      </a>
-                     </td>
-                     <td>9876543210</td>
-                     <td>sarah.j@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">12 Months</span></td>
-                     <td><span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span></td>
-                     <td>Nov 10, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#103</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/03.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">Michael Brown</p>
-                      </a>
-                     </td>
-                     <td>8765432109</td>
-                     <td>michael.b@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">3 Months</span></td>
-                     <td><span class="lable-table bg-danger-subtle text-danger rounded border border-danger-subtle font-text2 fw-bold">Inactive<i class="bi bi-x-lg ms-2"></i></span></td>
-                     <td>Nov 08, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#104</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/04.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">Emma Watson</p>
-                      </a>
-                     </td>
-                     <td>7654321098</td>
-                     <td>emma.w@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">1 Month</span></td>
-                     <td><span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span></td>
-                     <td>Nov 05, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#105</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/05.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">John Doe</p>
-                      </a>
-                     </td>
-                     <td>6543210987</td>
-                     <td>john.d@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">6 Months</span></td>
-                     <td><span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span></td>
-                     <td>Nov 02, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#106</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/06.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">Olivia Smith</p>
-                      </a>
-                     </td>
-                     <td>5432109876</td>
-                     <td>olivia.s@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">2 Months</span></td>
-                     <td><span class="lable-table bg-danger-subtle text-danger rounded border border-danger-subtle font-text2 fw-bold">Inactive<i class="bi bi-x-lg ms-2"></i></span></td>
-                     <td>Oct 30, 2025</td>
-                   </tr>
-                   <tr>
-                     <td>
-                       <input class="form-check-input" type="checkbox">
-                     </td>
-                     <td>
-                      <a href="javascript:;">#107</a>
-                     </td>
-                     <td>
-                      <a class="d-flex align-items-center gap-3" href="javascript:;">
-                        <div class="customer-pic">
-                          <img src="assets/images/avatars/07.png" class="rounded-circle" width="40" height="40" alt="">
-                        </div>
-                        <p class="mb-0 customer-name fw-bold">James Wilson</p>
-                      </a>
-                     </td>
-                     <td>4321098765</td>
-                     <td>james.w@gmail.com</td>
-                     <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">12 Months</span></td>
-                     <td><span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span></td>
-                     <td>Oct 28, 2025</td>
-                   </tr>
+                 <tbody id="usersTableBody">
+                   <!-- Dynamic user rows will be loaded here -->
                  </tbody>
                </table>
             </div>
@@ -441,5 +361,450 @@
     <!--BS Scripts-->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- Add / Edit User Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header custom-modal-header">
+            <h5 class="modal-title custom-modal-title" id="userModalLabel">Add New User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="userForm">
+            <div class="modal-body pb-0">
+              <input type="hidden" id="modalUserId">
+              <div class="row g-2">
+                <div class="col-12 mb-2">
+                  <label for="modalUserName" class="form-label custom-modal-label mb-1">Full Name</label>
+                  <input type="text" class="form-control" id="modalUserName" required placeholder="e.g. John Doe">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="modalUserEmail" class="form-label custom-modal-label mb-1">Email Address</label>
+                  <input type="email" class="form-control" id="modalUserEmail" required placeholder="e.g. john@example.com">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="modalUserPhone" class="form-label custom-modal-label mb-1">Phone Number</label>
+                  <input type="text" class="form-control" id="modalUserPhone" required placeholder="e.g. 9087654321">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="modalUserPlan" class="form-label custom-modal-label mb-1">Subscription Plan</label>
+                  <select class="form-select" id="modalUserPlan" required>
+                    <option value="1 Month">1 Month</option>
+                    <option value="2 Months">2 Months</option>
+                    <option value="3 Months">3 Months</option>
+                    <option value="6 Months">6 Months</option>
+                    <option value="12 Months">12 Months</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="modalUserStatus" class="form-label custom-modal-label mb-1">Account Status</label>
+                  <select class="form-select" id="modalUserStatus" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer custom-modal-footer bg-transparent">
+              <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary px-4" id="saveUserBtn">Save User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    <!-- View User Details Modal -->
+    <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header custom-modal-header py-3">
+            <h5 class="modal-title custom-modal-title" id="viewUserModalLabel">User Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body py-4">
+            <div class="text-center mb-4">
+              <div class="position-relative d-inline-block">
+                <img id="viewUserAvatar" src="" class="rounded-circle border border-3 border-secondary" width="90" height="90" alt="Avatar">
+                <span id="viewUserStatusBadge" class="position-absolute bottom-0 end-0 translate-middle p-2 border border-2 border-white rounded-circle"></span>
+              </div>
+              <h4 id="viewUserName" class="fw-bold mt-3 mb-1 text-dark"></h4>
+              <span id="viewUserId" class="badge bg-light text-dark border px-2 py-1"></span>
+            </div>
+            
+            <div class="row g-3 border-top pt-3 text-start">
+              <div class="col-6">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Email Address</small>
+                <span id="viewUserEmail" class="fw-semibold text-dark"></span>
+              </div>
+              <div class="col-6">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Phone Number</small>
+                <span id="viewUserPhone" class="fw-semibold text-dark"></span>
+              </div>
+              <div class="col-6 mt-3">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Subscription Plan</small>
+                <span id="viewUserPlan" class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold mt-1"></span>
+              </div>
+              <div class="col-6 mt-3">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Account Status</small>
+                <span id="viewUserStatus" class="fw-semibold text-dark"></span>
+              </div>
+              <div class="col-6 mt-3">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Joined Date</small>
+                <span id="viewUserJoined" class="fw-semibold text-dark"></span>
+              </div>
+              <div class="col-6 mt-3">
+                <small class="text-muted d-block text-uppercase font-text2 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Expiry Date</small>
+                <span id="viewUserExpiry" class="fw-semibold text-danger"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer custom-modal-footer bg-transparent">
+            <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic User management script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Default Seed Data
+        const defaultUsers = [
+          { id: 101, name: "Andrew Carry", phone: "9087654321", email: "andrew.c@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 12, 2025", avatar: "01.png" },
+          { id: 102, name: "Sarah Jenkins", phone: "9876543210", email: "sarah.j@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Nov 10, 2025", avatar: "02.png" },
+          { id: 103, name: "Michael Brown", phone: "8765432109", email: "michael.b@gmail.com", plan: "3 Months", status: "Inactive", joinedDate: "Nov 08, 2025", avatar: "03.png" },
+          { id: 104, name: "Emma Watson", phone: "7654321098", email: "emma.w@gmail.com", plan: "1 Month", status: "Active", joinedDate: "Nov 05, 2025", avatar: "04.png" },
+          { id: 105, name: "John Doe", phone: "6543210987", email: "john.d@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 02, 2025", avatar: "05.png" },
+          { id: 106, name: "Olivia Smith", phone: "5432109876", email: "olivia.s@gmail.com", plan: "2 Months", status: "Inactive", joinedDate: "Oct 30, 2025", avatar: "06.png" },
+          { id: 107, name: "James Wilson", phone: "4321098765", email: "james.w@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Oct 28, 2025", avatar: "07.png" }
+        ];
+
+        // Load from localStorage or seed
+        let users = JSON.parse(localStorage.getItem("eusta_users"));
+        if (!users || users.length === 0) {
+          users = defaultUsers;
+          localStorage.setItem("eusta_users", JSON.stringify(users));
+        }
+
+        // Active filters and sort parameters
+        let currentSearch = "";
+        let currentSort = "newest"; // "newest", "oldest"
+        let currentStatus = "all"; // "all", "active", "inactive"
+        let currentPlan = "all"; // "all", plan values
+
+        // DOM Elements
+        const usersTableBody = document.getElementById("usersTableBody");
+        const searchInput = document.getElementById("searchUsersInput");
+        const sortByBtn = document.getElementById("sortByBtn");
+        const statusFilterBtn = document.getElementById("statusFilterBtn");
+        const planFilterBtn = document.getElementById("planFilterBtn");
+        const addUserBtn = document.getElementById("addUserBtn");
+        const userModal = new bootstrap.Modal(document.getElementById("userModal"));
+        const viewModal = new bootstrap.Modal(document.getElementById("viewUserModal"));
+        const userForm = document.getElementById("userForm");
+
+        // Format date helper
+        function formatDate(date) {
+          const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const d = new Date(date);
+          return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
+        }
+
+        // Helper to calculate expiration date
+        function getExpirationDate(joinedStr, planStr) {
+          const joinedDate = new Date(joinedStr);
+          if (isNaN(joinedDate.getTime())) return "N/A";
+          
+          let monthsToAdd = 1;
+          const planMatch = planStr.match(/(\d+)\s*Month/i);
+          if (planMatch) {
+            monthsToAdd = parseInt(planMatch[1]);
+          }
+          
+          const expDate = new Date(joinedDate);
+          expDate.setMonth(expDate.getMonth() + monthsToAdd);
+          
+          const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          return `${months[expDate.getMonth()]} ${String(expDate.getDate()).padStart(2, '0')}, ${expDate.getFullYear()}`;
+        }
+
+        // Open View Details Modal
+        function openViewModal(id) {
+          const user = users.find(u => u.id == id);
+          if (!user) return;
+          
+          document.getElementById("viewUserAvatar").src = `assets/images/avatars/${user.avatar}`;
+          document.getElementById("viewUserName").textContent = user.name;
+          document.getElementById("viewUserId").textContent = `#${user.id}`;
+          document.getElementById("viewUserEmail").textContent = user.email;
+          document.getElementById("viewUserPhone").textContent = user.phone;
+          document.getElementById("viewUserPlan").textContent = user.plan;
+          document.getElementById("viewUserStatus").textContent = user.status;
+          document.getElementById("viewUserJoined").textContent = user.joinedDate;
+          
+          const expiry = getExpirationDate(user.joinedDate, user.plan);
+          document.getElementById("viewUserExpiry").textContent = expiry;
+          
+          // Status badge indicator
+          const badge = document.getElementById("viewUserStatusBadge");
+          if (user.status.toLowerCase() === "active") {
+            badge.className = "position-absolute bottom-0 end-0 translate-middle p-2 bg-success border border-2 border-white rounded-circle";
+          } else {
+            badge.className = "position-absolute bottom-0 end-0 translate-middle p-2 bg-danger border border-2 border-white rounded-circle";
+          }
+          
+          viewModal.show();
+        }
+
+        // Render function
+        function renderTable() {
+          // Filter
+          let filteredUsers = users.filter(user => {
+            const matchSearch = user.name.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                                user.email.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                                user.phone.includes(currentSearch);
+            
+            const matchStatus = currentStatus === "all" || user.status.toLowerCase() === currentStatus.toLowerCase();
+            
+            // Normalize plan format before comparing
+            const userPlanNorm = user.plan.toLowerCase().trim();
+            const currentPlanNorm = currentPlan.toLowerCase().trim();
+            const matchPlan = currentPlan === "all" || userPlanNorm === currentPlanNorm;
+
+            return matchSearch && matchStatus && matchPlan;
+          });
+
+          // Sort
+          filteredUsers.sort((a, b) => {
+            const dateA = new Date(a.joinedDate);
+            const dateB = new Date(b.joinedDate);
+            return currentSort === "newest" ? dateB - dateA : dateA - dateB;
+          });
+
+          // Render HTML
+          usersTableBody.innerHTML = "";
+          if (filteredUsers.length === 0) {
+            usersTableBody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-muted">No users found.</td></tr>`;
+            return;
+          }
+
+          filteredUsers.forEach((user, index) => {
+            const statusBadge = user.status.toLowerCase() === "active" 
+              ? `<span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span>`
+              : `<span class="lable-table bg-danger-subtle text-danger rounded border border-danger-subtle font-text2 fw-bold">Inactive<i class="bi bi-x-lg ms-2"></i></span>`;
+
+            const rowHtml = `
+              <tr>
+                <td><input class="form-check-input" type="checkbox" data-id="${user.id}"></td>
+                <td><a href="javascript:;" class="view-user-link fw-bold text-primary" data-id="${user.id}">#${user.id}</a></td>
+                <td>
+                  <a class="d-flex align-items-center gap-3 view-user-link" href="javascript:;" data-id="${user.id}">
+                    <div class="customer-pic">
+                      <img src="assets/images/avatars/${user.avatar}" class="rounded-circle" width="40" height="40" alt="">
+                    </div>
+                    <p class="mb-0 customer-name fw-bold text-dark">${user.name}</p>
+                  </a>
+                </td>
+                <td>${user.phone}</td>
+                <td>${user.email}</td>
+                <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">${user.plan}</span></td>
+                <td>${statusBadge}</td>
+                <td>${getExpirationDate(user.joinedDate, user.plan)}</td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-icon btn-light dropdown-toggle dropdown-toggle-nocaret d-inline-flex align-items-center justify-content-center border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 32px; height: 32px; padding: 0;">
+                      <i class="bi bi-three-dots-vertical" style="font-size: 1.15rem; color: #1a1a1a;"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border border-1 border-light-subtle" style="border-radius: 10px; min-width: 140px; padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;">
+                      <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="../user/index.html?client=${user.id}" target="_blank" style="border-radius: 6px; font-size: 13px; font-weight: 500;">
+                          <i class="bi bi-eye text-success" style="font-size: 1.1rem;"></i>
+                          <span>View Site</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item edit-user-btn d-flex align-items-center gap-2 py-2" href="javascript:;" data-id="${user.id}" style="border-radius: 6px; font-size: 13px; font-weight: 500;">
+                          <i class="bi bi-pencil-fill text-primary" style="font-size: 1rem;"></i>
+                          <span>Edit User</span>
+                        </a>
+                      </li>
+                      <li><hr class="dropdown-divider my-1"></li>
+                      <li>
+                        <a class="dropdown-item delete-user-btn text-danger d-flex align-items-center gap-2 py-2" href="javascript:;" data-id="${user.id}" style="border-radius: 6px; font-size: 13px; font-weight: 500;">
+                          <i class="bi bi-trash-fill text-danger" style="font-size: 1rem;"></i>
+                          <span>Delete</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            `;
+            usersTableBody.insertAdjacentHTML("beforeend", rowHtml);
+          });
+
+          // Bind view link clicks
+          document.querySelectorAll(".view-user-link").forEach(link => {
+            link.addEventListener("click", function(e) {
+              e.preventDefault();
+              const id = parseInt(this.getAttribute("data-id"));
+              openViewModal(id);
+            });
+          });
+
+          // Rebind action buttons
+          document.querySelectorAll(".edit-user-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+              const id = parseInt(this.getAttribute("data-id"));
+              openEditModal(id);
+            });
+          });
+
+          document.querySelectorAll(".delete-user-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+              const id = parseInt(this.getAttribute("data-id"));
+              deleteUser(id);
+            });
+          });
+        }
+
+        // Add User action
+        addUserBtn.addEventListener("click", function () {
+          userForm.reset();
+          document.getElementById("modalUserId").value = "";
+          document.getElementById("userModalLabel").textContent = "Add New User";
+          document.getElementById("saveUserBtn").textContent = "Add User";
+          userModal.show();
+        });
+
+        function openEditModal(id) {
+          const user = users.find(u => u.id == id);
+          if (!user) return;
+
+          document.getElementById("modalUserId").value = user.id;
+          document.getElementById("modalUserName").value = user.name;
+          document.getElementById("modalUserEmail").value = user.email;
+          document.getElementById("modalUserPhone").value = user.phone;
+          
+          // Select value mapping
+          const planSelect = document.getElementById("modalUserPlan");
+          // match "6 months" or "6 Months"
+          for (let option of planSelect.options) {
+            if (option.value.toLowerCase().trim() === user.plan.toLowerCase().trim()) {
+              planSelect.value = option.value;
+              break;
+            }
+          }
+          
+          const statusSelect = document.getElementById("modalUserStatus");
+          for (let option of statusSelect.options) {
+            if (option.value.toLowerCase().trim() === user.status.toLowerCase().trim()) {
+              statusSelect.value = option.value;
+              break;
+            }
+          }
+
+          document.getElementById("userModalLabel").textContent = "Edit User Settings";
+          document.getElementById("saveUserBtn").textContent = "Save Changes";
+          userModal.show();
+        }
+
+        function deleteUser(id) {
+          const user = users.find(u => u.id == id);
+          if (!user) return;
+
+          if (confirm(`Are you sure you want to delete user "${user.name}"?`)) {
+            users = users.filter(u => u.id != id);
+            localStorage.setItem("eusta_users", JSON.stringify(users));
+            renderTable();
+          }
+        }
+
+        // Handle Form Submit (Add and Edit)
+        userForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const idInput = document.getElementById("modalUserId").value;
+          const name = document.getElementById("modalUserName").value.trim();
+          const email = document.getElementById("modalUserEmail").value.trim();
+          const phone = document.getElementById("modalUserPhone").value.trim();
+          const plan = document.getElementById("modalUserPlan").value;
+          const status = document.getElementById("modalUserStatus").value;
+
+          if (idInput) {
+            // Edit mode
+            const id = parseInt(idInput);
+            const userIndex = users.findIndex(u => u.id == id);
+            if (userIndex !== -1) {
+              users[userIndex].name = name;
+              users[userIndex].email = email;
+              users[userIndex].phone = phone;
+              users[userIndex].plan = plan;
+              users[userIndex].status = status;
+            }
+          } else {
+            // Add mode
+            // Generate unique ID
+            const maxId = users.reduce((max, u) => u.id > max ? u.id : max, 100);
+            const newId = maxId + 1;
+            
+            // Select random avatar between 01 and 07
+            const randomAvatarNum = String(Math.floor(Math.random() * 7) + 1).padStart(2, '0');
+            const avatar = `${randomAvatarNum}.png`;
+
+            const newUser = {
+              id: newId,
+              name: name,
+              phone: phone,
+              email: email,
+              plan: plan,
+              status: status,
+              joinedDate: formatDate(new Date()),
+              avatar: avatar
+            };
+
+            users.push(newUser);
+          }
+
+          localStorage.setItem("eusta_users", JSON.stringify(users));
+          userModal.hide();
+          renderTable();
+        });
+
+        // Search input event
+        searchInput.addEventListener("input", function (e) {
+          currentSearch = e.target.value;
+          renderTable();
+        });
+
+        // Sort dropdown events
+        document.querySelectorAll(".sort-item").forEach(item => {
+          item.addEventListener("click", function () {
+            currentSort = this.getAttribute("data-value");
+            sortByBtn.textContent = `Sort By: ${this.textContent}`;
+            renderTable();
+          });
+        });
+
+        // Status dropdown events
+        document.querySelectorAll(".status-item").forEach(item => {
+          item.addEventListener("click", function () {
+            currentStatus = this.getAttribute("data-value");
+            statusFilterBtn.textContent = `Status: ${this.textContent}`;
+            renderTable();
+          });
+        });
+
+        // Plan dropdown events
+        document.querySelectorAll(".plan-item").forEach(item => {
+          item.addEventListener("click", function () {
+            currentPlan = this.getAttribute("data-value");
+            planFilterBtn.textContent = `Plan: ${this.textContent}`;
+            renderTable();
+          });
+        });
+
+        // Initial table render
+        renderTable();
+      });
+    </script>
   </body>
 </html>
