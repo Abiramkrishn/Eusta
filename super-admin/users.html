@@ -25,7 +25,17 @@
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
     <link href="assets/css/premium.css" rel="stylesheet">
-     
+    <style>
+      html, body {
+        height: 100%;
+        min-height: 100vh;
+        background-color: #FAF9F6 !important;
+      }
+      .page-content {
+        min-height: calc(100vh - 60px) !important;
+        background-color: #FAF9F6 !important;
+      }
+    </style>
   </head>
   <body>
 
@@ -185,6 +195,15 @@
                       <span class="material-symbols-outlined">group</span>
                     </div>
                     <div class="menu-title">Users</div>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="subscriptions.html" class="cus-padding">
+                    <div class="parent-icon">
+                      <span class="material-symbols-outlined">card_membership</span>
+                    </div>
+                    <div class="menu-title">Subscriptions</div>
                   </a>
                 </li>
 
@@ -508,6 +527,66 @@
           return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
         }
 
+        // Populate Subscription Plans from Settings / localStorage
+        function populatePlans() {
+          const defaultPlans = [
+            { duration: 1, cost: 999 },
+            { duration: 2, cost: 1899 },
+            { duration: 3, cost: 2499 },
+            { duration: 6, cost: 4499 },
+            { duration: 12, cost: 7999 }
+          ];
+          
+          let storedPlans = JSON.parse(localStorage.getItem("eusta_subscription_plans"));
+          if (!storedPlans || storedPlans.length === 0) {
+            storedPlans = defaultPlans;
+            localStorage.setItem("eusta_subscription_plans", JSON.stringify(storedPlans));
+          }
+
+          // Sort plans ascending
+          storedPlans.sort((a, b) => a.duration - b.duration);
+
+          // 1. Populate the Add/Edit Modal Dropdown
+          const modalSelect = document.getElementById("modalUserPlan");
+          if (modalSelect) {
+            modalSelect.innerHTML = "";
+            storedPlans.forEach(plan => {
+              const label = plan.duration === 1 ? "1 Month" : `${plan.duration} Months`;
+              const opt = document.createElement("option");
+              opt.value = label;
+              opt.textContent = `${label} (₹${plan.cost.toLocaleString('en-IN')})`;
+              modalSelect.appendChild(opt);
+            });
+          }
+
+          // 2. Populate the Table Filter Dropdown
+          const filterMenu = planFilterBtn.nextElementSibling;
+          if (filterMenu) {
+            filterMenu.innerHTML = `<li><a class="dropdown-item plan-item active" data-value="all" href="javascript:;">All Plans</a></li>`;
+            storedPlans.forEach(plan => {
+              const label = plan.duration === 1 ? "1 Month" : `${plan.duration} Months`;
+              const li = document.createElement("li");
+              li.innerHTML = `<a class="dropdown-item plan-item" data-value="${label}" href="javascript:;">${label}</a>`;
+              filterMenu.appendChild(li);
+            });
+            
+            // Re-bind click events for dynamic plan-items
+            document.querySelectorAll(".plan-item").forEach(item => {
+              item.addEventListener("click", function () {
+                filterMenu.querySelectorAll(".plan-item").forEach(el => el.classList.remove("active"));
+                this.classList.add("active");
+
+                currentPlan = this.getAttribute("data-value");
+                planFilterBtn.textContent = `Plan: ${this.textContent}`;
+                renderTable();
+              });
+            });
+          }
+        }
+
+        // Initialize Plans list
+        populatePlans();
+
         // Helper to calculate expiration date
         function getExpirationDate(joinedStr, planStr) {
           const joinedDate = new Date(joinedStr);
@@ -793,14 +872,7 @@
           });
         });
 
-        // Plan dropdown events
-        document.querySelectorAll(".plan-item").forEach(item => {
-          item.addEventListener("click", function () {
-            currentPlan = this.getAttribute("data-value");
-            planFilterBtn.textContent = `Plan: ${this.textContent}`;
-            renderTable();
-          });
-        });
+
 
         // Initial table render
         renderTable();

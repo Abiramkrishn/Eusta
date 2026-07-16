@@ -204,146 +204,65 @@
         <!-- Page Title & Breadcrumb -->
         <div class="row align-items-center mb-4">
           <div class="col">
-            <h4 class="mb-0 fw-bold">System Settings</h4>
+            <h4 class="mb-0 fw-bold">Subscription Plans</h4>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Settings</li>
+                <li class="breadcrumb-item active" aria-current="page">Subscriptions</li>
               </ol>
             </nav>
           </div>
         </div>
 
        <div class="row">
-         <div class="col-12 col-lg-8">
-           <!-- Account Settings -->
-           <div class="card">
-             <div class="card-header bg-transparent">
-               <h6 class="mb-0 fw-bold">Super Admin Profile Settings</h6>
-             </div>
-             <div class="card-body">
-               <form>
-                 <div class="row g-3">
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Full Name</label>
-                     <input type="text" class="form-control" value="Eusta Administrator">
-                   </div>
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Email Address</label>
-                     <input type="email" class="form-control" value="admin@eusta.com">
-                   </div>
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Phone Number</label>
-                     <input type="text" class="form-control" value="+1 800 555 0199">
-                   </div>
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Organization Name</label>
-                     <input type="text" class="form-control" value="Eusta Ltd.">
-                   </div>
-                   <div class="col-12">
-                     <label class="form-label">Admin Address</label>
-                     <textarea class="form-control" rows="3">123 Corporate Blvd, Suite 400, New York, NY</textarea>
-                   </div>
-                   <div class="col-12 text-end">
-                     <button type="submit" class="btn btn-primary px-4">Save Changes</button>
-                   </div>
-                 </div>
-               </form>
-             </div>
-           </div>
+         <div class="col-12 col-lg-12">
+            <!-- Manage Subscription Plans -->
+            <div class="card mb-5">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0 fw-bold">Manage Subscription Plans (INR)</h6>
+              </div>
+              <div class="card-body pb-4">
+                
+                <!-- Table listing current plans -->
+                <div class="table-responsive mb-4">
+                  <table class="table align-middle table-hover mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Plan Duration</th>
+                        <th>Cost</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="plansTableBody">
+                      <!-- Dynamic rows loaded here -->
+                    </tbody>
+                  </table>
+                </div>
 
-           <!-- System Settings -->
-           <div class="card">
-             <div class="card-header bg-transparent">
-               <h6 class="mb-0 fw-bold">Application & System Settings</h6>
-             </div>
-             <div class="card-body">
-               <form>
-                 <div class="row g-3">
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Default Plan Duration</label>
-                     <select class="form-select">
-                       <option value="1">1 Month</option>
-                       <option value="3">3 Months</option>
-                       <option value="6" selected>6 Months</option>
-                       <option value="12">12 Months</option>
-                     </select>
-                   </div>
-                   <div class="col-12 col-md-6">
-                     <label class="form-label">Auto-refresh Dashboard Interval (Seconds)</label>
-                     <input type="number" class="form-control" value="60">
-                   </div>
-                   <div class="col-12">
-                     <div class="form-check form-switch mb-3">
-                       <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
-                       <label class="form-check-label" for="emailNotifications">Email alert on subscriber expiration</label>
-                     </div>
-                     <div class="form-check form-switch mb-3">
-                       <input class="form-check-input" type="checkbox" id="userRegistrationAlert" checked>
-                       <label class="form-check-label" for="userRegistrationAlert">Notify admin on new customer signups</label>
-                     </div>
-                     <div class="form-check form-switch">
-                       <input class="form-check-input" type="checkbox" id="maintenanceMode">
-                       <label class="form-check-label" for="maintenanceMode">Enable Platform Maintenance Mode</label>
-                     </div>
-                   </div>
-                    <div class="col-12 text-end">
-                      <button type="submit" class="btn btn-primary px-4">Update Configuration</button>
+                <!-- Create/Add new plan form -->
+                <h6 class="fw-bold mb-3 font-text2" style="font-size: 13px; color: #1a1a1a; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 15px;">Add or Update Plan</h6>
+                <form id="subscriptionPricingForm">
+                  <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-5">
+                      <label class="form-label font-text2 fw-semibold mb-1" style="font-size: 11px;">Duration (Months)</label>
+                      <input type="number" class="form-control" id="newPlanDuration" required min="1" max="120" placeholder="e.g. 5">
+                    </div>
+                    <div class="col-12 col-md-5">
+                      <label class="form-label font-text2 fw-semibold mb-1" style="font-size: 11px;">Cost in INR (₹)</label>
+                      <input type="number" class="form-control" id="newPlanCost" required min="0" placeholder="e.g. 3499">
+                    </div>
+                    <div class="col-12 col-md-2 text-end">
+                      <button type="submit" class="btn btn-primary w-100 px-2" style="white-space: nowrap;">Save Plan</button>
                     </div>
                   </div>
                 </form>
+                
+                <div id="pricingSuccessAlert" class="alert alert-success d-none mt-3 border-0 bg-success-subtle text-success py-2 font-text2 fw-semibold rounded" role="alert">
+                  <i class="bi bi-check-circle-fill me-2"></i>Plans configuration updated successfully!
+                </div>
               </div>
             </div>
           </div>
-
-         <div class="col-12 col-lg-4">
-           <!-- Security settings -->
-           <div class="card">
-             <div class="card-header bg-transparent">
-               <h6 class="mb-0 fw-bold">Change Password</h6>
-             </div>
-             <div class="card-body">
-               <form>
-                 <div class="row g-3">
-                   <div class="col-12">
-                     <label class="form-label">Current Password</label>
-                     <input type="password" class="form-control" placeholder="••••••••">
-                   </div>
-                   <div class="col-12">
-                     <label class="form-label">New Password</label>
-                     <input type="password" class="form-control" placeholder="••••••••">
-                   </div>
-                   <div class="col-12">
-                     <label class="form-label">Confirm New Password</label>
-                     <input type="password" class="form-control" placeholder="••••••••">
-                   </div>
-                   <div class="col-12 text-end">
-                     <button type="submit" class="btn btn-danger px-4">Change Password</button>
-                   </div>
-                 </div>
-               </form>
-             </div>
-           </div>
-
-           <!-- Appearance settings -->
-           <div class="card">
-             <div class="card-header bg-transparent">
-               <h6 class="mb-0 fw-bold">Dashboard Theme</h6>
-             </div>
-             <div class="card-body">
-               <div class="row g-3">
-                 <div class="col-12">
-                   <p class="text-secondary small mb-3">Choose a pre-defined theme mode for Eusta panels.</p>
-                   <div class="d-flex flex-wrap gap-2">
-                     <button class="btn btn-outline-dark w-100 mb-2 py-2" onclick="setTheme('light')"><i class="bi bi-sun-fill me-2"></i>Light Mode</button>
-                     <button class="btn btn-dark w-100 mb-2 py-2" onclick="setTheme('dark')"><i class="bi bi-moon-stars-fill me-2"></i>Dark Mode</button>
-                     <button class="btn btn-outline-secondary w-100 py-2" onclick="setTheme('semi-dark')"><i class="bi bi-circle-half me-2"></i>Semi-Dark Mode</button>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
        </div>
      </main>
      <!--end main content-->
@@ -370,6 +289,112 @@
       // Restore saved theme
       const savedTheme = localStorage.getItem('theme') || 'light';
       setTheme(savedTheme);
+
+      // Subscription Plans Logic
+      document.addEventListener("DOMContentLoaded", function () {
+        const pricingForm = document.getElementById("subscriptionPricingForm");
+        const successAlert = document.getElementById("pricingSuccessAlert");
+        const plansTableBody = document.getElementById("plansTableBody");
+
+        // Seed data for plans if not present
+        const defaultPlans = [
+          { duration: 1, cost: 999 },
+          { duration: 2, cost: 1899 },
+          { duration: 3, cost: 2499 },
+          { duration: 6, cost: 4499 },
+          { duration: 12, cost: 7999 }
+        ];
+
+        let plans = JSON.parse(localStorage.getItem("eusta_subscription_plans"));
+        if (!plans) {
+          plans = defaultPlans;
+          localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
+        }
+
+        // Render function
+        function renderPlans() {
+          // Sort plans by duration ascending
+          plans.sort((a, b) => a.duration - b.duration);
+          
+          plansTableBody.innerHTML = "";
+          if (plans.length === 0) {
+            plansTableBody.innerHTML = `<tr><td colspan="3" class="text-center py-3 text-muted">No custom subscription plans created yet.</td></tr>`;
+            return;
+          }
+
+          plans.forEach(plan => {
+            const durationLabel = plan.duration === 1 ? "1 Month" : `${plan.duration} Months`;
+            const rowHtml = `
+              <tr>
+                <td><span class="fw-bold">${durationLabel}</span></td>
+                <td><span class="fw-semibold text-dark">₹${plan.cost.toLocaleString('en-IN')}</span></td>
+                <td class="text-end">
+                  <button type="button" class="btn btn-sm btn-icon btn-outline-danger delete-plan-btn" data-duration="${plan.duration}" title="Delete Plan" style="width: 28px; height: 28px; padding: 0; display: inline-flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            `;
+            plansTableBody.insertAdjacentHTML("beforeend", rowHtml);
+          });
+
+          // Bind delete actions
+          document.querySelectorAll(".delete-plan-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+              const dur = parseInt(this.getAttribute("data-duration"));
+              deletePlan(dur);
+            });
+          });
+        }
+
+        // Delete Plan function
+        function deletePlan(duration) {
+          if (confirm(`Are you sure you want to delete the ${duration} Month(s) plan?`)) {
+            plans = plans.filter(p => p.duration !== duration);
+            localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
+            renderPlans();
+            
+            // Show alert
+            successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plan deleted successfully!';
+            successAlert.classList.remove("d-none");
+            setTimeout(() => successAlert.classList.add("d-none"), 3000);
+          }
+        }
+
+        // Form Submit (Add/Update)
+        pricingForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const duration = parseInt(document.getElementById("newPlanDuration").value);
+          const cost = parseInt(document.getElementById("newPlanCost").value);
+
+          if (isNaN(duration) || isNaN(cost) || duration < 1 || cost < 0) return;
+
+          // Check if duration exists
+          const existingIndex = plans.findIndex(p => p.duration === duration);
+          if (existingIndex !== -1) {
+            plans[existingIndex].cost = cost;
+          } else {
+            plans.push({ duration: duration, cost: cost });
+          }
+
+          localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
+          
+          // Reset inputs
+          document.getElementById("newPlanDuration").value = "";
+          document.getElementById("newPlanCost").value = "";
+
+          // Alert and Re-render
+          successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plans configuration updated successfully!';
+          successAlert.classList.remove("d-none");
+          setTimeout(() => successAlert.classList.add("d-none"), 3000);
+
+          renderPlans();
+        });
+
+        // Initial render
+        renderPlans();
+      });
     </script>
   </body>
 </html>
