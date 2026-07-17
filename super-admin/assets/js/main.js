@@ -2,19 +2,36 @@
 $(function() {
 	"use strict";
 
+	// Dynamically append overlay if it doesn't exist
+	if ($(".overlay").length === 0) {
+		$("body").append('<div class="overlay btn-toggle-menu"></div>');
+	}
 
-// app dropdown
-if (document.querySelector(".app-container")) {
-	new PerfectScrollbar(".app-container");
-}
-if (document.querySelector(".header-notifications-list")) {
-	new PerfectScrollbar(".header-notifications-list");
-}
+	// Dynamically append close button to sidebar header for mobile view
+	if ($(".sidebar-header").length && $(".sidebar-close-btn").length === 0) {
+		const closeBtn = $('<div class="sidebar-close-btn d-xl-none"><span class="material-symbols-outlined fs-4">close</span></div>');
+		$(".sidebar-header").append(closeBtn);
+		closeBtn.on("click", function() {
+			$("body").removeClass("toggled");
+		});
+	}
 
+	// Close sidebar on overlay click
+	$(document).on("click", ".overlay", function() {
+		$("body").removeClass("toggled");
+	});
 
-$(".sidebar-close").on("click", function() {
-	$("body").removeClass("toggled")
-})
+	$(".sidebar-close").on("click", function() {
+		$("body").removeClass("toggled");
+	});
+
+	// app dropdown
+	if (document.querySelector(".app-container")) {
+		new PerfectScrollbar(".app-container");
+	}
+	if (document.querySelector(".header-notifications-list")) {
+		new PerfectScrollbar(".header-notifications-list");
+	}
 
 
 

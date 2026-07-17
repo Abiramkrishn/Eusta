@@ -591,3 +591,40 @@ table.table tbody td:nth-child(2) {
     margin-left: 70px !important;
   }
 }
+
+/* Mobile responsive fixes for overlay and close button */
+@media only screen and (max-width: 1199px) {
+  .toggled .overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    opacity: 1 !important;
+    z-index: 1040 !important;
+    display: block !important;
+  }
+  .sidebar-wrapper {
+    z-index: 1050 !important;
+  }
+  .sidebar-close-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--clr-premium-dark);
+    margin-left: auto;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .sidebar-close-btn:hover {
+    background-color: var(--clr-brand-gold-light);
+    color: var(--clr-brand-gold);
+  }
+}
+

@@ -16,7 +16,13 @@
 <div class="ea-sidebar-overlay" id="sidebarOverlay"></div>
 <div class="ea-shell">
   <aside class="ea-sidebar" id="sidebar">
-    <div class="ea-sidebar__logo"><img src="assets/img/logo.png" alt="Eusta Logo"><span class="ea-sidebar__logo-badge">Admin</span></div>
+    <div class="ea-sidebar__logo">
+      <img src="assets/img/logo.png" alt="Eusta Logo">
+      <span class="ea-sidebar__logo-badge">Admin</span>
+      <button class="ea-sidebar__close-btn" id="sidebarCloseBtn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
     <nav class="ea-sidebar__nav">
       <span class="ea-sidebar__section-label">Main Menu</span>
       <a href="index.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">dashboard</span><span class="ea-nav-label">Dashboard</span></a>
@@ -260,8 +266,10 @@
 <script>
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
   document.getElementById('sidebarToggle').addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
   overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); });
+  if (closeBtn) closeBtn.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); });
   const userMenu = document.getElementById('userMenu');
   document.getElementById('userTrigger').addEventListener('click', () => userMenu.classList.toggle('open'));
   document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) userMenu.classList.remove('open'); });

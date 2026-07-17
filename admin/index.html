@@ -26,6 +26,9 @@
     <div class="ea-sidebar__logo">
       <img src="assets/img/logo.png" alt="Eusta Logo">
       <span class="ea-sidebar__logo-badge">Admin</span>
+      <button class="ea-sidebar__close-btn" id="sidebarCloseBtn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
 
     <nav class="ea-sidebar__nav">
@@ -269,16 +272,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.js"></script>
 <script>
-  // Sidebar Toggle
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
   const toggle  = document.getElementById('sidebarToggle');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
 
   function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('open'); }
   function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
 
   toggle.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
   overlay.addEventListener('click', closeSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
 
   // User Menu
   const userTrigger = document.getElementById('userTrigger');
