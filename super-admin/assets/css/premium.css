@@ -631,3 +631,13 @@ table.table tbody td:nth-child(2) {
   }
 }
 
+/* Hide scrollbar for horizontally scrollable filter rows on mobile/all screens */
+.col-auto.flex-grow-1.overflow-auto {
+  -ms-overflow-style: none !important;  /* IE/Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+.col-auto.flex-grow-1.overflow-auto::-webkit-scrollbar {
+  display: none !important;  /* Chrome/Safari/Opera */
+}
+
+
