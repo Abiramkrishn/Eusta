@@ -641,6 +641,21 @@ table.table tbody td:nth-child(2) {
     margin-left: 0 !important;
     padding-bottom: 100px !important;
   }
+  
+  /* Mobile Logo styling in navbar */
+  .mobile-logo {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+  }
+}
+
+/* Hide mobile logo on desktop */
+@media screen and (min-width: 1199px) {
+  .mobile-logo {
+    display: none !important;
+  }
 }
 
 /* Hide scrollbar for horizontally scrollable filter rows on mobile/all screens */

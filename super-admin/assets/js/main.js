@@ -2,6 +2,16 @@
 $(function() {
 	"use strict";
 
+	// Dynamically append Eusta logo to topbar navbar on mobile
+	if ($(".navbar").length && $(".mobile-logo").length === 0) {
+		const mobileLogo = $(`
+			<a href="index.html" class="mobile-logo d-xl-none" style="display: flex; align-items: center; text-decoration: none;">
+				<img src="assets/images/logo.png" alt="Eusta" style="height: 32px; filter: brightness(1);">
+			</a>
+		`);
+		$(".navbar").prepend(mobileLogo);
+	}
+
 	// Dynamically append premium mobile bottom navigation bar if it doesn't exist
 	if ($(".mobile-bottom-nav").length === 0) {
 		const bottomNav = $(`
