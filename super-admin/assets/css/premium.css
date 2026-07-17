@@ -629,6 +629,18 @@ table.table tbody td:nth-child(2) {
     background-color: var(--clr-brand-gold-light);
     color: var(--clr-brand-gold);
   }
+  
+  /* Hide sidebar and related toggles/overlays under 1199px viewport */
+  .sidebar-wrapper, .overlay, .btn-toggle-menu {
+    display: none !important;
+  }
+  .top-header .navbar {
+    left: 0 !important;
+  }
+  .page-content {
+    margin-left: 0 !important;
+    padding-bottom: 100px !important;
+  }
 }
 
 /* Hide scrollbar for horizontally scrollable filter rows on mobile/all screens */
@@ -639,5 +651,70 @@ table.table tbody td:nth-child(2) {
 .col-auto.flex-grow-1.overflow-auto::-webkit-scrollbar {
   display: none !important;  /* Chrome/Safari/Opera */
 }
+
+/* Premium Floating Bottom Navigation Bar */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 440px;
+  height: 66px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(177, 139, 94, 0.15);
+  border-radius: 35px;
+  box-shadow: 0 10px 30px rgba(177, 139, 94, 0.12);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1030;
+  padding: 0 10px;
+}
+
+.mobile-bottom-nav .nav-link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #8A8A8F;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  width: 70px;
+  height: 52px;
+  border-radius: 20px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.mobile-bottom-nav .nav-link-item .material-symbols-outlined {
+  font-size: 24px;
+  margin-bottom: 2px;
+  transition: all 0.25s ease;
+  color: #8A8A8F !important;
+}
+
+.mobile-bottom-nav .nav-link-item:hover {
+  color: var(--clr-brand-gold) !important;
+}
+
+.mobile-bottom-nav .nav-link-item:hover .material-symbols-outlined {
+  color: var(--clr-brand-gold) !important;
+}
+
+/* Active State styling with Gold accent */
+.mobile-bottom-nav .nav-link-item.nav-active {
+  color: var(--clr-brand-gold) !important;
+  font-weight: 700;
+}
+
+.mobile-bottom-nav .nav-link-item.nav-active .material-symbols-outlined {
+  transform: translateY(-2px);
+  color: var(--clr-brand-gold) !important;
+}
+
 
 

@@ -2,28 +2,42 @@
 $(function() {
 	"use strict";
 
-	// Dynamically append overlay if it doesn't exist
-	if ($(".overlay").length === 0) {
-		$("body").append('<div class="overlay btn-toggle-menu"></div>');
-	}
+	// Dynamically append premium mobile bottom navigation bar if it doesn't exist
+	if ($(".mobile-bottom-nav").length === 0) {
+		const bottomNav = $(`
+			<div class="mobile-bottom-nav d-xl-none">
+				<a href="index.html" class="nav-link-item" id="mobile-nav-dashboard">
+					<span class="material-symbols-outlined">home</span>
+					<span class="nav-text">Dashboard</span>
+				</a>
+				<a href="users.html" class="nav-link-item" id="mobile-nav-users">
+					<span class="material-symbols-outlined">group</span>
+					<span class="nav-text">Users</span>
+				</a>
+				<a href="subscriptions.html" class="nav-link-item" id="mobile-nav-subscriptions">
+					<span class="material-symbols-outlined">card_membership</span>
+					<span class="nav-text">Subscriptions</span>
+				</a>
+				<a href="settings.html" class="nav-link-item" id="mobile-nav-settings">
+					<span class="material-symbols-outlined">settings</span>
+					<span class="nav-text">Settings</span>
+				</a>
+			</div>
+		`);
+		$("body").append(bottomNav);
 
-	// Dynamically append close button to sidebar header for mobile view
-	if ($(".sidebar-header").length && $(".sidebar-close-btn").length === 0) {
-		const closeBtn = $('<div class="sidebar-close-btn d-xl-none"><span class="material-symbols-outlined fs-4">close</span></div>');
-		$(".sidebar-header").append(closeBtn);
-		closeBtn.on("click", function() {
-			$("body").removeClass("toggled");
+		// Highlight active menu link based on current path location
+		let currentLocation = window.location.pathname.split("/").pop();
+		if (currentLocation === "" || currentLocation === "/") {
+			currentLocation = "index.html";
+		}
+		bottomNav.find(".nav-link-item").each(function() {
+			let href = $(this).attr("href");
+			if (href === currentLocation) {
+				$(this).addClass("nav-active");
+			}
 		});
 	}
-
-	// Close sidebar on overlay click
-	$(document).on("click", ".overlay", function() {
-		$("body").removeClass("toggled");
-	});
-
-	$(".sidebar-close").on("click", function() {
-		$("body").removeClass("toggled");
-	});
 
 	// app dropdown
 	if (document.querySelector(".app-container")) {
