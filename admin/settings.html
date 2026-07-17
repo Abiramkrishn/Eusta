@@ -1,385 +1,293 @@
-<!doctype html>
-<html lang="en" dir="ltr">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Eusta</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- inject:css-->
-    <link rel="stylesheet" href="./assets/vendor/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- endinject -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@4.0.8/css/line.min.css">
-    
-    <script>
-		// Render localStorage JS:
-		if (localStorage.theme) document.documentElement.setAttribute("data-theme", localStorage.theme);
-		if (localStorage.layout) document.documentElement.setAttribute("data-nav", localStorage.navbar);
-		if (localStorage.layout) document.documentElement.setAttribute("dir", localStorage.layout);
-    </script>	
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Eusta Admin</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/eusta-admin.css">
 </head>
+<body>
 
-<body class="geex-dashboard">
-    
-	
+<div class="ea-sidebar-overlay" id="sidebarOverlay"></div>
+<div class="ea-shell">
+  <aside class="ea-sidebar" id="sidebar">
+    <div class="ea-sidebar__logo"><img src="assets/img/logo.png" alt="Eusta Logo"><span class="ea-sidebar__logo-badge">Admin</span></div>
+    <nav class="ea-sidebar__nav">
+      <span class="ea-sidebar__section-label">Main Menu</span>
+      <a href="index.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">dashboard</span><span class="ea-nav-label">Dashboard</span></a>
+      <a href="products.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">inventory_2</span><span class="ea-nav-label">Products</span></a>
+      <a href="categories.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">category</span><span class="ea-nav-label">Categories</span></a>
+      <a href="contacts.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">forum</span><span class="ea-nav-label">Enquiries</span></a>
+      <span class="ea-sidebar__section-label">System</span>
+      <a href="legal.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">gavel</span><span class="ea-nav-label">Legal</span></a>
+      <a href="settings.html" class="ea-nav-item active"><span class="material-symbols-outlined ea-nav-icon">settings</span><span class="ea-nav-label">Settings</span></a>
+    </nav>
+    <div class="ea-sidebar__footer"><div class="ea-sidebar__footer-card"><p>Eusta Business Plan</p><strong>14 Days Left</strong><a href="settings.html" class="ea-btn ea-btn-primary ea-btn-sm" style="width:100%; justify-content:center;">Upgrade Plan</a></div></div>
+  </aside>
 
+  <div class="ea-content">
+    <header class="ea-topbar">
+      <div class="ea-topbar__left">
+        <button class="ea-topbar__toggle" id="sidebarToggle"><span class="material-symbols-outlined">menu</span></button>
+        <div class="ea-topbar__breadcrumb"><span class="ea-topbar__title">Settings</span><span class="ea-topbar__sub">Configure your platform preferences</span></div>
+      </div>
+      <div class="ea-topbar__right">
+        <div class="ea-user-menu" id="userMenu">
+          <div class="ea-user-trigger" id="userTrigger"><div class="ea-user-avatar">EA</div><div class="ea-user-info"><span class="ea-user-name">Eusta Admin</span><span class="ea-user-role">Administrator</span></div><span class="material-symbols-outlined ea-user-chevron">expand_more</span></div>
+          <div class="ea-user-dropdown"><a href="settings.html" class="ea-dropdown-item"><span class="material-symbols-outlined">settings</span> Settings</a><div class="ea-dropdown-divider"></div><a href="signin.html" class="ea-dropdown-item danger"><span class="material-symbols-outlined">logout</span> Logout</a></div>
+        </div>
+      </div>
+    </header>
 
-    <main class="geex-main-content">
-		
+    <main class="ea-main">
 
-        <div class="geex-sidebar">
-			<a href="#" class="geex-sidebar__close">
-				<i class="uil uil-times"></i>
-			</a>
-			<div class="geex-sidebar__wrapper">
-				<div class="geex-sidebar__header">
-					<a href="index.html" class="geex-sidebar__logo justify-content-center">
-						<img class="logo-lite" src="assets/img/logo.png" alt="logo" />
-						<img class="logo-dark" src="assets/img/logo-lite.svg" alt="logo" />
-					</a>
-				</div>
-				<nav class="geex-sidebar__menu-wrapper">
-					<ul class="geex-sidebar__menu">
-						<li class="geex-sidebar__menu__item has-children">
-							<a href="index.html" class="geex-sidebar__menu__link">
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<g clip-path="url(#clip0_1139_9707)">
-										<path
-											d="M21.1943 8.31319L14.2413 1.35936C13.3808 0.501345 12.2152 0.0195312 11 0.0195312C9.78482 0.0195312 8.61921 0.501345 7.75868 1.35936L0.805761 8.31319C0.549484 8.56782 0.3463 8.8708 0.207987 9.20454C0.0696733 9.53829 -0.00101787 9.89617 1.10729e-05 10.2574V19.2564C1.10729e-05 19.9857 0.289742 20.6852 0.805467 21.2009C1.32119 21.7166 2.02067 22.0064 2.75001 22.0064H19.25C19.9794 22.0064 20.6788 21.7166 21.1946 21.2009C21.7103 20.6852 22 19.9857 22 19.2564V10.2574C22.001 9.89617 21.9303 9.53829 21.792 9.20454C21.6537 8.8708 21.4505 8.56782 21.1943 8.31319ZM13.75 20.173H8.25001V16.5669C8.25001 15.8375 8.53974 15.138 9.05547 14.6223C9.57119 14.1066 10.2707 13.8169 11 13.8169C11.7294 13.8169 12.4288 14.1066 12.9446 14.6223C13.4603 15.138 13.75 15.8375 13.75 16.5669V20.173ZM20.1667 19.2564C20.1667 19.4995 20.0701 19.7326 19.8982 19.9045C19.7263 20.0764 19.4931 20.173 19.25 20.173H15.5833V16.5669C15.5833 15.3513 15.1005 14.1855 14.2409 13.3259C13.3814 12.4664 12.2156 11.9835 11 11.9835C9.78444 11.9835 8.61865 12.4664 7.75911 13.3259C6.89956 14.1855 6.41668 15.3513 6.41668 16.5669V20.173H2.75001C2.5069 20.173 2.27374 20.0764 2.10183 19.9045C1.92992 19.7326 1.83334 19.4995 1.83334 19.2564V10.2574C1.83419 10.0145 1.93068 9.78168 2.10193 9.60935L9.05485 2.65827C9.57157 2.14396 10.271 1.85522 11 1.85522C11.7291 1.85522 12.4285 2.14396 12.9452 2.65827L19.8981 9.61211C20.0687 9.78375 20.1651 10.0155 20.1667 10.2574V19.2564Z"
-											fill="#B9BBBD" />
-									</g>
-									<defs>
-										<clipPath id="clip0_1139_9707">
-											<rect width="22" height="22" fill="white" />
-										</clipPath>
-									</defs>
-								</svg>
-								<span>Dashboard</span>
-							</a>
+      <!-- Tabs -->
+      <div class="ea-tabs">
+        <div class="ea-tab active" onclick="switchTab('general', this)">General</div>
+        <div class="ea-tab" onclick="switchTab('store', this)">Store Info</div>
+        <div class="ea-tab" onclick="switchTab('notifications', this)">Notifications</div>
+        <div class="ea-tab" onclick="switchTab('account', this)">Account</div>
+      </div>
 
-						</li>
-						<li class="geex-sidebar__menu__item has-children">
-							<a href="products.html" class="geex-sidebar__menu__link">
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<g clip-path="url(#clip0_1139_9714)">
-										<path
-											d="M6.41667 0H3.66667C2.69421 0 1.76158 0.386308 1.07394 1.07394C0.386308 1.76158 0 2.69421 0 3.66667L0 6.41667C0 7.38913 0.386308 8.32176 1.07394 9.00939C1.76158 9.69702 2.69421 10.0833 3.66667 10.0833H6.41667C7.38913 10.0833 8.32176 9.69702 9.00939 9.00939C9.69702 8.32176 10.0833 7.38913 10.0833 6.41667V3.66667C10.0833 2.69421 9.69702 1.76158 9.00939 1.07394C8.32176 0.386308 7.38913 0 6.41667 0V0ZM8.25 6.41667C8.25 6.9029 8.05684 7.36921 7.71303 7.71303C7.36921 8.05684 6.9029 8.25 6.41667 8.25H3.66667C3.18044 8.25 2.71412 8.05684 2.3703 7.71303C2.02649 7.36921 1.83333 6.9029 1.83333 6.41667V3.66667C1.83333 3.18044 2.02649 2.71412 2.3703 2.3703C2.71412 2.02649 3.18044 1.83333 3.66667 1.83333H6.41667C6.9029 1.83333 7.36921 2.02649 7.71303 2.3703C8.05684 2.71412 8.25 3.18044 8.25 3.66667V6.41667Z"
-											fill="#B9BBBD" />
-										<path
-											d="M18.3327 0H15.5827C14.6102 0 13.6776 0.386309 12.99 1.07394C12.3023 1.76158 11.916 2.69421 11.916 3.66667V6.41667C11.916 7.38913 12.3023 8.32176 12.99 9.0094C13.6776 9.69703 14.6102 10.0833 15.5827 10.0833H18.3327C19.3051 10.0833 20.2378 9.69703 20.9254 9.0094C21.613 8.32176 21.9993 7.38913 21.9993 6.41667V3.66667C21.9993 2.69421 21.613 1.76158 20.9254 1.07394C20.2378 0.386309 19.3051 0 18.3327 0V0ZM20.166 6.41667C20.166 6.9029 19.9728 7.36922 19.629 7.71303C19.2852 8.05685 18.8189 8.25 18.3327 8.25H15.5827C15.0964 8.25 14.6301 8.05685 14.2863 7.71303C13.9425 7.36922 13.7493 6.9029 13.7493 6.41667V3.66667C13.7493 3.18044 13.9425 2.71412 14.2863 2.37031C14.6301 2.02649 15.0964 1.83333 15.5827 1.83333H18.3327C18.8189 1.83333 19.2852 2.02649 19.629 2.37031C19.9728 2.71412 20.166 3.18044 20.166 3.66667V6.41667Z"
-											fill="#B9BBBD" />
-										<path
-											d="M6.41667 11.9167H3.66667C2.69421 11.9167 1.76158 12.3031 1.07394 12.9907C0.386308 13.6783 0 14.611 0 15.5834L0 18.3334C0 19.3059 0.386308 20.2385 1.07394 20.9262C1.76158 21.6138 2.69421 22.0001 3.66667 22.0001H6.41667C7.38913 22.0001 8.32176 21.6138 9.00939 20.9262C9.69702 20.2385 10.0833 19.3059 10.0833 18.3334V15.5834C10.0833 14.611 9.69702 13.6783 9.00939 12.9907C8.32176 12.3031 7.38913 11.9167 6.41667 11.9167ZM8.25 18.3334C8.25 18.8197 8.05684 19.286 7.71303 19.6298C7.36921 19.9736 6.9029 20.1668 6.41667 20.1668H3.66667C3.18044 20.1668 2.71412 19.9736 2.3703 19.6298C2.02649 19.286 1.83333 18.8197 1.83333 18.3334V15.5834C1.83333 15.0972 2.02649 14.6309 2.3703 14.2871C2.71412 13.9432 3.18044 13.7501 3.66667 13.7501H6.41667C6.9029 13.7501 7.36921 13.9432 7.71303 14.2871C8.05684 14.6309 8.25 15.0972 8.25 15.5834V18.3334Z"
-											fill="#B9BBBD" />
-										<path
-											d="M18.3327 11.9167H15.5827C14.6102 11.9167 13.6776 12.3031 12.99 12.9907C12.3023 13.6783 11.916 14.611 11.916 15.5834V18.3334C11.916 19.3059 12.3023 20.2385 12.99 20.9262C13.6776 21.6138 14.6102 22.0001 15.5827 22.0001H18.3327C19.3051 22.0001 20.2378 21.6138 20.9254 20.9262C21.613 20.2385 21.9993 19.3059 21.9993 18.3334V15.5834C21.9993 14.611 21.613 13.6783 20.9254 12.9907C20.2378 12.3031 19.3051 11.9167 18.3327 11.9167ZM20.166 18.3334C20.166 18.8197 19.9728 19.286 19.629 19.6298C19.2852 19.9736 18.8189 20.1668 18.3327 20.1668H15.5827C15.0964 20.1668 14.6301 19.9736 14.2863 19.6298C13.9425 19.286 13.7493 18.8197 13.7493 18.3334V15.5834C13.7493 15.0972 13.9425 14.6309 14.2863 14.2871C14.6301 13.9432 15.0964 13.7501 15.5827 13.7501H18.3327C18.8189 13.7501 19.2852 13.9432 19.629 14.2871C19.9728 14.6309 20.166 15.0972 20.166 15.5834V18.3334Z"
-											fill="#B9BBBD" />
-									</g>
-									<defs>
-										<clipPath id="clip0_1139_9714">
-											<rect width="22" height="22" fill="white" />
-										</clipPath>
-									</defs>
-								</svg>
-								<span>Products</span>
-							</a>
-						</li>
-						<li class="geex-sidebar__menu__item has-children">
-							<a href="categories.html" class="geex-sidebar__menu__link">
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<g clip-path="url(#clip0_1141_9730)">
-										<path
-											d="M20.6108 10.0608L10.9996 15.8285L1.3883 10.0608C1.17983 9.93573 0.930209 9.89858 0.694351 9.95755C0.458493 10.0165 0.255718 10.1668 0.130635 10.3752C0.0055526 10.5837 -0.0315922 10.8333 0.0273724 11.0692C0.0863369 11.305 0.236581 11.5078 0.445052 11.6329L10.5284 17.6829C10.671 17.7686 10.8341 17.8138 11.0005 17.8138C11.1668 17.8138 11.33 17.7686 11.4726 17.6829L21.5559 11.6329C21.7644 11.5078 21.9146 11.305 21.9736 11.0692C22.0325 10.8333 21.9954 10.5837 21.8703 10.3752C21.7452 10.1668 21.5424 10.0165 21.3066 9.95755C21.0707 9.89858 20.8211 9.93573 20.6126 10.0608H20.6108Z"
-											fill="#B9BBBD" />
-										<path
-											d="M20.6108 14.2476L10.9995 20.0143L1.3883 14.2476C1.28507 14.1856 1.17066 14.1446 1.05159 14.1269C0.932525 14.1092 0.811133 14.1151 0.694348 14.1443C0.577563 14.1735 0.467672 14.2254 0.37095 14.2971C0.274227 14.3688 0.192567 14.4588 0.130633 14.562C0.0686979 14.6652 0.0277013 14.7796 0.00998337 14.8987C-0.00773452 15.0178 -0.00182666 15.1392 0.0273696 15.256C0.0863342 15.4918 0.236578 15.6946 0.445049 15.8197L10.5284 21.8697C10.671 21.9553 10.8341 22.0006 11.0005 22.0006C11.1668 22.0006 11.33 21.9553 11.4725 21.8697L21.5559 15.8197C21.7644 15.6946 21.9146 15.4918 21.9736 15.256C22.0325 15.0201 21.9954 14.7705 21.8703 14.562C21.7452 14.3535 21.5424 14.2033 21.3066 14.1443C21.0707 14.0854 20.8211 14.1225 20.6126 14.2476H20.6108Z"
-											fill="#B9BBBD" />
-										<path
-											d="M10.9997 13.5424C10.5052 13.5421 10.0201 13.4074 9.59629 13.1528L0.444293 7.66104C0.308762 7.57955 0.19662 7.46437 0.118767 7.32672C0.0409147 7.18906 0 7.0336 0 6.87546C0 6.71731 0.0409147 6.56186 0.118767 6.4242C0.19662 6.28654 0.308762 6.17137 0.444293 6.08987L9.59629 0.598125C10.0201 0.343501 10.5053 0.208984 10.9997 0.208984C11.4942 0.208984 11.9793 0.343501 12.4031 0.598125L21.5551 6.08987C21.6907 6.17137 21.8028 6.28654 21.8807 6.4242C21.9585 6.56186 21.9994 6.71731 21.9994 6.87546C21.9994 7.0336 21.9585 7.18906 21.8807 7.32672C21.8028 7.46437 21.6907 7.57955 21.5551 7.66104L12.4031 13.1528C11.9793 13.4074 11.4942 13.5421 10.9997 13.5424ZM2.69838 6.87546L10.5414 11.5807C10.6799 11.6636 10.8383 11.7073 10.9997 11.7073C11.1611 11.7073 11.3195 11.6636 11.458 11.5807L19.301 6.87546L11.458 2.17021C11.3195 2.08735 11.1611 2.04359 10.9997 2.04359C10.8383 2.04359 10.6799 2.08735 10.5414 2.17021L2.69838 6.87546Z"
-											fill="#B9BBBD" />
-									</g>
-									<defs>
-										<clipPath id="clip0_1141_9730">
-											<rect width="22" height="22" fill="white" />
-										</clipPath>
-									</defs>
-								</svg>
-								<span>Categories</span>
-							</a>
-						</li>
-						<li class="geex-sidebar__menu__item has-children">
-						<a href="contacts.html" class="geex-sidebar__menu__link">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-							<path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 
-									1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 
-									3-1.34 3-3S9.66 5 8 5 5 6.34 5 
-									8s1.34 3 3 3zm0 2c-2.33 0-7 
-									1.17-7 3.5V19h14v-2.5C19 
-									14.17 14.33 13 12 13H8zm8 
-									0c-.29 0-.62.02-.97.05 
-									1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" 
-									fill="#B9BBBD"/>
-							</svg>
-							<span>Contacts</span>
-						</a>
-						</li>
-                        <li class="geex-sidebar__menu__item has-children">
-							<a href="legal.html" class="geex-sidebar__menu__link">
-								<svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<path d="M6 2a2 2 0 0 0-2 2v16a2 
-										2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 
-										7V3.5L18.5 9H13z" 
-										fill="#B9BBBD"/>
-								</svg>
-								<span>Legal Information</span>
-							</a>
-						</li>
-
-						<li class="geex-sidebar__menu__item has-children">
-							<a href="settings.html" class="geex-sidebar__menu__link">
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<g clip-path="url(#clip0_1141_9723)">
-										<path
-											d="M17.4167 0.916748H4.58333C3.3682 0.918204 2.20326 1.40156 1.34403 2.26078C0.484808 3.12001 0.00145554 4.28495 0 5.50008L0 16.5001C0.00145554 17.7152 0.484808 18.8802 1.34403 19.7394C2.20326 20.5986 3.3682 21.082 4.58333 21.0834H17.4167C18.6318 21.082 19.7967 20.5986 20.656 19.7394C21.5152 18.8802 21.9985 17.7152 22 16.5001V5.50008C21.9985 4.28495 21.5152 3.12001 20.656 2.26078C19.7967 1.40156 18.6318 0.918204 17.4167 0.916748ZM4.58333 2.75008H17.4167C18.146 2.75008 18.8455 3.03981 19.3612 3.55554C19.8769 4.07126 20.1667 4.77074 20.1667 5.50008V6.41675H1.83333V5.50008C1.83333 4.77074 2.12306 4.07126 2.63879 3.55554C3.15451 3.03981 3.85399 2.75008 4.58333 2.75008ZM17.4167 19.2501H4.58333C3.85399 19.2501 3.15451 18.9604 2.63879 18.4446C2.12306 17.9289 1.83333 17.2294 1.83333 16.5001V8.25008H20.1667V16.5001C20.1667 17.2294 19.8769 17.9289 19.3612 18.4446C18.8455 18.9604 18.146 19.2501 17.4167 19.2501ZM17.4167 11.9167C17.4167 12.1599 17.3201 12.393 17.1482 12.5649C16.9763 12.7368 16.7431 12.8334 16.5 12.8334H5.5C5.25689 12.8334 5.02373 12.7368 4.85182 12.5649C4.67991 12.393 4.58333 12.1599 4.58333 11.9167C4.58333 11.6736 4.67991 11.4405 4.85182 11.2686C5.02373 11.0967 5.25689 11.0001 5.5 11.0001H16.5C16.7431 11.0001 16.9763 11.0967 17.1482 11.2686C17.3201 11.4405 17.4167 11.6736 17.4167 11.9167ZM13.75 15.5834C13.75 15.8265 13.6534 16.0597 13.4815 16.2316C13.3096 16.4035 13.0764 16.5001 12.8333 16.5001H5.5C5.25689 16.5001 5.02373 16.4035 4.85182 16.2316C4.67991 16.0597 4.58333 15.8265 4.58333 15.5834C4.58333 15.3403 4.67991 15.1071 4.85182 14.9352C5.02373 14.7633 5.25689 14.6667 5.5 14.6667H12.8333C13.0764 14.6667 13.3096 14.7633 13.4815 14.9352C13.6534 15.1071 13.75 15.3403 13.75 15.5834ZM2.75 4.58342C2.75 4.40212 2.80376 4.22489 2.90449 4.07414C3.00521 3.9234 3.14837 3.80591 3.31587 3.73653C3.48337 3.66715 3.66768 3.64899 3.8455 3.68436C4.02332 3.71973 4.18665 3.80704 4.31485 3.93523C4.44305 4.06343 4.53035 4.22677 4.56572 4.40458C4.60109 4.5824 4.58294 4.76671 4.51356 4.93421C4.44418 5.10171 4.32668 5.24487 4.17594 5.3456C4.02519 5.44632 3.84797 5.50008 3.66667 5.50008C3.42355 5.50008 3.19039 5.4035 3.01849 5.2316C2.84658 5.05969 2.75 4.82653 2.75 4.58342ZM5.5 4.58342C5.5 4.40212 5.55376 4.22489 5.65449 4.07414C5.75521 3.9234 5.89838 3.80591 6.06587 3.73653C6.23337 3.66715 6.41768 3.64899 6.5955 3.68436C6.77332 3.71973 6.93665 3.80704 7.06485 3.93523C7.19305 4.06343 7.28035 4.22677 7.31572 4.40458C7.35109 4.5824 7.33294 4.76671 7.26356 4.93421C7.19418 5.10171 7.07668 5.24487 6.92594 5.3456C6.77519 5.44632 6.59797 5.50008 6.41667 5.50008C6.17355 5.50008 5.94039 5.4035 5.76849 5.2316C5.59658 5.05969 5.5 4.82653 5.5 4.58342ZM8.25 4.58342C8.25 4.40212 8.30376 4.22489 8.40449 4.07414C8.50521 3.9234 8.64837 3.80591 8.81587 3.73653C8.98337 3.66715 9.16768 3.64899 9.3455 3.68436C9.52332 3.71973 9.68665 3.80704 9.81485 3.93523C9.94305 4.06343 10.0304 4.22677 10.0657 4.40458C10.1011 4.5824 10.0829 4.76671 10.0136 4.93421C9.94418 5.10171 9.82668 5.24487 9.67594 5.3456C9.5252 5.44632 9.34797 5.50008 9.16667 5.50008C8.92355 5.50008 8.69039 5.4035 8.51849 5.2316C8.34658 5.05969 8.25 4.82653 8.25 4.58342Z"
-											fill="#B9BBBD" />
-									</g>
-									<defs>
-										<clipPath id="clip0_1141_9723">
-											<rect width="22" height="22" fill="white" />
-										</clipPath>
-									</defs>
-								</svg>
-								<span>Settings</span>
-							</a>
-
-						</li>
-					</ul>
-				</nav>
-				<div class="geex-sidebar__footer quatinery-bg p-4 text-center" style="border-radius: 20px;">
-					<span class="geex-sidebar__footer__title">Need Help?</span>
-					<a href="" class="geex-content__invoice__chat__btn geex-btn geex-btn--success">
-						<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
-							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 
-							19.79 19.79 0 0 1-8.63-3.07 
-							19.5 19.5 0 0 1-6-6 
-							19.79 19.79 0 0 1-3.07-8.63 
-							A2 2 0 0 1 4.92 2h3a2 2 0 0 1 
-							2 1.72c.12.81.37 1.6.72 2.34 
-							a2 2 0 0 1-.45 2.11L9 9a16 
-							16 0 0 0 6 6l.83-.83a2 2 0 0 1 
-							2.11-.45c.74.35 1.53.6 2.34.72 
-							A2 2 0 0 1 22 16.92z" fill="white" />
-						</svg>
-						Call Now
-					</a>
-
-				</div>
-			</div>
-		</div>
-	
- 
-		
-
-		<div class="geex-content">
-			<div class="geex-content__header">
-				<div class="geex-content__header__content">
-					<h2 class="geex-content__header__title">Settings</h2>
-					<p class="geex-content__header__subtitle">Manage your business details</p>
-				</div>
-
-                
-
-				<div class="geex-content__header__action">
-					<div class="geex-content__header__action__wrap">
-						<ul class="geex-content__header__quickaction">
-							<li class="geex-content__header__quickaction__item">
-								<a href="#" class="geex-content__header__quickaction__link">
-									<img class="user-img" src="assets/img/icon.png" alt="user" style="border: 1px solid black; border-radius: 50%;"/>
-								</a>
-								<div class="geex-content__header__popup geex-content__header__popup--author">
-									<div class="geex-content__header__popup__header">
-										<div class="geex-content__header__popup__header__img">
-											<img src="assets/img/icon.png" alt="user" width="60"/>
-										</div>
-										<div class="geex-content__header__popup__header__content">
-											<h3 class="geex-content__header__popup__header__title">Eusta</h3>
-											<span class="geex-content__header__popup__header__subtitle">Admin</span>
-										</div>
-									</div>
-									<div class="geex-content__header__popup__content">
-										<ul class="geex-content__header__popup__items">
-											<li class="geex-content__header__popup__item">
-												<a class="geex-content__header__popup__link" href="settings.html">
-													<i class="uil uil-cog"></i>
-													Settings
-												</a>
-											</li>
-										</ul>
-									</div>
-									<div class="geex-content__header__popup__footer">
-										<a href="signin.html" class="geex-content__header__popup__footer__link">
-											<i class="uil uil-arrow-up-left"></i>Logout
-										</a>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-            <div class="d-flex justify-content-end mb-3">
-                <a href="" class="geex-content__invoice__chat__btn geex-btn geex-btn--success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6
-                                0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.932 7.932 0 0 0 20 12
-                                c0-4.42-3.58-8-8-8zm-6.76.24L3.5 5.99A7.932 7.932 0 0 0 4 12
-                                c0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6
-                                0-1.01.25-1.97.7-2.8l-1.46-1.46z" fill="white"/>
-                    </svg>
-                    Update
-                </a>
+      <!-- General Tab -->
+      <div class="ea-tab-panel active" id="tab-general">
+        <div class="ea-card">
+          <div class="ea-card-header"><div class="ea-card-title">General Settings</div></div>
+          <div class="ea-card-body">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Platform Name</label>
+                  <input type="text" class="ea-input" value="Eusta">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Contact Email</label>
+                  <input type="email" class="ea-input" value="support@eusta.com">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Phone Number</label>
+                  <input type="tel" class="ea-input" value="+91 9000000000">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Currency</label>
+                  <select class="ea-select">
+                    <option selected>Indian Rupee (₹)</option>
+                    <option>US Dollar ($)</option>
+                    <option>Euro (€)</option>
+                    <option>British Pound (£)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="ea-form-group">
+                  <label class="ea-label">Platform Description</label>
+                  <textarea class="ea-textarea">Eusta is a premium home decor and furniture e-commerce platform curating the finest pieces for modern living.</textarea>
+                </div>
+              </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-4 d-flex mb-4">
-                    <div class="geex-content__feature__card" style="gap: 0;">
-                            <small class="form-label">Business name</small>
-                        <div class="geex-content__form__single__box w-100">
-						    <input placeholder="Enter business name" class="form-control"/>
-					    </div>
-					</div>
-                </div>
-
-                <div class="col-md-4 d-flex mb-4">
-                    <div class="geex-content__feature__card" style="gap: 0;">
-                    <small class="form-label">Upload your logo</small>
-                    <div class="geex-content__form__single__box w-100 d-flex align-items-center" style="gap: 15px;">
-                        <input type="file" accept="image/*" class="form-control w-100" onchange="previewImage(this)" />
-                        <img src="" alt="Logo Preview"
-                            style="width:80px; height:auto; object-fit:cover; border:1px solid #ddd; display:none; border-radius:6px;" />
-                    </div>
-                    </div>
-
-                    <script>
-                    function previewImage(input) {
-                    const file = input.files[0];
-                    const img = input.closest(".geex-content__form__single__box").querySelector("img");
-                    if (file) {
-                        img.src = URL.createObjectURL(file);
-                        img.style.display = "block";
-                    } else {
-                        img.src = "";
-                        img.style.display = "none";
-                    }
-                    }
-                    </script>
-
-                </div>
-
-                <div class="col-md-4 d-flex mb-4">
-                    <div class="geex-content__feature__card" style="gap: 0;">
-                            <small class="form-label">WhatsApp number to recieve enquiry</small>
-                        <div class="geex-content__form__single__box w-100">
-						    <input placeholder="Enter WhatsApp number" class="form-control"/>
-					    </div>
-					</div>
-                </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+              <button class="ea-btn ea-btn-primary" onclick="showToast('General settings saved!')"><span class="material-symbols-outlined">save</span> Save Changes</button>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="row">
-                <div class="col-xxl-6 col-xl-6 col-md-6  mb-4">
-                    <div class="geex-content__feature__card" style="gap: 0; display: block;">
-                        <div class="w-100">
-                            <h4 class="geex-content__widget__single__title text-center">Contact Details</h4>
-                        </div>
-                        
-                        <small class="form-label">Mobile number</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-						    <input placeholder="Enter mobile number" class="form-control"/>
-					    </div>
-
-                        <small class="form-label">Email address</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-						    <input placeholder="Enter email address" class="form-control"/>
-					    </div>
-
-                        <small class="form-label">Address</small>
-                        <div class="geex-content__form__single__box w-100">
-						    <textarea class="form-control" placeholder="Enter address" rows="7"></textarea>
-					    </div>
-					</div>
+      <!-- Store Info Tab -->
+      <div class="ea-tab-panel" id="tab-store">
+        <div class="ea-card">
+          <div class="ea-card-header"><div class="ea-card-title">Store Information</div></div>
+          <div class="ea-card-body">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Store Name</label>
+                  <input type="text" class="ea-input" value="Eusta Home">
                 </div>
-
-                <div class="col-xxl-6 col-xl-6 col-md-6  mb-4">
-                    <div class="geex-content__feature__card" style="gap: 0; display: block;">
-                        <div class="w-100">
-                            <h4 class="geex-content__widget__single__title text-center">Social Media Links</h4>
-                        </div>
-                        
-                        <small class="form-label">Facebook</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-                            <div class="geex-content__widget__single__cta__img" style="background:#eaeaff;">
-								<img src="assets/img/icon/facebook.svg" alt="facebook" />
-							</div>
-						    <input placeholder="Enter mobile number" class="form-control"/>
-					    </div>
-
-                        <small class="form-label">Instagram</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-                            <div class="geex-content__widget__single__cta__img" style="background:#ffeafc;">
-								<img src="assets/img/icon/instagram.png" alt="instagram"/>
-							</div>
-						    <input placeholder="Enter email address" class="form-control"/>
-					    </div>
-
-                        <small class="form-label">Youtube</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-                            <div class="geex-content__widget__single__cta__img" style="background:#fff2f2;">
-								<img src="assets/img/icon/youtube.svg" alt="youtube" />
-							</div>
-						    <input placeholder="Enter email address" class="form-control"/>
-					    </div>
-
-                        <small class="form-label">X</small>
-                        <div class="geex-content__form__single__box w-100 mb-4">
-                            <div class="geex-content__widget__single__cta__img" style="background:#ebebeb;">
-								<img src="assets/img/icon/x.png" alt="youtube" />
-							</div>
-						    <input placeholder="Enter email address" class="form-control"/>
-					    </div>
-					</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Business Registration No.</label>
+                  <input type="text" class="ea-input" placeholder="e.g. CIN U47913MH2025…">
                 </div>
+              </div>
+              <div class="col-12">
+                <div class="ea-form-group">
+                  <label class="ea-label">Business Address</label>
+                  <textarea class="ea-textarea" style="min-height:80px;">123, Design Park, Bandra West, Mumbai - 400 050, Maharashtra, India</textarea>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">GST Number</label>
+                  <input type="text" class="ea-input" placeholder="27AABCU9603R1Z8">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Free Shipping Threshold (₹)</label>
+                  <input type="number" class="ea-input" value="2999">
+                </div>
+              </div>
             </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+              <button class="ea-btn ea-btn-primary" onclick="showToast('Store info saved!')"><span class="material-symbols-outlined">save</span> Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- Notifications Tab -->
+      <div class="ea-tab-panel" id="tab-notifications">
+        <div class="ea-card">
+          <div class="ea-card-header"><div class="ea-card-title">Notification Preferences</div></div>
+          <div class="ea-card-body">
+            <div style="display:flex; flex-direction:column; gap:18px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; background:var(--bg-body); border-radius:var(--radius-sm); border:1px solid var(--border);">
+                <div>
+                  <div style="font-weight:600; font-size:14px;">New Enquiry Alerts</div>
+                  <div class="text-muted" style="font-size:12px;">Get notified when a customer sends a new message</div>
+                </div>
+                <label style="cursor:pointer;">
+                  <input type="checkbox" checked style="accent-color:var(--gold); width:16px; height:16px;">
+                </label>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; background:var(--bg-body); border-radius:var(--radius-sm); border:1px solid var(--border);">
+                <div>
+                  <div style="font-weight:600; font-size:14px;">Low Stock Alerts</div>
+                  <div class="text-muted" style="font-size:12px;">Alert when product stock falls below 10 units</div>
+                </div>
+                <label style="cursor:pointer;">
+                  <input type="checkbox" checked style="accent-color:var(--gold); width:16px; height:16px;">
+                </label>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; background:var(--bg-body); border-radius:var(--radius-sm); border:1px solid var(--border);">
+                <div>
+                  <div style="font-weight:600; font-size:14px;">Subscription Renewal Reminder</div>
+                  <div class="text-muted" style="font-size:12px;">7-day advance reminder before plan expiry</div>
+                </div>
+                <label style="cursor:pointer;">
+                  <input type="checkbox" checked style="accent-color:var(--gold); width:16px; height:16px;">
+                </label>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; background:var(--bg-body); border-radius:var(--radius-sm); border:1px solid var(--border);">
+                <div>
+                  <div style="font-weight:600; font-size:14px;">Weekly Analytics Digest</div>
+                  <div class="text-muted" style="font-size:12px;">Email summary of weekly performance every Monday</div>
+                </div>
+                <label style="cursor:pointer;">
+                  <input type="checkbox" style="accent-color:var(--gold); width:16px; height:16px;">
+                </label>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+              <button class="ea-btn ea-btn-primary" onclick="showToast('Notification preferences saved!')"><span class="material-symbols-outlined">save</span> Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-			
-		</div>
+      <!-- Account Tab -->
+      <div class="ea-tab-panel" id="tab-account">
+        <div class="ea-card">
+          <div class="ea-card-header"><div class="ea-card-title">Account Settings</div></div>
+          <div class="ea-card-body">
+            <div style="display:flex; align-items:center; gap:20px; margin-bottom:28px; padding:20px; background:var(--bg-body); border-radius:var(--radius-md); border:1px solid var(--border);">
+              <div class="ea-user-avatar" style="width:64px; height:64px; font-size:22px;">EA</div>
+              <div>
+                <div style="font-size:16px; font-weight:700;">Eusta Admin</div>
+                <div class="text-muted" style="font-size:13px;">admin@eusta.com</div>
+                <span class="ea-badge ea-badge-gold" style="margin-top:6px;">Administrator</span>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Display Name</label>
+                  <input type="text" class="ea-input" value="Eusta Admin">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Email Address</label>
+                  <input type="email" class="ea-input" value="admin@eusta.com">
+                </div>
+              </div>
+              <div class="col-12"><div class="ea-divider"></div></div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">New Password</label>
+                  <div class="ea-pwd-wrap">
+                    <input type="password" class="ea-input" id="newPwd" placeholder="Enter new password">
+                    <button class="ea-pwd-toggle" onclick="togglePwd('newPwd', this)"><span class="material-symbols-outlined">visibility</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="ea-form-group">
+                  <label class="ea-label">Confirm Password</label>
+                  <div class="ea-pwd-wrap">
+                    <input type="password" class="ea-input" id="confPwd" placeholder="Confirm new password">
+                    <button class="ea-pwd-toggle" onclick="togglePwd('confPwd', this)"><span class="material-symbols-outlined">visibility</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:12px;">
+              <a href="signin.html" class="ea-btn ea-btn-danger ea-btn-sm"><span class="material-symbols-outlined">logout</span> Log Out of All Devices</a>
+              <button class="ea-btn ea-btn-primary" onclick="showToast('Account settings updated!')"><span class="material-symbols-outlined">save</span> Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
+  </div>
+</div>
 
-    <!-- inject:js-->
-    <script src="./assets/vendor/js/jquery/jquery-3.5.1.min.js"></script>
-    <script src="./assets/vendor/js/jquery/jquery-ui.js"></script>
-    <script src="./assets/vendor/js/bootstrap/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.min.js" referrerpolicy="origin"></script>
-    <script src="./assets/js/main.js"></script>
-    <!-- endinject-->
+<div class="ea-toast-wrap" id="toastWrap"></div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  document.getElementById('sidebarToggle').addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
+  overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); });
+  const userMenu = document.getElementById('userMenu');
+  document.getElementById('userTrigger').addEventListener('click', () => userMenu.classList.toggle('open'));
+  document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) userMenu.classList.remove('open'); });
+
+  function switchTab(id, el) {
+    document.querySelectorAll('.ea-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ea-tab-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  function togglePwd(id, btn) {
+    const inp = document.getElementById(id);
+    const isHidden = inp.type === 'password';
+    inp.type = isHidden ? 'text' : 'password';
+    btn.querySelector('.material-symbols-outlined').textContent = isHidden ? 'visibility_off' : 'visibility';
+  }
+
+  function showToast(msg) {
+    const tw = document.getElementById('toastWrap');
+    const t = document.createElement('div');
+    t.className = 'ea-toast';
+    t.innerHTML = '<span class="material-symbols-outlined">check_circle</span> ' + msg;
+    tw.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+</script>
 </body>
-
 </html>

@@ -1,0 +1,11 @@
+{
+  "name": "eusta-portal",
+  "version": "1.0.0",
+  "description": "Eusta central portal connecting User, Admin, and Super Admin panels",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Antigravity",
+  "license": "ISC"
+}
