@@ -432,73 +432,76 @@ body.auth-page .card {
   border-color: var(--clr-brand-gold) !important;
 }
 
-/* Compact Sidebar View Refinements (Toggled State) */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a {
-  margin: 6px 12px !important;
-  padding: 0 !important;
-  width: 46px !important;
-  height: 46px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  border-radius: 50% !important; /* Clean circular selection pills */
-  border-left: 0 !important;
+/* Compact Sidebar View Refinements (Toggled State) - Desktop Only */
+@media screen and (min-width: 1199px) {
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a {
+    margin: 6px 12px !important;
+    padding: 0 !important;
+    width: 46px !important;
+    height: 46px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important; /* Clean circular selection pills */
+    border-left: 0 !important;
+  }
+
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li.menu-label {
+    display: none !important;
+  }
+
+  /* Active State when toggled */
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active,
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a {
+    background-color: var(--clr-brand-gold) !important;
+    color: #ffffff !important;
+  }
+
+  /* Clear icon backgrounds & borders to prevent squashed ovals */
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a .parent-icon {
+    background: transparent !important;
+    border: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    color: var(--clr-common-body-text) !important;
+  }
+
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a .parent-icon .material-symbols-outlined {
+    font-size: 22px !important;
+    color: var(--clr-common-body-text) !important;
+  }
+
+  /* Active/Hover states of parent icon inside the circular selector */
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active .parent-icon,
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a .parent-icon {
+    color: #ffffff !important;
+  }
+
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active .parent-icon .material-symbols-outlined,
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a .parent-icon .material-symbols-outlined {
+    color: #ffffff !important;
+  }
+
+  /* Hover highlights when toggled */
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a:hover {
+    background-color: var(--clr-brand-gold-light) !important;
+    color: var(--clr-brand-gold) !important;
+  }
+
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a:hover .parent-icon .material-symbols-outlined {
+    color: var(--clr-brand-gold) !important;
+  }
+
+  /* Clean profile img container at the bottom when toggled */
+  body.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-bottom .user-img {
+    border: none !important;
+  }
 }
 
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li.menu-label {
-  display: none !important;
-}
-
-/* Active State when toggled */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active,
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a {
-  background-color: var(--clr-brand-gold) !important;
-  color: #ffffff !important;
-}
-
-/* Clear icon backgrounds & borders to prevent squashed ovals */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a .parent-icon {
-  background: transparent !important;
-  border: none !important;
-  width: 24px !important;
-  height: 24px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  color: var(--clr-common-body-text) !important;
-}
-
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a .parent-icon .material-symbols-outlined {
-  font-size: 22px !important;
-  color: var(--clr-common-body-text) !important;
-}
-
-/* Active/Hover states of parent icon inside the circular selector */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active .parent-icon,
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a .parent-icon {
-  color: #ffffff !important;
-}
-
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a.active .parent-icon .material-symbols-outlined,
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .mm-active > a .parent-icon .material-symbols-outlined {
-  color: #ffffff !important;
-}
-
-/* Hover highlights when toggled */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a:hover {
-  background-color: var(--clr-brand-gold-light) !important;
-  color: var(--clr-brand-gold) !important;
-}
-
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a:hover .parent-icon .material-symbols-outlined {
-  color: var(--clr-brand-gold) !important;
-}
-
-/* Clean profile img container at the bottom when toggled */
-body.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-bottom .user-img {
-  border: none !important;
-}
 
 /* Search Input Icon Padding Fix */
 .position-relative input[type="search"],
