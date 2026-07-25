@@ -414,7 +414,7 @@
 
         <!-- STEP 1: Store Setup -->
         <div class="onboarding-step-content active" id="obStep1">
-          <h2 class="onboarding-title">Welcome to Eusta! Let's set up your store 🚀</h2>
+          <h2 class="onboarding-title">Welcome to Eusta! Let's set up your store</h2>
           <p class="onboarding-sub">Configure your business niche so Eusta tailors your category preset icons, product structure, and customer enquiry options.</p>
 
           <div class="form-group mb-3">
@@ -427,35 +427,35 @@
             <div class="niche-grid">
               <label class="niche-option selected">
                 <input type="radio" name="obNiche" value="home" checked>
-                <span>🛋️ Home & Furniture</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">chair</span> Home & Furniture</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="fashion">
-                <span>👗 Fashion & Apparel</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">checkroom</span> Fashion & Apparel</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="tech">
-                <span>📱 Electronics & Tech</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">smartphone</span> Electronics & Tech</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="garden">
-                <span>🪴 Gardening & Plants</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">potted_plant</span> Gardening & Plants</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="beauty">
-                <span>💄 Beauty & Cosmetics</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">auto_fix_high</span> Beauty & Cosmetics</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="grocery">
-                <span>🍎 Grocery & Food</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">restaurant</span> Grocery & Food</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="sports">
-                <span>⚽ Sports & Fitness</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">fitness_center</span> Sports & Fitness</span>
               </label>
               <label class="niche-option">
                 <input type="radio" name="obNiche" value="other">
-                <span>📦 General Retail</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px;">inventory_2</span> General Retail</span>
               </label>
             </div>
           </div>
@@ -463,7 +463,7 @@
 
         <!-- STEP 2: Software Feature Tour -->
         <div class="onboarding-step-content" id="obStep2">
-          <h2 class="onboarding-title">A 1-Minute Dashboard Tour 🧭</h2>
+          <h2 class="onboarding-title">A 1-Minute Dashboard Tour</h2>
           <p class="onboarding-sub">Here are the main tools you'll use to manage your store and grow your sales:</p>
 
           <div class="tour-grid">
@@ -503,7 +503,7 @@
 
         <!-- STEP 3: Quick Start Actions -->
         <div class="onboarding-step-content" id="obStep3">
-          <h2 class="onboarding-title">You're All Set! 🎉</h2>
+          <h2 class="onboarding-title">You're All Set!</h2>
           <p class="onboarding-sub">Your store is configured and ready to receive customers. Choose your next step:</p>
 
           <div class="action-grid">
