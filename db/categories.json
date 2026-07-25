@@ -68,19 +68,5 @@
     "icon": "table_bar",
     "status": "Active",
     "created": "2025-02-12"
-  },
-  {
-    "id": "cat_11",
-    "name": "Office Chairs",
-    "icon": "desk",
-    "status": "Active",
-    "created": "2025-02-15"
-  },
-  {
-    "id": "cat_12",
-    "name": "Recliners",
-    "icon": "airline_seat_recline_extra",
-    "status": "Active",
-    "created": "2025-02-20"
   }
 ]
