@@ -191,20 +191,30 @@
     }
 
     .footer {
-      color: rgba(255,255,255,0.2);
-      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.45);
+      font-size: 12.5px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
     }
-    .footer a {
-      color: rgba(177,139,94,0.6);
-      text-decoration: none;
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
     }
-    .footer a:hover { color: #B18B5E; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="logo-badge">
-      <span><span class="material-symbols-outlined" style="font-size:16px;">eco</span> Eusta Platform</span>
+      <span>Eusta Platform</span>
     </div>
 
     <h1>Welcome to Eusta</h1>
@@ -233,9 +243,10 @@
       </a>
     </div>
 
-    <p class="footer">
-      Built with care &nbsp;·&nbsp; <a href="https://github.com/Abiramkrishn/Eusta">GitHub Repo</a>
-    </p>
+    <div class="footer">
+      <span class="status-dot"></span>
+      <span>Development Mode</span>
+    </div>
   </div>
 </body>
 </html>
