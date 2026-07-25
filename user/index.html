@@ -685,7 +685,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                    <div class="premium-service-card">
                       <div class="premium-service-icon">
-                         <img src="assets/imgs/icons/1.png" alt="Free Delivery">
+                         <i class="fa-solid fa-truck-fast"></i>
                       </div>
                       <div class="premium-service-content">
                          <h5>Free Delivery</h5>
@@ -696,7 +696,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                    <div class="premium-service-card">
                       <div class="premium-service-icon">
-                         <img src="assets/imgs/icons/2.png" alt="EMI Available">
+                         <i class="fa-solid fa-credit-card"></i>
                       </div>
                       <div class="premium-service-content">
                          <h5>EMI Available</h5>
@@ -707,7 +707,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                    <div class="premium-service-card">
                       <div class="premium-service-icon">
-                         <img src="assets/imgs/icons/3.png" alt="24/7 Support">
+                         <i class="fa-solid fa-headset"></i>
                       </div>
                       <div class="premium-service-content">
                          <h5>24/7 Support</h5>
@@ -718,7 +718,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                    <div class="premium-service-card">
                       <div class="premium-service-icon">
-                         <img src="assets/imgs/icons/4.png" alt="Trusted">
+                         <i class="fa-solid fa-shield-halved"></i>
                       </div>
                       <div class="premium-service-content">
                          <h5>Trusted</h5>
@@ -892,7 +892,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const prodRes = await fetch('/api/products');
           const products = await prodRes.json();
           const grid = document.getElementById('dynamicProductGrid');
-          if (grid) {
+          if (grid && Array.isArray(products) && products.length > 0) {
             grid.innerHTML = '';
             
             products.slice(0, 8).forEach(prod => {
@@ -900,14 +900,15 @@ document.addEventListener("DOMContentLoaded", function () {
               div.className = 'product-grid-item';
               
               const discPrice = prod.price;
-              const origPrice = Math.round(prod.price * 1.25);
+              const origPrice = prod.oldPrice || Math.round(prod.price * 1.25);
               const discountText = prod.discount || '20% off';
+              const imgSrc = prod.image || 'assets/imgs/furniture/product/product1.png';
               
               div.innerHTML = `
                 <a href="product-details.html?id=${prod.id}">
                   <div class="product-card">
                     <div class="product-img-wrapper">
-                      <img src="${prod.image}" alt="${prod.name}" onerror="this.src='assets/imgs/furniture/product/product1.png'">
+                      <img src="${imgSrc}" alt="${prod.name}" onerror="this.src='assets/imgs/furniture/product/product1.png'">
                       <div class="cus-product-badge">
                         <span class="product-trending">${discountText}</span>
                       </div>

@@ -30,11 +30,11 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 /* Soft Shadow & Floating Effect on Product Cards */
 .product-card {
   background: #ffffff !important;
-  border: 1px solid #E5E7EB !important;
-  box-shadow: 0 4px 12px var(--clr-premium-shadow) !important;
+  border: 1px solid #EAEAEA !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03) !important;
   border-radius: 16px !important;
   padding: 20px !important;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease !important;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -43,8 +43,9 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 }
 
 .product-card:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 12px 28px var(--clr-premium-shadow-hover) !important;
+  transform: translateY(-6px) !important;
+  border-color: var(--clr-brand-gold, #B18B5E) !important;
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.12), 0 4px 14px -2px var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.25)) !important;
 }
 
 /* Edge-to-Edge Single Background Image Wrapper */
@@ -203,10 +204,11 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 }
 
 .enquire-btn:hover {
-  background-color: #99754C !important; /* Darker gold */
+  background-color: var(--clr-brand-gold, #B18B5E) !important;
+  filter: brightness(0.92) !important;
   color: #ffffff !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(177, 139, 94, 0.15) !important;
+  box-shadow: 0 4px 12px var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.25)) !important;
 }
 
 /* Scale buttons down on small mobile screens to prevent text wrapping */
@@ -541,23 +543,23 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 }
 
 .premium-service-card {
-  background: #FAF7F2 !important; /* Clean light gold-ivory wash */
+  background: var(--clr-brand-gold-light, rgba(177, 139, 94, 0.08)) !important;
   border-radius: 14px !important;
-  padding: 14px 20px !important; /* Compact padding for horizontal list badge look */
+  padding: 14px 20px !important;
   box-shadow: none !important;
   display: flex;
   align-items: center;
   gap: 14px;
   height: 100%;
   transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-  border: 1px solid rgba(177, 139, 94, 0.16) !important; /* Delicate gold outline */
+  border: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.2)) !important;
   position: relative;
 }
 
 .premium-service-card:hover {
   transform: translateY(-3px);
-  background-color: #F4EBE0 !important; /* Soft warm gold-sand on hover */
-  border-color: rgba(177, 139, 94, 0.4) !important;
+  background-color: var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.18)) !important;
+  border-color: var(--clr-brand-gold, #B18B5E) !important;
 }
 
 /* Elegant right-side gold chevron to signal interactivity */
@@ -566,7 +568,7 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   font-size: 22px;
   font-weight: 300;
   color: var(--clr-brand-gold);
-  margin-left: auto; /* Push to far right */
+  margin-left: auto;
   opacity: 0.6;
   transition: transform 0.2s ease, opacity 0.2s ease;
   line-height: 1;
@@ -584,10 +586,24 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   align-items: center;
   justify-content: center;
   background-color: #FFFFFF !important;
-  border: 1px solid rgba(177, 139, 94, 0.22) !important;
+  border: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.3)) !important;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(177, 139, 94, 0.05);
+  color: var(--clr-brand-gold, #B18B5E) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.premium-service-icon i {
+  font-size: 17px !important;
+  color: var(--clr-brand-gold, #B18B5E) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.premium-service-icon .material-symbols-outlined {
+  font-size: 22px !important;
+  color: var(--clr-brand-gold, #B18B5E) !important;
 }
 
 .premium-service-icon img {
@@ -852,33 +868,33 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   align-items: center;
   background: #ffffff !important;
   border-radius: 26px !important;
-  border: 1px solid rgba(177, 139, 94, 0.35) !important; /* Gold border matching social icons */
+  border: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.35)) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
   overflow: hidden;
-  padding-left: 44px !important; /* Increased from 38px to create space between icon and text */
+  padding-left: 44px !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 .header-search form:hover {
-  border-color: rgba(177, 139, 94, 0.65) !important;
+  border-color: var(--clr-brand-gold, #B18B5E) !important;
 }
 .header-search form:focus-within {
-  border-color: var(--clr-brand-gold) !important;
-  box-shadow: 0 0 0 3.5px rgba(177, 139, 94, 0.15), 0 2px 8px rgba(0, 0, 0, 0.02) !important; /* Gold focus wash glow */
+  border-color: var(--clr-brand-gold, #B18B5E) !important;
+  box-shadow: 0 0 0 3.5px var(--clr-brand-gold-light, rgba(177, 139, 94, 0.15)), 0 2px 8px rgba(0, 0, 0, 0.02) !important;
 }
 .header-search input {
   border: none !important;
   background: transparent !important;
   height: 38px !important;
-  line-height: 38px !important; /* Center text vertically */
+  line-height: 38px !important;
   padding: 0 14px 0 0 !important;
   font-size: 13px !important;
   color: var(--clr-common-heading) !important;
   width: 100% !important;
-  text-align: left !important; /* Forces search text left and next to icon */
+  text-align: left !important;
 }
 .header-search input::placeholder {
-  color: rgba(177, 139, 94, 0.55) !important; /* Soft brand-gold placeholder */
-  opacity: 1 !important;
+  color: #8E8E93 !important;
+  opacity: 0.8 !important;
 }
 .header-search button {
   position: absolute !important;
@@ -1151,7 +1167,7 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 /* Footer Section Overrides */
 .footer-bg {
   background-color: #121110 !important; /* Premium warm dark charcoal */
-  border-top: 1px solid rgba(177, 139, 94, 0.15) !important; /* Gold accent line */
+  border-top: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.15)) !important;
 }
 
 /* Reduce excessive top/bottom footer padding to eliminate empty blank spaces */
@@ -1235,9 +1251,9 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   height: 38px !important;
   line-height: 36px !important;
   text-align: center;
-  color: var(--clr-brand-gold) !important; /* Brand gold icon */
-  background-color: rgba(177, 139, 94, 0.12) !important; /* Warm gold wash */
-  border: 1px solid rgba(177, 139, 94, 0.3) !important; /* Light gold border */
+  color: var(--clr-brand-gold) !important;
+  background-color: var(--clr-brand-gold-light, rgba(177, 139, 94, 0.12)) !important;
+  border: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.3)) !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1268,17 +1284,17 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   height: 36px !important;
   border-radius: 50% !important;
   background-color: transparent !important;
-  border: 1px solid rgba(177, 139, 94, 0.25) !important; /* Gold border */
-  color: var(--clr-brand-gold) !important; /* Gold icons */
+  border: 1px solid var(--clr-brand-gold-glow, rgba(177, 139, 94, 0.25)) !important;
+  color: var(--clr-brand-gold) !important;
   font-size: 13px !important;
   margin-right: 10px !important;
   transition: all 0.3s ease !important;
 }
 
 .theme-social a:hover {
-  background-color: var(--clr-brand-gold) !important; /* Solid gold fill */
+  background-color: var(--clr-brand-gold) !important;
   border-color: var(--clr-brand-gold) !important;
-  color: #ffffff !important; /* White icon on hover */
+  color: #ffffff !important;
   transform: translateY(-2px) !important;
 }
 
@@ -1288,14 +1304,28 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
    Provides consistent gaps on all breakpoints.
    ============================================ */
 
-/* Base grid: 2 columns on mobile (default) */
+/* Base grid: 4 columns on desktop */
 .product-grid {
   display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 14px 10px !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px 20px !important;
   margin: 0 !important;
   width: 100% !important;
   padding: 0 !important;
+}
+
+@media (max-width: 1199px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 20px 16px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px 10px !important;
+  }
 }
 
 /* Reset ALL child elements inside product-grid */
@@ -1304,34 +1334,25 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   max-width: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.product-grid > .product-grid-item > a {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 /* Ensure product-card fills the grid cell fully */
 .product-grid .product-card {
   height: 100% !important;
-}
-
-/* Tablet: 3 columns */
-@media (min-width: 768px) {
-  .product-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 20px 16px !important;
-  }
-}
-
-/* Desktop: 4 columns */
-@media (min-width: 992px) {
-  .product-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 24px 20px !important;
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1400px) {
-  .product-grid {
-    gap: 28px 24px !important;
-  }
+  width: 100% !important;
+  flex: 1 !important;
+  box-sizing: border-box !important;
 }
 
 /* ============================================
