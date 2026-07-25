@@ -55,11 +55,26 @@
 
       <!-- Tabs -->
       <div class="ea-tabs">
-        <div class="ea-tab active" onclick="switchTab('general', this)">General</div>
-        <div class="ea-tab" onclick="switchTab('branding', this)">🎨 Branding & Theme</div>
-        <div class="ea-tab" onclick="switchTab('store', this)">Store Info</div>
-        <div class="ea-tab" onclick="switchTab('notifications', this)">Notifications</div>
-        <div class="ea-tab" onclick="switchTab('account', this)">Account</div>
+        <div class="ea-tab active" onclick="switchTab('general', this)">
+          <span class="material-symbols-outlined">tune</span>
+          <span>General</span>
+        </div>
+        <div class="ea-tab" onclick="switchTab('branding', this)">
+          <span class="material-symbols-outlined">palette</span>
+          <span>Branding & Theme</span>
+        </div>
+        <div class="ea-tab" onclick="switchTab('store', this)">
+          <span class="material-symbols-outlined">storefront</span>
+          <span>Store Info</span>
+        </div>
+        <div class="ea-tab" onclick="switchTab('notifications', this)">
+          <span class="material-symbols-outlined">notifications</span>
+          <span>Notifications</span>
+        </div>
+        <div class="ea-tab" onclick="switchTab('account', this)">
+          <span class="material-symbols-outlined">manage_accounts</span>
+          <span>Account</span>
+        </div>
       </div>
 
       <!-- General Tab -->
@@ -296,7 +311,7 @@
               <div class="ea-card-body" id="previewContainer" style="background:#FFFFFF; border-radius:12px; padding:16px; transition:all 0.3s; border:1px solid #E5E7EB;">
                 
                 <!-- Mini Header -->
-                <div id="prevHeader" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#ffffff; border-radius:8px; border-bottom:2px solid #B18B5E; margin-bottom:16px;">
+                <div id="prevHeader" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#ffffff; border-radius:8px; border-bottom:1px solid #E5E7EB; margin-bottom:16px;">
                   <div style="display:flex; align-items:center; gap:8px;">
                     <img id="prevLogoImg" src="../user/assets/imgs/logo/logo.png" alt="Logo" style="height:24px; object-fit:contain;">
                     <span id="prevBrandText" style="font-weight:700; font-size:14px; color:#1A1A1A;">Eusta</span>
@@ -658,7 +673,6 @@
       if (logoPreviewThumb) logoPreviewThumb.src = resolvedSrc;
     }
     
-    if (prevHeader) prevHeader.style.borderBottomColor = primary;
     if (prevActiveTab) {
       prevActiveTab.style.color = primary;
       prevActiveTab.style.borderBottomColor = primary;
