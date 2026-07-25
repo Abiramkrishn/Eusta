@@ -9,11 +9,11 @@
   "instagram": "https://instagram.com/eusta",
   "niche": "fashion",
   "logoUrl": "assets/imgs/logo/logo.png",
-  "logoText": "Eusta",
-  "primaryColor": "#B18B5E",
-  "secondaryColor": "#1A1A1A",
+  "logoText": "Eusta Store",
+  "primaryColor": "#059669",
+  "secondaryColor": "#064E3B",
   "backgroundColor": "#FFFFFF",
-  "textColor": "#4A4A4A",
-  "headingColor": "#1A1A1A",
+  "textColor": "#064E3B",
+  "headingColor": "#064E3B",
   "themePreset": "gold"
 }
