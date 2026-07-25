@@ -767,7 +767,7 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(177, 139, 94, 0.85) 100%) !important; /* Premium dark charcoal to bronze gold tint (fully blends medical icon text) */
+  background: linear-gradient(135deg, var(--clr-premium-dark, #1A1A1A) 0%, var(--clr-brand-gold, #B18B5E) 100%) !important;
   z-index: 1;
 }
 

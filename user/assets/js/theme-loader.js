@@ -57,6 +57,14 @@
       .cus-product-badge, .deal-offer-badge {
         background-color: ${secondary} !important;
       }
+      .deals-hero-premium::before {
+        background: linear-gradient(135deg, ${secondary} 0%, ${primary} 100%) !important;
+      }
+      .deals-hero-badge {
+        background-color: ${primary} !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 15px ${hexToRgba(primary, 0.35)} !important;
+      }
     `;
 
     // Apply Logo & Store Name
