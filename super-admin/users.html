@@ -654,7 +654,7 @@
           const user = users.find(u => u.id == id);
           if (!user) return;
 
-          const bName = user.businessName || user.name || "—";
+          const bName = user.businessName || user.name || "-";
           const isActive = user.status && user.status.toLowerCase() === "active";
           const expiry = getExpirationDate(user.joinedDate, user.plan);
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categories — Eusta Admin</title>
+  <title>Categories | Eusta Admin</title>
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -77,7 +77,7 @@
       <div class="ea-section-header">
         <div>
           <h3>All Categories</h3>
-          <p>5 categories — click to manage products</p>
+          <p>5 categories: click to manage products</p>
         </div>
         <button class="ea-btn ea-btn-primary" onclick="document.getElementById('addCatModal').classList.add('open')">
           <span class="material-symbols-outlined">add</span> Add Category
@@ -499,7 +499,7 @@
       });
 
       const titleLabel = document.querySelector('.ea-section-header p');
-      if (titleLabel) titleLabel.textContent = `${categories.length} categories — click to manage products`;
+      if (titleLabel) titleLabel.textContent = `${categories.length} categories: click to manage products`;
 
       // 1. Populate Cards Grid
       const grid = document.querySelector('.ea-cat-grid');
