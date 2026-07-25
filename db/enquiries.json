@@ -1,0 +1,22 @@
+[
+  {
+    "id": "enq_1",
+    "name": "David Millar",
+    "email": "david@example.com",
+    "phone": "+8801265648289",
+    "subject": "Product Inquiry",
+    "message": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis, qui sapiente. Rem impedit sint quaerat!",
+    "date": "Jul 14, 2025",
+    "status": "Unread"
+  },
+  {
+    "id": "enq_2",
+    "name": "Sakib al Hasan",
+    "email": "sakib@example.com",
+    "phone": "+880123464239",
+    "subject": "General Inquiry",
+    "message": "Do you have any ongoing discount offers or loyalty programs for regular customers? Please share details.",
+    "date": "Jul 10, 2025",
+    "status": "Unread"
+  }
+]

@@ -25,6 +25,7 @@
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
     <link href="assets/css/premium.css" rel="stylesheet">
+    <script src="assets/js/super-auth.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -296,24 +297,20 @@
         const successAlert = document.getElementById("pricingSuccessAlert");
         const plansTableBody = document.getElementById("plansTableBody");
 
-        // Seed data for plans if not present
-        const defaultPlans = [
-          { duration: 1, cost: 999 },
-          { duration: 2, cost: 1899 },
-          { duration: 3, cost: 2499 },
-          { duration: 6, cost: 4499 },
-          { duration: 12, cost: 7999 }
-        ];
+        let plans = [];
 
-        let plans = JSON.parse(localStorage.getItem("eusta_subscription_plans"));
-        if (!plans) {
-          plans = defaultPlans;
-          localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
+        async function fetchPlansFromBackend() {
+          try {
+            const res = await fetch('/api/subscription-plans');
+            plans = await res.json();
+            renderPlans();
+          } catch(err) {
+            console.error('Error fetching plans:', err);
+          }
         }
 
         // Render function
         function renderPlans() {
-          // Sort plans by duration ascending
           plans.sort((a, b) => a.duration - b.duration);
           
           plansTableBody.innerHTML = "";
@@ -348,21 +345,27 @@
         }
 
         // Delete Plan function
-        function deletePlan(duration) {
+        async function deletePlan(duration) {
           if (confirm(`Are you sure you want to delete the ${duration} Month(s) plan?`)) {
-            plans = plans.filter(p => p.duration !== duration);
-            localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
-            renderPlans();
-            
-            // Show alert
-            successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plan deleted successfully!';
-            successAlert.classList.remove("d-none");
-            setTimeout(() => successAlert.classList.add("d-none"), 3000);
+            try {
+              const res = await fetch(`/api/subscription-plans?duration=${duration}`, { method: 'DELETE' });
+              if (res.ok) {
+                fetchPlansFromBackend();
+                
+                successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plan deleted successfully!';
+                successAlert.classList.remove("d-none");
+                setTimeout(() => successAlert.classList.add("d-none"), 3000);
+              } else {
+                alert('Failed to delete plan');
+              }
+            } catch(err) {
+              console.error(err);
+            }
           }
         }
 
         // Form Submit (Add/Update)
-        pricingForm.addEventListener("submit", function (e) {
+        pricingForm.addEventListener("submit", async function (e) {
           e.preventDefault();
 
           const duration = parseInt(document.getElementById("newPlanDuration").value);
@@ -370,30 +373,33 @@
 
           if (isNaN(duration) || isNaN(cost) || duration < 1 || cost < 0) return;
 
-          // Check if duration exists
-          const existingIndex = plans.findIndex(p => p.duration === duration);
-          if (existingIndex !== -1) {
-            plans[existingIndex].cost = cost;
-          } else {
-            plans.push({ duration: duration, cost: cost });
+          try {
+            const res = await fetch('/api/subscription-plans', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ duration, cost })
+            });
+
+            if (res.ok) {
+              document.getElementById("newPlanDuration").value = "";
+              document.getElementById("newPlanCost").value = "";
+
+              successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plans configuration updated successfully!';
+              successAlert.classList.remove("d-none");
+              setTimeout(() => successAlert.classList.add("d-none"), 3000);
+
+              fetchPlansFromBackend();
+            } else {
+              alert('Failed to save plan');
+            }
+          } catch(err) {
+            console.error(err);
+            alert('Error connecting to the backend');
           }
-
-          localStorage.setItem("eusta_subscription_plans", JSON.stringify(plans));
-          
-          // Reset inputs
-          document.getElementById("newPlanDuration").value = "";
-          document.getElementById("newPlanCost").value = "";
-
-          // Alert and Re-render
-          successAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Plans configuration updated successfully!';
-          successAlert.classList.remove("d-none");
-          setTimeout(() => successAlert.classList.add("d-none"), 3000);
-
-          renderPlans();
         });
 
         // Initial render
-        renderPlans();
+        fetchPlansFromBackend();
       });
     </script>
   </body>

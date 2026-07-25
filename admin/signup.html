@@ -35,14 +35,14 @@
           <label class="ea-label">Full Name</label>
           <div class="ea-input-icon">
             <span class="material-symbols-outlined">person</span>
-            <input type="text" class="ea-input" placeholder="Your full name" required>
+            <input type="text" id="fullName" class="ea-input" placeholder="Your full name" required>
           </div>
         </div>
         <div class="ea-form-group">
           <label class="ea-label">Email Address</label>
           <div class="ea-input-icon">
             <span class="material-symbols-outlined">mail</span>
-            <input type="email" class="ea-input" placeholder="admin@eusta.com" required>
+            <input type="email" id="emailAddress" class="ea-input" placeholder="admin@eusta.com" required>
           </div>
         </div>
         <div class="ea-form-group">
@@ -59,7 +59,36 @@
             <button type="button" class="ea-pwd-toggle" onclick="togglePwd('confPwd','cpIcon')"><span class="material-symbols-outlined" id="cpIcon">visibility</span></button>
           </div>
         </div>
-        <button type="submit" class="ea-btn ea-btn-primary ea-btn-lg" style="width:100%; justify-content:center;">Create Account</button>
+
+        <div style="margin:20px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:16px 0;">
+          <label class="ea-label" style="font-weight:700; color:var(--text-main); margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+            <span class="material-symbols-outlined" style="font-size:18px; color:var(--gold);">palette</span> Storefront Initial Setup (Optional)
+          </label>
+          
+          <div class="ea-form-group" style="margin-bottom:12px;">
+            <label class="ea-label">Store / Brand Name</label>
+            <input type="text" id="storeName" class="ea-input" placeholder="e.g. Eusta Store">
+          </div>
+
+          <div class="ea-form-group" style="margin-bottom:12px;">
+            <label class="ea-label">Store Theme Preset</label>
+            <select id="themePresetSelect" class="ea-select" style="width:100%;">
+              <option value="gold" selected>🌟 Eusta Gold (#B18B5E)</option>
+              <option value="emerald">🌿 Emerald Green (#059669)</option>
+              <option value="sapphire">💎 Royal Sapphire (#2563EB)</option>
+              <option value="amber">🍊 Sunset Amber (#D97706)</option>
+              <option value="crimson">🌹 Crimson Elegance (#DC2626)</option>
+              <option value="onyx">🖤 Dark Onyx (#18181B)</option>
+            </select>
+          </div>
+
+          <div class="ea-form-group">
+            <label class="ea-label">Logo Image URL</label>
+            <input type="text" id="storeLogo" class="ea-input" placeholder="assets/imgs/logo/logo.png">
+          </div>
+        </div>
+
+        <button type="submit" class="ea-btn ea-btn-primary ea-btn-lg" style="width:100%; justify-content:center;">Create Account & Setup Store</button>
       </form>
       <div class="ea-auth__form-footer">Already have an account? <a href="signin.html">Sign In</a></div>
       <div style="text-align:center; margin-top:12px;"><a href="../index.html" style="font-size:12px; color:var(--text-muted);">← Back to Portal</a></div>
@@ -72,9 +101,67 @@
     inp.type = inp.type === 'password' ? 'text' : 'password';
     document.getElementById(iconId).textContent = inp.type === 'password' ? 'visibility' : 'visibility_off';
   }
-  document.getElementById('signupForm').addEventListener('submit', (e) => {
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    window.location.href = 'verification.html';
+    const name = document.getElementById('fullName').value;
+    const email = document.getElementById('emailAddress').value;
+    const password = document.getElementById('signupPwd').value;
+    const confirmPassword = document.getElementById('confPwd').value;
+
+    const storeName = document.getElementById('storeName').value;
+    const themePreset = document.getElementById('themePresetSelect').value;
+    const storeLogo = document.getElementById('storeLogo').value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, role: 'admin' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        // Save initial storefront branding if provided
+        const presetColors = {
+          gold: { primary: '#B18B5E', secondary: '#1A1A1A' },
+          emerald: { primary: '#059669', secondary: '#064E3B' },
+          sapphire: { primary: '#2563EB', secondary: '#1E3A8A' },
+          amber: { primary: '#D97706', secondary: '#78350F' },
+          crimson: { primary: '#DC2626', secondary: '#881337' },
+          onyx: { primary: '#18181B', secondary: '#09090B' }
+        };
+        const selectedColors = presetColors[themePreset] || presetColors.gold;
+        const brandPayload = {
+          businessName: storeName || 'Eusta Store',
+          logoText: storeName || 'Eusta',
+          primaryColor: selectedColors.primary,
+          secondaryColor: selectedColors.secondary,
+          headingColor: selectedColors.secondary,
+          backgroundColor: '#FFFFFF',
+          textColor: '#4A4A4A',
+          themePreset: themePreset
+        };
+        if (storeLogo) brandPayload.logoUrl = storeLogo;
+
+        await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(brandPayload)
+        });
+
+        alert('Registration successful & Storefront theme set! Please login.');
+        window.location.href = 'signin.html';
+      } else {
+        alert(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error registering account');
+    }
   });
 </script>
 </body>

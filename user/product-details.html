@@ -22,6 +22,7 @@
    <link rel="stylesheet" href="assets/css/spacing.css">
    <link rel="stylesheet" href="assets/css/main.css">
    <link rel="stylesheet" href="assets/css/premium.css">
+   <script src="assets/js/theme-loader.js"></script>
 </head>
 
 <body style="overflow-x: hidden;">
@@ -151,17 +152,17 @@
                            <div class="tab-pane fade show active" id="img-1" role="tabpanel"
                               aria-labelledby="img-1-tab">
                               <div class="product__details-thumb-big w-img">
-                                 <img src="assets/imgs/product/details/details-04.png" alt="">
+                                 <img id="detailMainImg1" src="assets/imgs/product/details/details-04.png" alt="">
                               </div>
                            </div>
                            <div class="tab-pane fade" id="img-2" role="tabpanel" aria-labelledby="img-2-tab">
                               <div class="product__details-thumb-big w-img">
-                                 <img src="assets/imgs/product/details/details-05.png" alt="">
+                                 <img id="detailMainImg2" src="assets/imgs/product/details/details-05.png" alt="">
                               </div>
                            </div>
                            <div class="tab-pane fade" id="img-3" role="tabpanel" aria-labelledby="img-3-tab">
                               <div class="product__details-thumb-big w-img">
-                                 <img src="assets/imgs/product/details/details-06.png" alt="">
+                                 <img id="detailMainImg3" src="assets/imgs/product/details/details-06.png" alt="">
                               </div>
                            </div>
                         </div>
@@ -174,15 +175,15 @@
                               <button class="nav-link active" id="img-1-tab" data-bs-toggle="tab"
                                  data-bs-target="#img-1" type="button" role="tab" aria-controls="img-1"
                                  aria-selected="true">
-                                 <img src="assets/imgs/product/details/details-04.png" alt="product-sm-thumb">
+                                 <img id="detailThumbImg1" src="assets/imgs/product/details/details-04.png" alt="product-sm-thumb">
                               </button>
                               <button class="nav-link" id="img-2-tab" data-bs-toggle="tab" data-bs-target="#img-2"
                                  type="button" role="tab" aria-controls="img-3" aria-selected="false">
-                                 <img src="assets/imgs/product/details/details-05.png" alt="product-sm-thumb">
+                                 <img id="detailThumbImg2" src="assets/imgs/product/details/details-05.png" alt="product-sm-thumb">
                               </button>
                               <button class="nav-link" id="img-3-tab" data-bs-toggle="tab" data-bs-target="#img-3"
                                  type="button" role="tab" aria-controls="img-3" aria-selected="false">
-                                 <img src="assets/imgs/product/details/details-06.png" alt="product-sm-thumb">
+                                 <img id="detailThumbImg3" src="assets/imgs/product/details/details-06.png" alt="product-sm-thumb">
                               </button>
                            </div>
                         </nav>
@@ -194,28 +195,28 @@
                   <div class="product__details-content pr-80">
                      <div class="product__details-top d-sm-flex align-items-center mb-15">
                         <div class="product__details-tag mr-10">
-                           <a href="#">Sofa</a>
+                           <a id="detailCategoryTag" href="#">Sofa</a>
                         </div>
                      </div>
-                     <h3 class="product__details-title text-capitalize">Alexander roll Arm sofa</h3>
+                     <h3 id="detailProductTitle" class="product__details-title text-capitalize">Alexander roll Arm sofa</h3>
                      <div class="product__details-price ">
-                        <span class="old-price">₹30,500</span>
-                        <span class="new-price">₹19,250</span>
+                        <span id="detailOldPrice" class="old-price">₹30,500</span>
+                        <span id="detailNewPrice" class="new-price">₹19,250</span>
                      </div>
                      
 
                      <div class="product__details-action mb-35">
-                        <a href="" class="wtsp-btn">
+                        <a href="" id="detailWhatsAppBtn" class="wtsp-btn" target="_blank">
                            <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
                         </a>
                      </div>
                      <div class="product__details-meta mb-20">
                         <div class="sku">
                            <span>SKU:</span>
-                           <a href="#">EUSTA-SF01</a>
+                           <a id="detailSKU" href="#">EUSTA-SF01</a>
                         </div>
                         <div class="categories">
-                           <span>Categories:</span> <a href="#">Sofas</a>, <a href="#">Living Room</a>
+                           <span>Categories:</span> <a id="detailCategoriesList" href="#">Sofas</a>
                         </div>
                      </div>
 
@@ -253,7 +254,7 @@
                         <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
                            aria-labelledby="nav-description-tab">
                            <div class="product__details-des">
-                              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore iste veniam beatae unde 
+                              <p id="detailDescriptionParagraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore iste veniam beatae unde 
                                  dolores suscipit accusantium aspernatur, excepturi sit? Labore, minima asperiores inventore 
                                  sunt nobis vitae vel expedita repellat dolor?</p>
                            </div>
@@ -536,7 +537,7 @@
                               <span><i class="fa-solid fa-envelope furniture-icon"></i></span>
                            </div>
                            <div class="footer-info-text">
-                              <a class="furniture-clr-hover" href="tel:012-345-6789">info@eusta.in</a>
+                              <a class="furniture-clr-hover" href="mailto:info@eusta.com">info@eusta.com</a>
                            </div>
                         </div>
                      </div>
@@ -600,6 +601,108 @@
    <script src="assets/js/beforeafter.jquery-1.0.0.min.js"></script>
    <script src="assets/js/main.js"></script>
    <script src="assets/js/premium.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const prodId = urlParams.get('id');
+
+        if (!prodId) {
+          alert('No product ID specified.');
+          window.location.href = 'product.html';
+          return;
+        }
+
+        try {
+          // Fetch settings first to get WhatsApp number
+          const settingsRes = await fetch('/api/settings');
+          const settings = await settingsRes.json();
+          if (settings) {
+            const waNum = settings.whatsappNumber || settings.phone || settings.contactPhone;
+            if (waNum) {
+              whatsappNum = waNum.replace(/[^0-9]/g, '');
+            }
+
+            const waLink = document.querySelector('.mobile-bottom-menu a[href*="wa.me"]');
+            if (waLink) {
+              waLink.href = `https://wa.me/${whatsappNum}`;
+            }
+
+            const phoneVal = settings.phone || settings.contactPhone;
+            const footerPhone = document.querySelector('a[href^="tel:"]');
+            if (footerPhone && phoneVal) {
+              footerPhone.href = `tel:${phoneVal}`;
+              footerPhone.textContent = phoneVal;
+            }
+
+            const emailVal = settings.email || settings.contactEmail;
+            const footerEmail = document.querySelector('a[href^="mailto:"]');
+            if (footerEmail && emailVal) {
+              footerEmail.href = `mailto:${emailVal}`;
+              footerEmail.textContent = emailVal;
+            }
+          }
+
+          // Fetch matching product details
+          const prodRes = await fetch('/api/products');
+          const products = await prodRes.json();
+          const prod = products.find(p => String(p.id) === String(prodId));
+
+          if (!prod) {
+            alert('Product not found.');
+            window.location.href = 'product.html';
+            return;
+          }
+
+          // Update product display fields
+          document.getElementById('detailProductTitle').textContent = prod.name;
+          document.getElementById('detailNewPrice').textContent = `₹${prod.price.toLocaleString('en-IN')}`;
+          
+          const origPrice = Math.round(prod.price * 1.25);
+          document.getElementById('detailOldPrice').textContent = `₹${origPrice.toLocaleString('en-IN')}`;
+          
+          document.getElementById('detailSKU').textContent = prod.sku;
+          document.getElementById('detailCategoryTag').textContent = prod.category;
+          document.getElementById('detailCategoryTag').href = `product.html?category=${encodeURIComponent(prod.category)}`;
+          
+          document.getElementById('detailCategoriesList').textContent = prod.category;
+          document.getElementById('detailCategoriesList').href = `product.html?category=${encodeURIComponent(prod.category)}`;
+          
+          document.getElementById('detailDescriptionParagraph').textContent = prod.description || 'No description available for this item.';
+
+          // Images updates
+          const imageUrl = prod.image.startsWith('http') || prod.image.startsWith('/') ? prod.image : `../${prod.image}`;
+          const img1 = document.getElementById('detailMainImg1');
+          if (img1) img1.src = imageUrl;
+          const img2 = document.getElementById('detailMainImg2');
+          if (img2) img2.src = imageUrl;
+          const img3 = document.getElementById('detailMainImg3');
+          if (img3) img3.src = imageUrl;
+
+          const thumb1 = document.getElementById('detailThumbImg1');
+          if (thumb1) thumb1.src = imageUrl;
+          const thumb2 = document.getElementById('detailThumbImg2');
+          if (thumb2) thumb2.src = imageUrl;
+          const thumb3 = document.getElementById('detailThumbImg3');
+          if (thumb3) thumb3.src = imageUrl;
+
+          // WhatsApp Enquiry Link generation
+          const productName = prod.name;
+          const productSku = prod.sku;
+          const productPrice = prod.price.toLocaleString('en-IN');
+          const pageUrl = window.location.href;
+          
+          const waMessage = `Hi, I am interested in buying ${productName} (SKU: ${productSku}) priced at ₹${productPrice}.\nProduct link: ${pageUrl}`;
+          const waBtn = document.getElementById('detailWhatsAppBtn');
+          if (waBtn) {
+            waBtn.href = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(waMessage)}`;
+          }
+
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    </script>
 </body>
 
 </html>

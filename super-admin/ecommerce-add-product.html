@@ -24,7 +24,7 @@
     <link href="assets/css/semi-dark-theme.css" rel="stylesheet">
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
-     
+    <script src="assets/js/super-auth.js"></script>
   </head>
   <body>
 
@@ -843,11 +843,11 @@
                    <div class="card-body">
                      <div class="mb-4">
                         <h5 class="mb-3">Product Title</h5>
-                        <input type="text" class="form-control" placeholder="write title here....">
+                        <input type="text" id="productTitle" class="form-control" placeholder="write title here....">
                      </div>
                      <div class="mb-4">
                        <h5 class="mb-3">Product Description</h5>
-                       <textarea class="form-control" cols="4" rows="6" placeholder="write a description here.."></textarea>
+                       <textarea id="productDescription" class="form-control" cols="4" rows="6" placeholder="write a description here.."></textarea>
                      </div>
                      <div class="mb-4">
                       <h5 class="mb-3">Display images</h5>
@@ -873,7 +873,7 @@
                               <div class="row g-3">
                                 <div class="col-12 col-lg-6">
                                   <h6 class="mb-2">Regular price</h6>
-                                  <input class="form-control" type="text" placeholder="$$$">
+                                  <input id="productPrice" class="form-control" type="text" placeholder="$$$">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                   <h6 class="mb-2">Sale price</h6>
@@ -1029,7 +1029,7 @@
                      <div class="d-flex align-items-center justify-content-between">
                       <button type="button" class="btn btn-danger px-4">Discard</button>
                       <button type="button" class="btn btn-success px-4">Save Draft</button>
-                      <button type="button" class="btn btn-primary px-4">Publish</button>
+                      <button type="button" id="publishProductBtn" class="btn btn-primary px-4">Publish</button>
                      </div>
                   </div>
                 </div>
@@ -1202,13 +1202,56 @@
 	 <script src="assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
 	 <script src="assets/plugins/fancy-file-uploader/jquery.iframe-transport.js"></script>
 	 <script src="assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
-   <script>
+    <script>
 		$('#fancy-file-upload').FancyFileUpload({
 			params: {
 				action: 'fileuploader'
 			},
 			maxfilesize: 1000000
 		});
+
+        document.getElementById('publishProductBtn').addEventListener('click', async function() {
+          const name = document.getElementById('productTitle').value.trim();
+          const description = document.getElementById('productDescription').value.trim();
+          const price = parseFloat(document.getElementById('productPrice').value) || 0;
+          const sku = document.getElementById('SKU').value.trim() || ('SKU-' + Date.now());
+          
+          const categorySelect = document.getElementById('AddCategory');
+          const category = categorySelect ? categorySelect.options[categorySelect.selectedIndex].text : 'General';
+
+          if (!name) {
+            alert('Product Title is required');
+            return;
+          }
+
+          const payload = {
+            name,
+            description,
+            price,
+            sku,
+            category,
+            status: 'Active',
+            image: 'user/assets/imgs/furniture/product/product1.png'
+          };
+
+          try {
+            const res = await fetch('/api/products', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+              alert('Product published successfully!');
+              window.location.href = 'ecommerce-products.html';
+            } else {
+              alert('Failed to publish product');
+            }
+          } catch(err) {
+            console.error(err);
+            alert('Error publishing product');
+          }
+        });
 	 </script>
 
     <!--BS Scripts-->

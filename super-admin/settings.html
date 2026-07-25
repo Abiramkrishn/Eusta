@@ -25,6 +25,7 @@
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
     <link href="assets/css/premium.css" rel="stylesheet">
+    <script src="assets/js/super-auth.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -222,27 +223,27 @@
                <h6 class="mb-0 fw-bold">Super Admin Profile Settings</h6>
              </div>
              <div class="card-body">
-               <form>
+               <form id="superSettingsForm">
                  <div class="row g-3">
                    <div class="col-12 col-md-6">
                      <label class="form-label">Full Name</label>
-                     <input type="text" class="form-control" value="Eusta Administrator">
+                     <input type="text" id="superSettingName" class="form-control" value="Eusta Administrator">
                    </div>
                    <div class="col-12 col-md-6">
                      <label class="form-label">Email Address</label>
-                     <input type="email" class="form-control" value="admin@eusta.com">
+                     <input type="email" id="superSettingEmail" class="form-control" value="admin@eusta.com">
                    </div>
                    <div class="col-12 col-md-6">
                      <label class="form-label">Phone Number</label>
-                     <input type="text" class="form-control" value="+1 800 555 0199">
+                     <input type="text" id="superSettingPhone" class="form-control" value="+91 9876543210">
                    </div>
                    <div class="col-12 col-md-6">
                      <label class="form-label">Organization Name</label>
-                     <input type="text" class="form-control" value="Eusta Ltd.">
+                     <input type="text" id="superSettingOrg" class="form-control" value="Eusta">
                    </div>
                    <div class="col-12">
                      <label class="form-label">Admin Address</label>
-                     <textarea class="form-control" rows="3">123 Corporate Blvd, Suite 400, New York, NY</textarea>
+                     <textarea id="superSettingAddress" class="form-control" rows="3">Bangalore, India</textarea>
                    </div>
                    <div class="col-12 text-end">
                      <button type="submit" class="btn btn-primary px-4">Save Changes</button>
@@ -370,6 +371,58 @@
       // Restore saved theme
       const savedTheme = localStorage.getItem('theme') || 'light';
       setTheme(savedTheme);
+
+      async function loadSuperSettings() {
+        try {
+          const res = await fetch('/api/settings');
+          const settings = await res.json();
+          if (settings.businessName) document.getElementById('superSettingOrg').value = settings.businessName;
+          if (settings.contactEmail || settings.email) document.getElementById('superSettingEmail').value = settings.contactEmail || settings.email;
+          if (settings.contactPhone || settings.phone) document.getElementById('superSettingPhone').value = settings.contactPhone || settings.phone;
+          if (settings.address) document.getElementById('superSettingAddress').value = settings.address;
+        } catch(err) {
+          console.error(err);
+        }
+      }
+
+      const superSettingsForm = document.getElementById('superSettingsForm');
+      if (superSettingsForm) {
+        superSettingsForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const businessName = document.getElementById('superSettingOrg').value;
+          const contactEmail = document.getElementById('superSettingEmail').value;
+          const contactPhone = document.getElementById('superSettingPhone').value;
+          const address = document.getElementById('superSettingAddress').value;
+
+          const payload = {
+            businessName,
+            contactEmail,
+            email: contactEmail,
+            contactPhone,
+            phone: contactPhone,
+            whatsappNumber: contactPhone.replace(/[^0-9]/g, ''),
+            address
+          };
+
+          try {
+            const res = await fetch('/api/settings', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (res.ok) {
+              alert('Settings updated successfully!');
+            } else {
+              alert('Failed to update settings');
+            }
+          } catch(err) {
+            console.error(err);
+            alert('Error saving settings');
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', loadSuperSettings);
     </script>
   </body>
 </html>

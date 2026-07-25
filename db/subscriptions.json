@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sub_1",
+    "email": "newsletter@example.com",
+    "date": "Jul 12, 2025"
+  },
+  {
+    "id": "sub_2",
+    "email": "customer@eusta.com",
+    "date": "Jul 15, 2025"
+  }
+]

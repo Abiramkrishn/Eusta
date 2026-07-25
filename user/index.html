@@ -23,6 +23,7 @@
    <link rel="stylesheet" href="assets/css/spacing.css">
    <link rel="stylesheet" href="assets/css/main.css">
    <link rel="stylesheet" href="assets/css/premium.css?v=15">
+   <script src="assets/js/theme-loader.js"></script>
 </head>
 
 <body>
@@ -242,7 +243,7 @@
             <div class="container mt-3">
                <div class="category-scroll-hint" id="categoryHint">
                   <div class="premium-categories-wrapper premium-categories-wrapper--sm" id="autoScrollCategories">
-                     <div class="premium-categories-container">
+                     <div class="premium-categories-container" id="categoriesContainer">
                         <a href="product.html?category=for-you" class="premium-category-item active">
                            <div class="premium-category-circle">
                               <i class="fa-solid fa-heart"></i>
@@ -416,7 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
                <div class="tab-content" id="nav-tabContent">
                   <div class="tab-pane fade active show" id="collection" role="tabpanel"
                      aria-labelledby="collection-tab">
-                     <div class="product-grid">
+                     <div class="product-grid" id="dynamicProductGrid">
 
                         <div class="product-grid-item">
                            <a href="product-details.html">
@@ -793,7 +794,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <span><i class="fa-solid fa-envelope furniture-icon"></i></span>
                            </div>
                            <div class="footer-info-text">
-                              <a class="furniture-clr-hover" href="tel:012-345-6789">info@eusta.in</a>
+                              <a class="furniture-clr-hover" href="mailto:info@eusta.com">info@eusta.com</a>
                            </div>
                         </div>
                      </div>
@@ -860,6 +861,103 @@ document.addEventListener("DOMContentLoaded", function () {
    <script src="assets/js/beforeafter.jquery-1.0.0.min.js"></script>
    <script src="assets/js/main.js"></script>
    <script src="assets/js/premium.js"></script>
+
+    <script>
+      async function loadStorefrontHome() {
+        try {
+          const catRes = await fetch('/api/categories');
+          const categories = await catRes.json();
+          const catContainer = document.getElementById('categoriesContainer');
+          if (catContainer) {
+            const firstItem = catContainer.querySelector('.premium-category-item');
+            catContainer.innerHTML = '';
+            if (firstItem) {
+              catContainer.appendChild(firstItem);
+            }
+            
+            categories.forEach(cat => {
+              const a = document.createElement('a');
+              a.href = `product.html?category=${encodeURIComponent(cat.slug || cat.name)}`;
+              a.className = 'premium-category-item';
+              a.innerHTML = `
+                <div class="premium-category-circle">
+                  ${window.getCategoryIconHTML(cat.icon)}
+                </div>
+                <span class="premium-category-name">${cat.name}</span>
+              `;
+              catContainer.appendChild(a);
+            });
+          }
+
+          const prodRes = await fetch('/api/products');
+          const products = await prodRes.json();
+          const grid = document.getElementById('dynamicProductGrid');
+          if (grid) {
+            grid.innerHTML = '';
+            
+            products.slice(0, 8).forEach(prod => {
+              const div = document.createElement('div');
+              div.className = 'product-grid-item';
+              
+              const discPrice = prod.price;
+              const origPrice = Math.round(prod.price * 1.25);
+              const discountText = prod.discount || '20% off';
+              
+              div.innerHTML = `
+                <a href="product-details.html?id=${prod.id}">
+                  <div class="product-card">
+                    <div class="product-img-wrapper">
+                      <img src="${prod.image}" alt="${prod.name}" onerror="this.src='assets/imgs/furniture/product/product1.png'">
+                      <div class="cus-product-badge">
+                        <span class="product-trending">${discountText}</span>
+                      </div>
+                    </div>
+                    <h6>${prod.name}</h6>
+                    <div class="d-flex justify-content-center align-items-center">
+                      <small class="mb-0"><strike>₹${origPrice.toLocaleString('en-IN')}</strike> &nbsp;</small>
+                      <p class="mb-0"><b>₹${discPrice.toLocaleString('en-IN')}</b></p>
+                    </div>
+                    <div class="w-100 d-flex" style="margin-top: 20px;">
+                      <div class="enquire-btn w-100">View Details</div>
+                    </div>
+                  </div>
+                </a>
+              `;
+              grid.appendChild(div);
+            });
+          }
+
+          const settingsRes = await fetch('/api/settings');
+          const settings = await settingsRes.json();
+          if (settings) {
+            const waLink = document.querySelector('.mobile-bottom-menu a[href*="wa.me"]');
+            const waNum = settings.whatsappNumber || settings.phone || settings.contactPhone;
+            if (waLink && waNum) {
+              waLink.href = `https://wa.me/${waNum.replace(/[^0-9]/g, '')}`;
+            }
+
+            const phoneVal = settings.phone || settings.contactPhone;
+            const footerPhone = document.querySelector('a[href^="tel:"]');
+            if (footerPhone && phoneVal) {
+              footerPhone.href = `tel:${phoneVal}`;
+              footerPhone.textContent = phoneVal;
+            }
+
+            const emailVal = settings.email || settings.contactEmail;
+            const footerEmail = document.querySelector('a[href^="mailto:"]');
+            if (footerEmail && emailVal) {
+              footerEmail.href = `mailto:${emailVal}`;
+              footerEmail.textContent = emailVal;
+            }
+          }
+
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadStorefrontHome);
+    </script>
 </body>
 
 </html>

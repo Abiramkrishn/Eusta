@@ -25,6 +25,7 @@
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
     <link href="assets/css/premium.css" rel="stylesheet">
+    <script src="assets/js/super-auth.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -385,25 +386,7 @@
     <script src="assets/js/main.js"></script>
     <!-- Dynamic Dashboard script -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Default Seed Data
-        const defaultUsers = [
-          { id: 101, name: "Andrew Carry", phone: "9087654321", email: "andrew.c@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 12, 2025", avatar: "01.png" },
-          { id: 102, name: "Sarah Jenkins", phone: "9876543210", email: "sarah.j@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Nov 10, 2025", avatar: "02.png" },
-          { id: 103, name: "Michael Brown", phone: "8765432109", email: "michael.b@gmail.com", plan: "3 Months", status: "Inactive", joinedDate: "Nov 08, 2025", avatar: "03.png" },
-          { id: 104, name: "Emma Watson", phone: "7654321098", email: "emma.w@gmail.com", plan: "1 Month", status: "Active", joinedDate: "Nov 05, 2025", avatar: "04.png" },
-          { id: 105, name: "John Doe", phone: "6543210987", email: "john.d@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 02, 2025", avatar: "05.png" },
-          { id: 106, name: "Olivia Smith", phone: "5432109876", email: "olivia.s@gmail.com", plan: "2 Months", status: "Inactive", joinedDate: "Oct 30, 2025", avatar: "06.png" },
-          { id: 107, name: "James Wilson", phone: "4321098765", email: "james.w@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Oct 28, 2025", avatar: "07.png" }
-        ];
-
-        // Load from localStorage or seed
-        let users = JSON.parse(localStorage.getItem("eusta_users"));
-        if (!users || users.length === 0) {
-          users = defaultUsers;
-          localStorage.setItem("eusta_users", JSON.stringify(users));
-        }
-
+      document.addEventListener("DOMContentLoaded", async function () {
         const now = new Date();
         const currentMonthNum = now.getMonth();
         const currentYearNum = now.getFullYear();
@@ -416,6 +399,7 @@
 
         // Helper to calculate expiration date
         function getExpirationDate(joinedStr, planStr) {
+          if (!joinedStr || !planStr) return null;
           const joinedDate = new Date(joinedStr);
           if (isNaN(joinedDate.getTime())) return null;
           
@@ -423,6 +407,8 @@
           const planMatch = planStr.match(/(\d+)\s*Month/i);
           if (planMatch) {
             monthsToAdd = parseInt(planMatch[1]);
+          } else if (planStr.toLowerCase().includes('year')) {
+            monthsToAdd = 12;
           }
           
           const expDate = new Date(joinedDate);
@@ -430,75 +416,61 @@
           return expDate;
         }
 
-        // Ensure we have some expiring plans this month for demonstration if needed.
-        let expiringUsersList = [];
+        try {
+          const res = await fetch('/api/users');
+          const users = await res.json();
 
-        function findExpiring() {
-          return users.filter(user => {
+          const clientUsers = users.filter(u => u.role === 'admin');
+
+          const expiringUsersList = clientUsers.filter(user => {
             const expDate = getExpirationDate(user.joinedDate, user.plan);
             if (!expDate) return false;
             return expDate.getMonth() === currentMonthNum && expDate.getFullYear() === currentYearNum;
           });
-        }
 
-        expiringUsersList = findExpiring();
-        if (expiringUsersList.length === 0) {
-          // Adjust user 101 to expire this month (has 6 Months plan -> set joinedDate to 6 months ago)
-          if (users[0]) {
-            const date6MonthsAgo = new Date();
-            date6MonthsAgo.setMonth(date6MonthsAgo.getMonth() - 6);
-            users[0].joinedDate = formatDate(date6MonthsAgo);
+          // Calculate KPI values
+          const totalUsers = clientUsers.length;
+          const activeUsers = clientUsers.filter(u => u.status && u.status.toLowerCase() === "active").length;
+          const inactiveUsers = clientUsers.filter(u => u.status && u.status.toLowerCase() === "inactive").length;
+          const expiringPlans = expiringUsersList.length;
+
+          // Update DOM KPIs
+          document.getElementById("kpiTotalUsers").textContent = totalUsers;
+          document.getElementById("kpiActiveUsers").textContent = activeUsers;
+          document.getElementById("kpiInactiveUsers").textContent = inactiveUsers;
+          document.getElementById("kpiExpiringPlans").textContent = expiringPlans;
+
+          // Populate Expiring Plans table
+          const expiringTableBody = document.getElementById("expiringTableBody");
+          expiringTableBody.innerHTML = "";
+
+          if (expiringUsersList.length === 0) {
+            expiringTableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No plans expiring this month.</td></tr>`;
+          } else {
+            const monthNames = [
+              "January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"
+            ];
+            expiringUsersList.forEach((user, index) => {
+              const expDate = getExpirationDate(user.joinedDate, user.plan);
+              const expDateStr = expDate ? `${monthNames[expDate.getMonth()]} ${expDate.getDate()}, ${expDate.getFullYear()}` : "N/A";
+              
+              const rowHtml = `
+                <tr>
+                  <td>${index + 1}</td>
+                  <td><p class="mb-0 customer-name fw-bold">${user.name}</p></td>
+                  <td>${user.phone || 'N/A'}</td>
+                  <td>${user.email}</td>
+                  <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">${user.plan || 'N/A'}</span></td>
+                  <td>${user.joinedDate || 'N/A'}</td>
+                  <td class="text-danger">${expDateStr}</td>
+                </tr>
+              `;
+              expiringTableBody.insertAdjacentHTML("beforeend", rowHtml);
+            });
           }
-          // Adjust user 103 to expire this month (has 3 Months plan -> set joinedDate to 3 months ago)
-          if (users[2]) {
-            const date3MonthsAgo = new Date();
-            date3MonthsAgo.setMonth(date3MonthsAgo.getMonth() - 3);
-            users[2].joinedDate = formatDate(date3MonthsAgo);
-          }
-          localStorage.setItem("eusta_users", JSON.stringify(users));
-          expiringUsersList = findExpiring();
-        }
-
-        // Calculate KPI values
-        const totalUsers = users.length;
-        const activeUsers = users.filter(u => u.status.toLowerCase() === "active").length;
-        const inactiveUsers = users.filter(u => u.status.toLowerCase() === "inactive").length;
-        const expiringPlans = expiringUsersList.length;
-
-        // Update DOM KPIs
-        document.getElementById("kpiTotalUsers").textContent = totalUsers;
-        document.getElementById("kpiActiveUsers").textContent = activeUsers;
-        document.getElementById("kpiInactiveUsers").textContent = inactiveUsers;
-        document.getElementById("kpiExpiringPlans").textContent = expiringPlans;
-
-        // Populate Expiring Plans table
-        const expiringTableBody = document.getElementById("expiringTableBody");
-        expiringTableBody.innerHTML = "";
-
-        if (expiringUsersList.length === 0) {
-          expiringTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">No plans expiring this month.</td></tr>`;
-        } else {
-          const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-          ];
-          expiringUsersList.forEach((user, index) => {
-            const expDate = getExpirationDate(user.joinedDate, user.plan);
-            const expDateStr = expDate ? `${monthNames[expDate.getMonth()]} ${expDate.getDate()}, ${expDate.getFullYear()}` : "N/A";
-            
-            const rowHtml = `
-              <tr>
-                <td>${index + 1}</td>
-                <td><p class="mb-0 customer-name fw-bold">${user.name}</p></td>
-                <td>${user.phone}</td>
-                <td>${user.email}</td>
-                <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">${user.plan}</span></td>
-                <td>${user.joinedDate}</td>
-                <td class="text-danger">${expDateStr}</td>
-              </tr>
-            `;
-            expiringTableBody.insertAdjacentHTML("beforeend", rowHtml);
-          });
+        } catch (err) {
+          console.error(err);
         }
       });
     </script>

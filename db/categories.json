@@ -1,0 +1,86 @@
+[
+  {
+    "id": "cat_1",
+    "name": "Furniture",
+    "icon": "chair",
+    "status": "Active",
+    "created": "2025-01-12"
+  },
+  {
+    "id": "cat_2",
+    "name": "Decor",
+    "icon": "auto_awesome",
+    "status": "Active",
+    "created": "2025-01-15"
+  },
+  {
+    "id": "cat_3",
+    "name": "Lighting",
+    "icon": "lightbulb",
+    "status": "Active",
+    "created": "2025-01-20"
+  },
+  {
+    "id": "cat_4",
+    "name": "Textiles",
+    "icon": "texture",
+    "status": "Active",
+    "created": "2025-01-22"
+  },
+  {
+    "id": "cat_5",
+    "name": "Kitchen",
+    "icon": "countertops",
+    "status": "Active",
+    "created": "2025-01-25"
+  },
+  {
+    "id": "cat_6",
+    "name": "Sofas",
+    "icon": "weekend",
+    "status": "Active",
+    "created": "2025-02-01"
+  },
+  {
+    "id": "cat_7",
+    "name": "Beds",
+    "icon": "bed",
+    "status": "Active",
+    "created": "2025-02-03"
+  },
+  {
+    "id": "cat_8",
+    "name": "Dining",
+    "icon": "table_restaurant",
+    "status": "Active",
+    "created": "2025-02-05"
+  },
+  {
+    "id": "cat_9",
+    "name": "Wardrobes",
+    "icon": "door_sliding",
+    "status": "Active",
+    "created": "2025-02-10"
+  },
+  {
+    "id": "cat_10",
+    "name": "Coffee Tables",
+    "icon": "table_bar",
+    "status": "Active",
+    "created": "2025-02-12"
+  },
+  {
+    "id": "cat_11",
+    "name": "Office Chairs",
+    "icon": "desk",
+    "status": "Active",
+    "created": "2025-02-15"
+  },
+  {
+    "id": "cat_12",
+    "name": "Recliners",
+    "icon": "airline_seat_recline_extra",
+    "status": "Active",
+    "created": "2025-02-20"
+  }
+]

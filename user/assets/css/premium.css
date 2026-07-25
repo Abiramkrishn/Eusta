@@ -710,6 +710,7 @@ h1, h2, h3, h4, h5, h6, .main-menu nav ul li a {
 .mobile-bottom-menu .deals-icon i {
   background: none !important;
   -webkit-background-clip: unset !important;
+  background-clip: unset !important;
   -webkit-text-fill-color: initial !important;
   color: #8E8E93 !important;
 }

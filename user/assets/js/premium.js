@@ -114,3 +114,154 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+
+// Category Icon Helper: Seamlessly renders preset vector icons or custom uploaded image URLs
+window.getCategoryIconHTML = function(iconName) {
+  if (!iconName) return '<i class="fa-solid fa-shapes"></i>';
+
+  if (iconName.startsWith('http://') || iconName.startsWith('https://') || iconName.startsWith('data:') || iconName.startsWith('/') || iconName.startsWith('assets/')) {
+    return `<img src="${iconName}" alt="Category" style="width:26px; height:26px; object-fit:contain;">`;
+  }
+
+  const iconMap = {
+    // Home & Furniture
+    'chair': 'fa-chair',
+    'furniture': 'fa-chair',
+    'sofa': 'fa-couch',
+    'sofas': 'fa-couch',
+    'weekend': 'fa-couch',
+    'bed': 'fa-bed',
+    'beds': 'fa-bed',
+    'dining': 'fa-utensils',
+    'table_restaurant': 'fa-utensils',
+    'wardrobes': 'fa-door-closed',
+    'door_sliding': 'fa-door-closed',
+    'coffee_table': 'fa-mug-hot',
+    'table_bar': 'fa-mug-hot',
+    'office_chair': 'fa-desktop',
+    'desk': 'fa-desktop',
+    'recliners': 'fa-couch',
+    'airline_seat_recline_extra': 'fa-couch',
+    'decor': 'fa-palette',
+    'auto_awesome': 'fa-wand-magic-sparkles',
+    'lighting': 'fa-lightbulb',
+    'lightbulb': 'fa-lightbulb',
+    'light': 'fa-lightbulb',
+    'textiles': 'fa-layer-group',
+    'texture': 'fa-layer-group',
+    'kitchen': 'fa-utensils',
+    'countertops': 'fa-utensils',
+    'storage': 'fa-box-open',
+    'inventory_2': 'fa-box-open',
+
+    // Fashion & Apparel
+    'clothing': 'fa-shirt',
+    'checkroom': 'fa-shirt',
+    'outerwear': 'fa-vest',
+    'styler': 'fa-vest',
+    'suits': 'fa-user-tie',
+    'dry_cleaning': 'fa-user-tie',
+    'footwear': 'fa-socks',
+    'steps': 'fa-socks',
+    'jewelry': 'fa-gem',
+    'diamond': 'fa-gem',
+    'watches': 'fa-clock',
+    'watch': 'fa-clock',
+    'bags': 'fa-bag-shopping',
+    'shopping_bag': 'fa-bag-shopping',
+    'eyewear': 'fa-glasses',
+    'glasses': 'fa-glasses',
+
+    // Electronics & Tech
+    'mobiles': 'fa-mobile-screen-button',
+    'smartphone': 'fa-mobile-screen-button',
+    'laptops': 'fa-laptop',
+    'laptop': 'fa-laptop',
+    'audio': 'fa-headphones',
+    'headphones': 'fa-headphones',
+    'cameras': 'fa-camera',
+    'photo_camera': 'fa-camera',
+    'tv': 'fa-tv',
+    'gaming': 'fa-gamepad',
+    'sports_esports': 'fa-gamepad',
+    'cables': 'fa-plug',
+    'electrical_services': 'fa-plug',
+    'hardware': 'fa-microchip',
+    'memory': 'fa-microchip',
+
+    // Gardening & Outdoor
+    'plants': 'fa-seedling',
+    'potted_plant': 'fa-seedling',
+    'lawn': 'fa-seedling',
+    'grass': 'fa-seedling',
+    'trees': 'fa-tree',
+    'nature': 'fa-tree',
+    'patio': 'fa-sun',
+    'home_work': 'fa-sun',
+    'irrigation': 'fa-faucet-drip',
+    'water_drop': 'fa-faucet-drip',
+
+    // Beauty, Cosmetics & Health
+    'cosmetics': 'fa-wand-magic-sparkles',
+    'auto_fix_high': 'fa-wand-magic-sparkles',
+    'skincare': 'fa-pump-soap',
+    'sanitizer': 'fa-pump-soap',
+    'spa': 'fa-spa',
+    'haircare': 'fa-scissors',
+    'content_cut': 'fa-scissors',
+    'wellness': 'fa-heart-pulse',
+    'favorite': 'fa-heart-pulse',
+
+    // Grocery & Food
+    'produce': 'fa-apple-whole',
+    'nutrition': 'fa-apple-whole',
+    'bakery': 'fa-bread-slice',
+    'bakery_dining': 'fa-bread-slice',
+    'beverages': 'fa-wine-glass',
+    'local_bar': 'fa-wine-glass',
+    'snacks': 'fa-cookie-bite',
+    'lunch_dining': 'fa-cookie-bite',
+    'food': 'fa-utensils',
+    'restaurant': 'fa-utensils',
+
+    // Sports & Fitness
+    'gym': 'fa-dumbbell',
+    'fitness_center': 'fa-dumbbell',
+    'cycling': 'fa-person-biking',
+    'directions_bike': 'fa-person-biking',
+    'sports': 'fa-volleyball',
+    'sports_soccer': 'fa-volleyball',
+    'camping': 'fa-person-hiking',
+    'hiking': 'fa-person-hiking',
+
+    // Baby & Kids
+    'baby': 'fa-baby',
+    'child_care': 'fa-baby',
+    'toys': 'fa-puzzle-piece',
+    'extension': 'fa-puzzle-piece',
+
+    // Automotive & Tools
+    'automotive': 'fa-car',
+    'directions_car': 'fa-car',
+    'tools': 'fa-wrench',
+    'build': 'fa-wrench',
+    'construction': 'fa-screwdriver-wrench',
+
+    // Books & Craft
+    'books': 'fa-book',
+    'book': 'fa-book',
+    'stationery': 'fa-pen-nib',
+    'edit': 'fa-pen-nib',
+    'craft': 'fa-palette',
+    'palette': 'fa-palette'
+  };
+
+  const cleanKey = iconName.toLowerCase().trim();
+  const faClass = iconMap[cleanKey];
+
+  if (faClass) {
+    return `<i class="fa-solid ${faClass}"></i>`;
+  }
+
+  return `<span class="material-symbols-outlined">${iconName}</span>`;
+};

@@ -1,0 +1,7 @@
+[
+  { "duration": 1, "cost": 999 },
+  { "duration": 2, "cost": 1899 },
+  { "duration": 3, "cost": 2499 },
+  { "duration": 6, "cost": 4499 },
+  { "duration": 12, "cost": 7999 }
+]

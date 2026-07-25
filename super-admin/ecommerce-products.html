@@ -23,7 +23,7 @@
     <link href="assets/css/semi-dark-theme.css" rel="stylesheet">
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
-     
+    <script src="assets/js/super-auth.js"></script>
   </head>
   <body>
 
@@ -916,8 +916,8 @@
                       <th>Action</th>
                     </tr>
                    </thead>
-                   <tbody>
-                     <tr>
+                    <tbody id="superProductsTableBody">
+                      <tr>
                        <td>
                          <input class="form-check-input" type="checkbox">
                        </td>
@@ -1475,5 +1475,76 @@
     <!--BS Scripts-->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    <script>
+      async function loadSuperProducts() {
+        try {
+          const res = await fetch('/api/products');
+          const products = await res.json();
+          const tbody = document.getElementById('superProductsTableBody');
+          if (!tbody) return;
+          tbody.innerHTML = '';
+          
+          products.forEach((prod, index) => {
+            let imgUrl = '../user/assets/imgs/furniture/product/product1.png';
+            if (prod.image) {
+              if (prod.image.startsWith('assets/imgs/')) imgUrl = '../user/' + prod.image;
+              else if (prod.image.startsWith('assets/img/')) imgUrl = '../admin/' + prod.image;
+              else imgUrl = '../' + prod.image;
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><input class="form-check-input" type="checkbox"></td>
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="product-box" style="width:50px; height:50px; overflow:hidden; border-radius:6px;">
+                    <img src="${imgUrl}" alt="" onerror="this.src='../user/assets/imgs/furniture/product/product1.png'" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:;" class="product-title fw-bold text-dark text-decoration-none">${prod.name}</a>
+                    <p class="mb-0 product-category text-muted" style="font-size:12px;">SKU: ${prod.sku}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="fw-semibold">₹${prod.price.toLocaleString('en-IN')}</td>
+              <td><span class="badge bg-light text-dark">${prod.category}</span></td>
+              <td><span class="badge bg-light-success text-success">${prod.status}</span></td>
+              <td>4.8</td>
+              <td>Eusta Store</td>
+              <td class="text-muted">${new Date().toLocaleDateString()}</td>
+              <td>
+                <div class="d-flex align-items-center gap-1">
+                  <button class="btn btn-sm btn-icon btn-light border-0 bg-transparent delete-prod-btn" data-id="${prod.id}"><i class="bi bi-trash text-danger"></i></button>
+                </div>
+              </td>
+            `;
+            
+            tr.querySelector('.delete-prod-btn').addEventListener('click', function() {
+              deleteProd(prod.id);
+            });
+            tbody.appendChild(tr);
+          });
+        } catch(err) {
+          console.error(err);
+        }
+      }
+
+      async function deleteProd(id) {
+        if (!confirm('Are you sure you want to delete this product?')) return;
+        try {
+          const res = await fetch(`/api/products?id=${id}`, { method: 'DELETE' });
+          if (res.ok) {
+            loadSuperProducts();
+          } else {
+            alert('Failed to delete product');
+          }
+        } catch(err) {
+          console.error(err);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadSuperProducts);
+    </script>
   </body>
 </html>

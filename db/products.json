@@ -1,0 +1,88 @@
+[
+  {
+    "id": "prod_1",
+    "name": "Stylish Gray Chair",
+    "sku": "EU-CH-01",
+    "category": "Furniture",
+    "price": 11999,
+    "oldPrice": 14999,
+    "stock": 25,
+    "status": "Active",
+    "description": "Ergonomically designed stylish grey accent chair with comfortable armrests and high durability wood frame. Perfect for office or living spaces.",
+    "image": "assets/imgs/furniture/product/product1.png"
+  },
+  {
+    "id": "prod_2",
+    "name": "Wicker Hanging Chair",
+    "sku": "EU-CH-02",
+    "category": "Furniture",
+    "price": 8999,
+    "oldPrice": 12999,
+    "stock": 12,
+    "status": "Active",
+    "description": "Outdoor and indoor wicker hanging basket chair with soft white cushions. Relax in modern elegance.",
+    "image": "assets/imgs/furniture/product/off-01.png",
+    "onSale": true
+  },
+  {
+    "id": "prod_3",
+    "name": "Brasslegged Armchair",
+    "sku": "EU-CH-03",
+    "category": "Furniture",
+    "price": 14450,
+    "oldPrice": 17000,
+    "stock": 8,
+    "status": "Active",
+    "description": "Luxury brass-legged armchair upholstered in high quality velvet fabric.",
+    "image": "assets/imgs/furniture/product/off-02.png",
+    "onSale": true
+  },
+  {
+    "id": "prod_4",
+    "name": "Elegant Gold Vase",
+    "sku": "EU-VS-01",
+    "category": "Decor",
+    "price": 4500,
+    "oldPrice": 5999,
+    "stock": 42,
+    "status": "Active",
+    "description": "Exquisitely polished brass/gold designer vase to elevate your flower displays.",
+    "image": "assets/img/p1.png"
+  },
+  {
+    "id": "prod_5",
+    "name": "Ceramic Vase Set",
+    "sku": "EU-VS-02",
+    "category": "Decor",
+    "price": 1299,
+    "oldPrice": 1999,
+    "stock": 68,
+    "status": "Active",
+    "description": "Two piece elegant minimal white ceramic vase set.",
+    "image": "assets/img/p2.png"
+  },
+  {
+    "id": "prod_6",
+    "name": "Woven Throw Blanket",
+    "sku": "EU-TX-01",
+    "category": "Textiles",
+    "price": 2150,
+    "oldPrice": 2999,
+    "stock": 12,
+    "status": "Low Stock",
+    "description": "Organic cotton textured throw blanket with tassel fringe.",
+    "image": "assets/img/p3.png"
+  },
+  {
+    "id": "prod_7",
+    "name": "Brass Table Lamp",
+    "sku": "EU-LM-01",
+    "category": "Lighting",
+    "price": 6499,
+    "oldPrice": 7999,
+    "stock": 0,
+    "status": "Out of Stock",
+    "description": "Adjustable brass table desk lamp.",
+    "image": "assets/img/p4.png"
+  }
+]

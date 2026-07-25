@@ -72,9 +72,29 @@
     inp.type = inp.type === 'password' ? 'text' : 'password';
     icon.textContent = inp.type === 'password' ? 'visibility' : 'visibility_off';
   }
-  document.getElementById('signinForm').addEventListener('submit', (e) => {
+  document.getElementById('signinForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    window.location.href = 'index.html';
+    const email = document.getElementById('adminEmail').value;
+    const password = document.getElementById('adminPwd').value;
+    
+    try {
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem('adminToken', data.token);
+        localStorage.setItem('adminUser', JSON.stringify(data.user));
+        window.location.href = 'index.html';
+      } else {
+        alert(data.message || 'Authentication failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error connecting to the server');
+    }
   });
 </script>
 </body>

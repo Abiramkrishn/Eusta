@@ -1077,7 +1077,7 @@ img { max-width: 100%; }
 /* ── 23. Visitor Chart Section ───────────────────────────── */
 .ea-chart-wrap { position: relative; }
 
-/* ── 24. Responsive ──────────────────────────────────────── */
+/* ── 24. Responsive & Mobile System ──────────────────────── */
 .ea-sidebar__close-btn {
   display: none;
   width: 32px;
@@ -1087,57 +1087,179 @@ img { max-width: 100%; }
   justify-content: center;
   color: var(--text-muted);
   transition: var(--transition);
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 .ea-sidebar__close-btn:hover {
   background: var(--gold-light);
   color: var(--gold);
 }
 
-@media (max-width: 1024px) {
-  :root { --sidebar-w: 240px; }
+/* Touch Input & Auto-Zoom Prevention */
+button, input, select, textarea {
+  font-size: 14px;
 }
 
-@media (max-width: 768px) {
+/* Smooth Touch Table Scroll */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  :root { --sidebar-w: 240px; }
+  .ea-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 991px) {
   .ea-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99999;
     transform: translateX(-100%);
-    box-shadow: var(--shadow-md);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.18);
   }
   .ea-sidebar.open {
     transform: translateX(0);
+  }
+  .ea-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .ea-topbar__toggle {
+    display: flex !important;
   }
   .ea-sidebar__close-btn {
     display: flex !important;
     margin-left: auto;
   }
-  .ea-content { margin-left: 0 !important; }
-  .ea-topbar__toggle { display: flex; }
-  .ea-main { padding: 18px; }
+}
+
+@media (max-width: 768px) {
+  .ea-main {
+    padding: 14px 12px;
+  }
+  
+  /* Topbar Header Compact Layout */
+  .ea-topbar {
+    padding: 0 14px;
+    height: 64px;
+  }
+  .ea-topbar__title {
+    font-size: 15px;
+  }
+  .ea-topbar__sub {
+    font-size: 11px;
+  }
+  .ea-topbar__right {
+    gap: 6px;
+  }
+  .ea-topbar__btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  .ea-user-trigger {
+    padding: 4px 8px 4px 4px;
+  }
+  .ea-user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
   .ea-auth { grid-template-columns: 1fr; }
   .ea-auth__brand { display: none; }
-  .ea-auth__panel { padding: 40px 28px; }
-  .ea-stats-grid { grid-template-columns: 1fr 1fr; }
-  .ea-topbar { padding: 0 18px; }
-  
-  /* Search & Filter Controls stacking */
+  .ea-auth__panel { padding: 32px 20px; }
+
+  /* Dashboard Stats Grid */
+  .ea-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .ea-stat-card {
+    padding: 14px;
+  }
+  .ea-stat-value {
+    font-size: 20px;
+  }
+
+  /* Table Controls Bar Stacking */
   .ea-search-bar {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
   }
   .ea-search-wrap {
-    width: 100%;
+    width: 100% !important;
   }
   .ea-select {
     width: 100% !important;
   }
   .ea-search-bar .ea-btn {
-    width: 100%;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Table Headers & Action Buttons */
+  .ea-table th, .ea-table td {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+  .ea-action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Modal Dialog Touch Responsive Fixes */
+  .ea-modal-overlay {
+    padding: 12px;
+  }
+  .ea-modal {
+    width: 100% !important;
+    max-height: 92vh !important;
+    border-radius: 14px !important;
+  }
+  .ea-modal-header {
+    padding: 14px 16px;
+  }
+  .ea-modal-body {
+    padding: 16px;
+  }
+  .ea-modal-footer {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+  .ea-modal-footer .ea-btn {
+    flex: 1;
     justify-content: center;
+  }
+
+  /* Categories Preset Grid on Mobile */
+  #presetGrid {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 
 @media (max-width: 480px) {
-  .ea-stats-grid { grid-template-columns: 1fr; }
-  .ea-user-info { display: none; }
+  .ea-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .ea-user-info {
+    display: none;
+  }
+  .ea-user-chevron {
+    display: none;
+  }
+  #presetGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 /* ── 25. Sidebar Overlay for Mobile ─────────────────────── */
@@ -1145,8 +1267,9 @@ img { max-width: 100%; }
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 999;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
 }
 .ea-sidebar-overlay.open { display: block; }
 

@@ -25,6 +25,7 @@
     <link href="assets/css/minimal-theme.css" rel="stylesheet">
     <link href="assets/css/shadow-theme.css" rel="stylesheet">
     <link href="assets/css/premium.css" rel="stylesheet">
+    <script src="assets/js/super-auth.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -496,45 +497,13 @@
       </div>
     </div>
 
-    <!-- Dynamic User management script -->
-    <script>
+    <!-- Dynamic User management script -->    <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Default Seed Data
-        const defaultUsers = [
-          { id: 101, businessName: "Carry Enterprises", phone: "9087654321", email: "andrew.c@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 12, 2025", avatar: "01.png" },
-          { id: 102, businessName: "Jenkins & Co", phone: "9876543210", email: "sarah.j@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Nov 10, 2025", avatar: "02.png" },
-          { id: 103, businessName: "Brown Solutions", phone: "8765432109", email: "michael.b@gmail.com", plan: "3 Months", status: "Inactive", joinedDate: "Nov 08, 2025", avatar: "03.png" },
-          { id: 104, businessName: "Watson Retail", phone: "7654321098", email: "emma.w@gmail.com", plan: "1 Month", status: "Active", joinedDate: "Nov 05, 2025", avatar: "04.png" },
-          { id: 105, businessName: "Doe Industries", phone: "6543210987", email: "john.d@gmail.com", plan: "6 Months", status: "Active", joinedDate: "Nov 02, 2025", avatar: "05.png" },
-          { id: 106, businessName: "Smith Traders", phone: "5432109876", email: "olivia.s@gmail.com", plan: "2 Months", status: "Inactive", joinedDate: "Oct 30, 2025", avatar: "06.png" },
-          { id: 107, businessName: "Wilson Group", phone: "4321098765", email: "james.w@gmail.com", plan: "12 Months", status: "Active", joinedDate: "Oct 28, 2025", avatar: "07.png" }
-        ];
-
-        // Load from localStorage or seed
-        let users = JSON.parse(localStorage.getItem("eusta_users"));
-        if (!users || users.length === 0) {
-          users = defaultUsers;
-          localStorage.setItem("eusta_users", JSON.stringify(users));
-        } else {
-          // Migrate: convert old 'name' field to 'businessName' if not already set
-          let migrated = false;
-          users = users.map(u => {
-            if (!u.businessName && u.name) {
-              migrated = true;
-              return { ...u, businessName: u.name };
-            }
-            return u;
-          });
-          if (migrated) {
-            localStorage.setItem("eusta_users", JSON.stringify(users));
-          }
-        }
-
         // Active filters and sort parameters
         let currentSearch = "";
-        let currentSort = "newest"; // "newest", "oldest"
-        let currentStatus = "all"; // "all", "active", "inactive"
-        let currentPlan = "all"; // "all", plan values
+        let currentSort = "newest"; 
+        let currentStatus = "all"; 
+        let currentPlan = "all"; 
 
         // DOM Elements
         const usersTableBody = document.getElementById("usersTableBody");
@@ -546,6 +515,27 @@
         const userModal = new bootstrap.Modal(document.getElementById("userModal"));
         const viewModal = new bootstrap.Modal(document.getElementById("viewUserModal"));
         const userForm = document.getElementById("userForm");
+
+        let users = [];
+
+        async function fetchUsersFromBackend() {
+          try {
+            const res = await fetch('/api/users');
+            const data = await res.json();
+            
+            // Map admin profiles and populate businessName
+            users = data.filter(u => u.role === 'admin').map((u, idx) => ({
+              ...u,
+              businessName: u.name,
+              avatar: u.avatar || `${String((idx % 7) + 1).padStart(2, '0')}.png`
+            }));
+            
+            populatePlans();
+            renderTable();
+          } catch(err) {
+            console.error('Error fetching users:', err);
+          }
+        }
 
         // Format date helper
         function formatDate(date) {
@@ -570,10 +560,8 @@
             localStorage.setItem("eusta_subscription_plans", JSON.stringify(storedPlans));
           }
 
-          // Sort plans ascending
           storedPlans.sort((a, b) => a.duration - b.duration);
 
-          // 1. Populate the Add/Edit Modal Dropdown
           const modalSelect = document.getElementById("modalUserPlan");
           if (modalSelect) {
             modalSelect.innerHTML = "";
@@ -586,7 +574,6 @@
             });
           }
 
-          // 2. Populate the Table Filter Dropdown
           const filterMenu = planFilterBtn.nextElementSibling;
           if (filterMenu) {
             filterMenu.innerHTML = `<li><a class="dropdown-item plan-item active" data-value="all" href="javascript:;">All Plans</a></li>`;
@@ -597,7 +584,6 @@
               filterMenu.appendChild(li);
             });
             
-            // Re-bind click events for dynamic plan-items
             document.querySelectorAll(".plan-item").forEach(item => {
               item.addEventListener("click", function () {
                 filterMenu.querySelectorAll(".plan-item").forEach(el => el.classList.remove("active"));
@@ -611,11 +597,9 @@
           }
         }
 
-        // Initialize Plans list
-        populatePlans();
-
         // Helper to calculate expiration date
         function getExpirationDate(joinedStr, planStr) {
+          if (!joinedStr || !planStr) return "N/A";
           const joinedDate = new Date(joinedStr);
           if (isNaN(joinedDate.getTime())) return "N/A";
           
@@ -623,6 +607,8 @@
           const planMatch = planStr.match(/(\d+)\s*Month/i);
           if (planMatch) {
             monthsToAdd = parseInt(planMatch[1]);
+          } else if (planStr.toLowerCase().includes('year')) {
+            monthsToAdd = 12;
           }
           
           const expDate = new Date(joinedDate);
@@ -632,13 +618,12 @@
           return `${months[expDate.getMonth()]} ${String(expDate.getDate()).padStart(2, '0')}, ${expDate.getFullYear()}`;
         }
 
-        // Generate simulated payment history for a user
+        // Generate simulated payment history
         function generatePaymentHistory(user) {
           const history = [];
-          const planMatch = user.plan.match(/(\d+)\s*Month/i);
+          const planMatch = user.plan ? user.plan.match(/(\d+)\s*Month/i) : null;
           const months = planMatch ? parseInt(planMatch[1]) : 1;
 
-          // Get plan cost from stored plans
           const storedPlans = JSON.parse(localStorage.getItem("eusta_subscription_plans")) || [];
           const matchedPlan = storedPlans.find(p => {
             const label = p.duration === 1 ? "1 Month" : `${p.duration} Months`;
@@ -646,7 +631,6 @@
           });
           const cost = matchedPlan ? matchedPlan.cost : (months * 999);
 
-          // Simulate up to 3 past payments based on joinedDate
           const joined = new Date(user.joinedDate);
           if (isNaN(joined.getTime())) return history;
 
@@ -664,42 +648,37 @@
           }
           return history.reverse();
         }
+
         // Open View Details Modal
         function openViewModal(id) {
           const user = users.find(u => u.id == id);
           if (!user) return;
 
           const bName = user.businessName || user.name || "—";
-          const isActive = user.status.toLowerCase() === "active";
+          const isActive = user.status && user.status.toLowerCase() === "active";
           const expiry = getExpirationDate(user.joinedDate, user.plan);
 
-          // Profile header
           document.getElementById("viewUserAvatar").src = `assets/images/avatars/${user.avatar}`;
           document.getElementById("viewUserName").textContent = bName;
           document.getElementById("viewUserId").textContent = `#${user.id}`;
           document.getElementById("viewUserEmailSmall").textContent = user.email;
-          document.getElementById("viewUserPhoneSmall").textContent = user.phone;
+          document.getElementById("viewUserPhoneSmall").textContent = user.phone || 'N/A';
 
-          // Status dot
           document.getElementById("viewUserStatusDot").style.background = isActive ? "#198754" : "#dc3545";
 
-          // Status chip
           document.getElementById("viewUserStatusChip").innerHTML = isActive
             ? `<span style="font-size:10px;font-weight:600;color:#198754;background:rgba(25,135,84,0.1);border:1px solid rgba(25,135,84,0.2);border-radius:20px;padding:2px 8px;"><i class="bi bi-check-circle-fill me-1"></i>Active</span>`
             : `<span style="font-size:10px;font-weight:600;color:#dc3545;background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.2);border-radius:20px;padding:2px 8px;"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>`;
 
-          // Stat chips
-          document.getElementById("viewUserPlan").textContent = user.plan;
+          document.getElementById("viewUserPlan").textContent = user.plan || 'N/A';
           document.getElementById("viewUserStatus").innerHTML = isActive
             ? `<span style="color:#198754;">Active</span>`
             : `<span style="color:#dc3545;">Inactive</span>`;
-          document.getElementById("viewUserJoined").textContent = user.joinedDate;
+          document.getElementById("viewUserJoined").textContent = user.joinedDate || 'N/A';
           document.getElementById("viewUserExpiry").textContent = expiry;
 
-          // View Site link
           document.getElementById("viewUserSiteBtn").href = `../user/index.html?client=${user.id}`;
 
-          // Payment History - compact, max 3 rows, no inner scroll
           const payments = generatePaymentHistory(user);
           const historyEl = document.getElementById("viewUserPaymentHistory");
           if (payments.length === 0) {
@@ -722,42 +701,37 @@
             `).join("");
           }
 
-          // Edit button
           document.getElementById("viewUserEditBtn").onclick = function() {
             viewModal.hide();
-            setTimeout(() => openEditModal(id), 300);
+            setTimeout(() => openEditModal(user.id), 300);
           };
 
           viewModal.show();
         }
 
-        // Render function
+        // Render Table
         function renderTable() {
-          // Filter
           let filteredUsers = users.filter(user => {
             const bName = (user.businessName || user.name || "").toLowerCase();
             const matchSearch = bName.includes(currentSearch.toLowerCase()) || 
                                 user.email.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                                user.phone.includes(currentSearch);
+                                (user.phone && user.phone.includes(currentSearch));
             
-            const matchStatus = currentStatus === "all" || user.status.toLowerCase() === currentStatus.toLowerCase();
+            const matchStatus = currentStatus === "all" || (user.status && user.status.toLowerCase() === currentStatus.toLowerCase());
             
-            // Normalize plan format before comparing
-            const userPlanNorm = user.plan.toLowerCase().trim();
+            const userPlanNorm = user.plan ? user.plan.toLowerCase().trim() : '';
             const currentPlanNorm = currentPlan.toLowerCase().trim();
             const matchPlan = currentPlan === "all" || userPlanNorm === currentPlanNorm;
-
+ 
             return matchSearch && matchStatus && matchPlan;
           });
 
-          // Sort
           filteredUsers.sort((a, b) => {
             const dateA = new Date(a.joinedDate);
             const dateB = new Date(b.joinedDate);
             return currentSort === "newest" ? dateB - dateA : dateA - dateB;
           });
 
-          // Render HTML
           usersTableBody.innerHTML = "";
           if (filteredUsers.length === 0) {
             usersTableBody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-muted">No users found.</td></tr>`;
@@ -765,7 +739,7 @@
           }
 
           filteredUsers.forEach((user, index) => {
-            const statusBadge = user.status.toLowerCase() === "active" 
+            const statusBadge = user.status && user.status.toLowerCase() === "active" 
               ? `<span class="lable-table bg-success-subtle text-success rounded border border-success-subtle font-text2 fw-bold">Active<i class="bi bi-check2 ms-2"></i></span>`
               : `<span class="lable-table bg-danger-subtle text-danger rounded border border-danger-subtle font-text2 fw-bold">Inactive<i class="bi bi-x-lg ms-2"></i></span>`;
 
@@ -781,9 +755,9 @@
                     <p class="mb-0 customer-name fw-bold text-dark">${user.businessName || user.name}</p>
                   </a>
                 </td>
-                <td>${user.phone}</td>
+                <td>${user.phone || 'N/A'}</td>
                 <td>${user.email}</td>
-                <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">${user.plan}</span></td>
+                <td><span class="lable-table bg-secondary-subtle text-secondary rounded font-text2 fw-bold">${user.plan || 'N/A'}</span></td>
                 <td>${statusBadge}</td>
                 <td>${getExpirationDate(user.joinedDate, user.plan)}</td>
                 <td>
@@ -819,32 +793,29 @@
             usersTableBody.insertAdjacentHTML("beforeend", rowHtml);
           });
 
-          // Bind view link clicks
           document.querySelectorAll(".view-user-link").forEach(link => {
             link.addEventListener("click", function(e) {
               e.preventDefault();
-              const id = parseInt(this.getAttribute("data-id"));
+              const id = this.getAttribute("data-id");
               openViewModal(id);
             });
           });
 
-          // Rebind action buttons
           document.querySelectorAll(".edit-user-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-              const id = parseInt(this.getAttribute("data-id"));
+              const id = this.getAttribute("data-id");
               openEditModal(id);
             });
           });
 
           document.querySelectorAll(".delete-user-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-              const id = parseInt(this.getAttribute("data-id"));
+              const id = this.getAttribute("data-id");
               deleteUser(id);
             });
           });
         }
 
-        // Add User action
         addUserBtn.addEventListener("click", function () {
           userForm.reset();
           document.getElementById("modalUserId").value = "";
@@ -860,13 +831,11 @@
           document.getElementById("modalUserId").value = user.id;
           document.getElementById("modalUserName").value = user.businessName || user.name || "";
           document.getElementById("modalUserEmail").value = user.email;
-          document.getElementById("modalUserPhone").value = user.phone;
+          document.getElementById("modalUserPhone").value = user.phone || "";
           
-          // Select value mapping
           const planSelect = document.getElementById("modalUserPlan");
-          // match "6 months" or "6 Months"
           for (let option of planSelect.options) {
-            if (option.value.toLowerCase().trim() === user.plan.toLowerCase().trim()) {
+            if (user.plan && option.value.toLowerCase().trim() === user.plan.toLowerCase().trim()) {
               planSelect.value = option.value;
               break;
             }
@@ -874,7 +843,7 @@
           
           const statusSelect = document.getElementById("modalUserStatus");
           for (let option of statusSelect.options) {
-            if (option.value.toLowerCase().trim() === user.status.toLowerCase().trim()) {
+            if (user.status && option.value.toLowerCase().trim() === user.status.toLowerCase().trim()) {
               statusSelect.value = option.value;
               break;
             }
@@ -885,19 +854,25 @@
           userModal.show();
         }
 
-        function deleteUser(id) {
+        async function deleteUser(id) {
           const user = users.find(u => u.id == id);
           if (!user) return;
 
           if (confirm(`Are you sure you want to delete "${user.businessName || user.name}"?`)) {
-            users = users.filter(u => u.id != id);
-            localStorage.setItem("eusta_users", JSON.stringify(users));
-            renderTable();
+            try {
+              const res = await fetch(`/api/users?id=${id}`, { method: 'DELETE' });
+              if (res.ok) {
+                fetchUsersFromBackend();
+              } else {
+                alert('Failed to delete user');
+              }
+            } catch(err) {
+              console.error(err);
+            }
           }
         }
 
-        // Handle Form Submit (Add and Edit)
-        userForm.addEventListener("submit", function (e) {
+        userForm.addEventListener("submit", async function (e) {
           e.preventDefault();
 
           const idInput = document.getElementById("modalUserId").value;
@@ -907,53 +882,49 @@
           const plan = document.getElementById("modalUserPlan").value;
           const status = document.getElementById("modalUserStatus").value;
 
-          if (idInput) {
-            // Edit mode
-            const id = parseInt(idInput);
-            const userIndex = users.findIndex(u => u.id == id);
-            if (userIndex !== -1) {
-              users[userIndex].businessName = businessName;
-              users[userIndex].email = email;
-              users[userIndex].phone = phone;
-              users[userIndex].plan = plan;
-              users[userIndex].status = status;
+          const payload = {
+            name: businessName,
+            email: email,
+            phone: phone,
+            plan: plan,
+            status: status,
+            role: 'admin'
+          };
+
+          try {
+            let res;
+            if (idInput) {
+              payload.id = idInput;
+              res = await fetch('/api/users', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+            } else {
+              res = await fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
             }
-          } else {
-            // Add mode
-            // Generate unique ID
-            const maxId = users.reduce((max, u) => u.id > max ? u.id : max, 100);
-            const newId = maxId + 1;
-            
-            // Select random avatar between 01 and 07
-            const randomAvatarNum = String(Math.floor(Math.random() * 7) + 1).padStart(2, '0');
-            const avatar = `${randomAvatarNum}.png`;
 
-            const newUser = {
-              id: newId,
-              businessName: businessName,
-              phone: phone,
-              email: email,
-              plan: plan,
-              status: status,
-              joinedDate: formatDate(new Date()),
-              avatar: avatar
-            };
-
-            users.push(newUser);
+            if (res.ok) {
+              userModal.hide();
+              fetchUsersFromBackend();
+            } else {
+              alert('Failed to save user');
+            }
+          } catch(err) {
+            console.error(err);
+            alert('Error saving user');
           }
-
-          localStorage.setItem("eusta_users", JSON.stringify(users));
-          userModal.hide();
-          renderTable();
         });
 
-        // Search input event
         searchInput.addEventListener("input", function (e) {
           currentSearch = e.target.value;
           renderTable();
         });
 
-        // Sort dropdown events
         document.querySelectorAll(".sort-item").forEach(item => {
           item.addEventListener("click", function () {
             currentSort = this.getAttribute("data-value");
@@ -962,7 +933,6 @@
           });
         });
 
-        // Status dropdown events
         document.querySelectorAll(".status-item").forEach(item => {
           item.addEventListener("click", function () {
             currentStatus = this.getAttribute("data-value");
@@ -971,10 +941,8 @@
           });
         });
 
-
-
-        // Initial table render
-        renderTable();
+        // Initial fetch
+        fetchUsersFromBackend();
       });
     </script>
   </body>

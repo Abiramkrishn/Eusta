@@ -22,6 +22,7 @@
    <link rel="stylesheet" href="assets/css/spacing.css">
    <link rel="stylesheet" href="assets/css/main.css">
    <link rel="stylesheet" href="assets/css/premium.css">
+   <script src="assets/js/theme-loader.js"></script>
 </head>
 
 <body>
@@ -190,32 +191,32 @@
                   <div class="col-xxl-8 col-xl-8">
                      <div class="contact-from bg-light">
                         <h3 class="text-center mb-30">Connect with us</h3>
-                        <form action="#">
+                        <form action="#" id="contactForm">
                            <div class="row">
                               <div class="col-lg-6">
                                  <div class="contact__from-input">
-                                    <input type="text" placeholder="Full Name*">
+                                    <input type="text" id="contactName" placeholder="Full Name*" required>
                                  </div>
                               </div>
                               <div class="col-lg-6">
                                  <div class="contact__from-input">
-                                    <input type="text" placeholder="Email Address">
+                                    <input type="email" id="contactEmail" placeholder="Email Address">
                                  </div>
                               </div>
                               <div class="col-lg-6">
                                  <div class="contact__from-input">
-                                    <input type="tel" placeholder="Phone Number*">
+                                    <input type="tel" id="contactPhone" placeholder="Phone Number*" required>
                                  </div>
                               </div>
                               <div class="col-lg-6">
                                  <div class="contact__from-input">
-                                    <input type="text" placeholder="Subject">
+                                    <input type="text" id="contactSubject" placeholder="Subject">
                                  </div>
                               </div>
                               
                               <div class="col-lg-12">
                                  <div class="contact__from-input">
-                                    <textarea name="Message" placeholder="Your Message"></textarea>
+                                    <textarea id="contactMessage" name="Message" placeholder="Your Message" required></textarea>
                                  </div>
                               </div>
                               <div class="col-12 text-center">
@@ -303,7 +304,7 @@
                               <span><i class="fa-solid fa-envelope furniture-icon"></i></span>
                            </div>
                            <div class="footer-info-text">
-                              <a class="furniture-clr-hover" href="tel:012-345-6789">info@eusta.in</a>
+                              <a class="furniture-clr-hover" href="mailto:info@eusta.com">info@eusta.com</a>
                            </div>
                         </div>
                      </div>
@@ -367,6 +368,80 @@
    <script src="assets/js/beforeafter.jquery-1.0.0.min.js"></script>
    <script src="assets/js/main.js"></script>
    <script src="assets/js/premium.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const contactForm = document.getElementById("contactForm");
+
+        // Fetch settings for global info updates
+        try {
+          const settingsRes = await fetch('/api/settings');
+          const settings = await settingsRes.json();
+          if (settings) {
+            const waLink = document.querySelector('.mobile-bottom-menu a[href*="wa.me"]');
+            const waNum = settings.whatsappNumber || settings.phone || settings.contactPhone;
+            if (waLink && waNum) {
+              waLink.href = `https://wa.me/${waNum.replace(/[^0-9]/g, '')}`;
+            }
+
+            const phoneVal = settings.phone || settings.contactPhone;
+            const footerPhone = document.querySelector('a[href^="tel:"]');
+            if (footerPhone && phoneVal) {
+              footerPhone.href = `tel:${phoneVal}`;
+              footerPhone.textContent = phoneVal;
+            }
+
+            const emailVal = settings.email || settings.contactEmail;
+            const footerEmail = document.querySelector('a[href^="mailto:"]');
+            if (footerEmail && emailVal) {
+              footerEmail.href = `mailto:${emailVal}`;
+              footerEmail.textContent = emailVal;
+            }
+          }
+        } catch(err) {
+          console.error(err);
+        }
+
+        // Handle contact form submit
+        if (contactForm) {
+          contactForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("contactName").value.trim();
+            const email = document.getElementById("contactEmail").value.trim();
+            const phone = document.getElementById("contactPhone").value.trim();
+            const subject = document.getElementById("contactSubject").value.trim();
+            const message = document.getElementById("contactMessage").value.trim();
+
+            const payload = {
+              name,
+              email,
+              phone,
+              subject,
+              message
+            };
+
+            try {
+              const res = await fetch('/api/enquiries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+
+              if (res.ok) {
+                alert('Your enquiry has been submitted successfully! We will get back to you shortly.');
+                contactForm.reset();
+              } else {
+                alert('Failed to submit enquiry. Please try again.');
+              }
+            } catch(err) {
+              console.error(err);
+              alert('Error connecting to the backend. Please try again.');
+            }
+          });
+        }
+      });
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,19 @@
+{
+  "whatsappNumber": "919000000000",
+  "whatsappText": "Hi, I have a general inquiry about Eusta Furniture.",
+  "businessName": "Eusta Store",
+  "contactEmail": "info@eusta.com",
+  "contactPhone": "+91 9000000000",
+  "address": "Bangalore, India",
+  "facebook": "https://facebook.com/eusta",
+  "instagram": "https://instagram.com/eusta",
+  "niche": "fashion",
+  "logoUrl": "assets/imgs/logo/logo.png",
+  "logoText": "Eusta",
+  "primaryColor": "#B18B5E",
+  "secondaryColor": "#1A1A1A",
+  "backgroundColor": "#FFFFFF",
+  "textColor": "#4A4A4A",
+  "headingColor": "#1A1A1A",
+  "themePreset": "gold"
+}

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="assets/css/eusta-admin.css">
+  <script src="assets/js/admin-auth.js"></script>
 </head>
 <body>
 
@@ -55,6 +56,7 @@
       <!-- Tabs -->
       <div class="ea-tabs">
         <div class="ea-tab active" onclick="switchTab('general', this)">General</div>
+        <div class="ea-tab" onclick="switchTab('branding', this)">🎨 Branding & Theme</div>
         <div class="ea-tab" onclick="switchTab('store', this)">Store Info</div>
         <div class="ea-tab" onclick="switchTab('notifications', this)">Notifications</div>
         <div class="ea-tab" onclick="switchTab('account', this)">Account</div>
@@ -69,19 +71,19 @@
               <div class="col-12 col-md-6">
                 <div class="ea-form-group">
                   <label class="ea-label">Platform Name</label>
-                  <input type="text" class="ea-input" value="Eusta">
+                  <input type="text" id="platformName" class="ea-input" value="Eusta">
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="ea-form-group">
                   <label class="ea-label">Contact Email</label>
-                  <input type="email" class="ea-input" value="support@eusta.com">
+                  <input type="email" id="contactEmail" class="ea-input" value="support@eusta.com">
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="ea-form-group">
                   <label class="ea-label">Phone Number</label>
-                  <input type="tel" class="ea-input" value="+91 9000000000">
+                  <input type="tel" id="contactPhone" class="ea-input" value="+91 9000000000">
                 </div>
               </div>
               <div class="col-12 col-md-6">
@@ -98,12 +100,239 @@
               <div class="col-12">
                 <div class="ea-form-group">
                   <label class="ea-label">Platform Description</label>
-                  <textarea class="ea-textarea">Eusta is a premium home decor and furniture e-commerce platform curating the finest pieces for modern living.</textarea>
+                  <textarea id="platformDesc" class="ea-textarea">Eusta is a premium home decor and furniture e-commerce platform curating the finest pieces for modern living.</textarea>
                 </div>
               </div>
             </div>
             <div style="display:flex; justify-content:flex-end; margin-top:8px;">
-              <button class="ea-btn ea-btn-primary" onclick="showToast('General settings saved!')"><span class="material-symbols-outlined">save</span> Save Changes</button>
+              <button class="ea-btn ea-btn-primary" id="saveGeneralBtn"><span class="material-symbols-outlined">save</span> Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branding & Theme Tab -->
+      <div class="ea-tab-panel" id="tab-branding">
+        <div class="row g-4">
+          <div class="col-12 col-lg-7">
+            <div class="ea-card">
+              <div class="ea-card-header">
+                <div class="ea-card-title">Storefront Logo & Theme Customization</div>
+              </div>
+              <div class="ea-card-body">
+
+                <!-- Logo Section -->
+                <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Storefront Logo & Identity</h6>
+                
+                <div class="row g-3 mb-4">
+                  <!-- File Upload Dropzone -->
+                  <div class="col-12">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Upload Logo Image</label>
+                      <input type="file" id="logoFileInput" accept="image/*" style="display:none;" onchange="handleLogoFileSelect(event)">
+                      
+                      <div id="logoDropZone" onclick="document.getElementById('logoFileInput').click()" style="border:2px dashed var(--border); border-radius:12px; padding:16px 20px; text-align:center; background:var(--bg-body); cursor:pointer; transition:all 0.2s;">
+                        <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+                          <div id="logoPreviewBox" style="width:56px; height:56px; border-radius:10px; background:#F4F4F4; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); overflow:hidden;">
+                            <img id="logoPreviewThumb" src="../user/assets/imgs/logo/logo.png" alt="Logo Preview" style="max-width:100%; max-height:100%; object-fit:contain;">
+                          </div>
+                          <div style="text-align:left; flex:1;">
+                            <div style="font-size:13px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                              <span class="material-symbols-outlined" style="color:var(--gold); font-size:20px;">cloud_upload</span> Click to upload logo image
+                            </div>
+                            <div class="text-muted" style="font-size:11px; margin-top:2px;">Supports PNG, JPG, SVG, WebP (Recommended transparent PNG)</div>
+                          </div>
+                          <button type="button" class="ea-btn ea-btn-sm ea-btn-primary" style="pointer-events:none;">Choose File</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Logo Image Path / URL</label>
+                      <div style="display:flex; gap:6px;">
+                        <input type="text" id="logoUrl" class="ea-input" placeholder="assets/imgs/logo/logo.png" oninput="updateLivePreview()">
+                        <button type="button" class="ea-btn ea-btn-sm" style="border:1px solid var(--border);" onclick="resetDefaultLogo()" title="Reset to default logo">Reset</button>
+                      </div>
+                      <small class="text-muted" style="font-size:11px;">Path or URL to logo image</small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Logo Text / Brand Name</label>
+                      <input type="text" id="brandName" class="ea-input" placeholder="Eusta" oninput="updateLivePreview()">
+                      <small class="text-muted" style="font-size:11px;">Displayed on storefront header & title</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ea-divider mb-4"></div>
+
+                <!-- Theme Color Presets -->
+                <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Color Theme Presets</h6>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:24px;">
+                  <button type="button" class="preset-btn" onclick="selectPreset('gold', '#B18B5E', '#1A1A1A', '#FFFFFF', '#1A1A1A')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#B18B5E; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#1A1A1A; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Eusta Gold</div>
+                    <div class="text-muted" style="font-size:10px;">Classic Luxury</div>
+                  </button>
+
+                  <button type="button" class="preset-btn" onclick="selectPreset('emerald', '#059669', '#064E3B', '#FFFFFF', '#064E3B')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#059669; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#064E3B; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Emerald Green</div>
+                    <div class="text-muted" style="font-size:10px;">Fresh & Botanical</div>
+                  </button>
+
+                  <button type="button" class="preset-btn" onclick="selectPreset('sapphire', '#2563EB', '#1E3A8A', '#FFFFFF', '#1E3A8A')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#2563EB; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#1E3A8A; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Royal Sapphire</div>
+                    <div class="text-muted" style="font-size:10px;">Modern Corporate</div>
+                  </button>
+
+                  <button type="button" class="preset-btn" onclick="selectPreset('amber', '#D97706', '#78350F', '#FFFFFF', '#78350F')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#D97706; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#78350F; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Sunset Amber</div>
+                    <div class="text-muted" style="font-size:10px;">Warm & Cozy</div>
+                  </button>
+
+                  <button type="button" class="preset-btn" onclick="selectPreset('crimson', '#DC2626', '#881337', '#FFFFFF', '#881337')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#DC2626; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#881337; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Crimson Elegance</div>
+                    <div class="text-muted" style="font-size:10px;">Bold & Premium</div>
+                  </button>
+
+                  <button type="button" class="preset-btn" onclick="selectPreset('onyx', '#18181B', '#09090B', '#FFFFFF', '#09090B')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left; transition:all 0.2s;">
+                    <div style="display:flex; gap:4px; margin-bottom:6px;">
+                      <span style="width:18px; height:18px; border-radius:50%; background:#18181B; display:inline-block;"></span>
+                      <span style="width:18px; height:18px; border-radius:50%; background:#09090B; display:inline-block;"></span>
+                    </div>
+                    <div style="font-size:12px; font-weight:600;">Dark Onyx</div>
+                    <div class="text-muted" style="font-size:10px;">Minimalist Dark</div>
+                  </button>
+                </div>
+
+                <div class="ea-divider mb-4"></div>
+
+                <!-- Custom Colors -->
+                <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Custom Theme Palette</h6>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Primary Accent Color</label>
+                      <div style="display:flex; gap:8px;">
+                        <input type="color" id="primaryColorPicker" value="#B18B5E" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('primary')">
+                        <input type="text" id="primaryColorHex" class="ea-input" value="#B18B5E" oninput="syncColorPicker('primary')">
+                      </div>
+                      <small class="text-muted" style="font-size:11px;">Used for buttons, active menus, & key highlights</small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Secondary / Header Color</label>
+                      <div style="display:flex; gap:8px;">
+                        <input type="color" id="secondaryColorPicker" value="#1A1A1A" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('secondary')">
+                        <input type="text" id="secondaryColorHex" class="ea-input" value="#1A1A1A" oninput="syncColorPicker('secondary')">
+                      </div>
+                      <small class="text-muted" style="font-size:11px;">Used for headers, dark accents & badges</small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Storefront Background Tint</label>
+                      <div style="display:flex; gap:8px;">
+                        <input type="color" id="bgColorPicker" value="#FFFFFF" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('bg')">
+                        <input type="text" id="bgColorHex" class="ea-input" value="#FFFFFF" oninput="syncColorPicker('bg')">
+                      </div>
+                      <small class="text-muted" style="font-size:11px;">Body background tone</small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="ea-form-group">
+                      <label class="ea-label">Heading & Text Color</label>
+                      <div style="display:flex; gap:8px;">
+                        <input type="color" id="textColorPicker" value="#1A1A1A" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('text')">
+                        <input type="text" id="textColorHex" class="ea-input" value="#1A1A1A" oninput="syncColorPicker('text')">
+                      </div>
+                      <small class="text-muted" style="font-size:11px;">Headings and main title colors</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+                  <button type="button" class="ea-btn ea-btn-primary" id="saveBrandingBtn"><span class="material-symbols-outlined">palette</span> Save Branding & Colors</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Interactive Preview Panel -->
+          <div class="col-12 col-lg-5">
+            <div class="ea-card" style="position:sticky; top:20px;">
+              <div class="ea-card-header" style="display:flex; align-items:center; justify-content:space-between;">
+                <div class="ea-card-title">Live Storefront Preview</div>
+                <span class="ea-badge ea-badge-gold">Real-time</span>
+              </div>
+              <div class="ea-card-body" id="previewContainer" style="background:#FFFFFF; border-radius:12px; padding:16px; transition:all 0.3s; border:1px solid #E5E7EB;">
+                
+                <!-- Mini Header -->
+                <div id="prevHeader" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#ffffff; border-radius:8px; border-bottom:2px solid #B18B5E; margin-bottom:16px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <img id="prevLogoImg" src="../user/assets/imgs/logo/logo.png" alt="Logo" style="height:24px; object-fit:contain;">
+                    <span id="prevBrandText" style="font-weight:700; font-size:14px; color:#1A1A1A;">Eusta</span>
+                  </div>
+                  <div style="display:flex; gap:12px; font-size:11px; font-weight:600;">
+                    <span style="color:#1A1A1A;">Home</span>
+                    <span id="prevActiveTab" style="color:#B18B5E; border-bottom:2px solid #B18B5E; padding-bottom:2px;">Deals</span>
+                    <span style="color:#1A1A1A;">Shop</span>
+                  </div>
+                </div>
+
+                <!-- Banner / Hero Card Preview -->
+                <div id="prevHeroCard" style="background:rgba(177,139,94,0.08); border-radius:12px; padding:16px; margin-bottom:16px; position:relative; overflow:hidden;">
+                  <span id="prevBadge" style="background:#1A1A1A; color:#FFFFFF; font-size:9px; font-weight:700; padding:3px 8px; border-radius:20px; text-transform:uppercase;">GET 30% OFF</span>
+                  <h5 id="prevHeading" style="font-size:15px; font-weight:700; color:#1A1A1A; margin-top:8px; margin-bottom:10px;">Wicker Hanging Chairs</h5>
+                  <button id="prevBtn" style="background:#B18B5E; color:#FFFFFF; border:none; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                    BUY NOW <span style="font-size:10px;">›</span>
+                  </button>
+                </div>
+
+                <!-- Mini Product Card -->
+                <div style="border:1px solid #E5E7EB; border-radius:12px; padding:12px; background:#ffffff;">
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:50px; height:50px; background:#F4F4F4; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px;">🪑</div>
+                    <div style="flex:1;">
+                      <div style="font-size:12px; font-weight:700; color:#1A1A1A;">Brasslegged Armchair</div>
+                      <div style="display:flex; gap:6px; align-items:baseline; margin-top:2px;">
+                        <span id="prevPrice" style="font-weight:700; font-size:13px; color:#1A1A1A;">₹14,999</span>
+                        <span style="font-size:10px; text-decoration:line-through; color:#8E8E93;">₹18,999</span>
+                      </div>
+                    </div>
+                    <button id="prevBtnSmall" style="background:#B18B5E; color:#FFFFFF; border:none; padding:5px 10px; border-radius:16px; font-size:10px; font-weight:600;">Enquire</button>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -296,6 +525,269 @@
     tw.appendChild(t);
     setTimeout(() => t.remove(), 3500);
   }
+
+  // Color Sync Helpers
+  function syncColorInput(type) {
+    if (type === 'primary') {
+      const val = document.getElementById('primaryColorPicker').value;
+      document.getElementById('primaryColorHex').value = val;
+    } else if (type === 'secondary') {
+      const val = document.getElementById('secondaryColorPicker').value;
+      document.getElementById('secondaryColorHex').value = val;
+    } else if (type === 'bg') {
+      const val = document.getElementById('bgColorPicker').value;
+      document.getElementById('bgColorHex').value = val;
+    } else if (type === 'text') {
+      const val = document.getElementById('textColorPicker').value;
+      document.getElementById('textColorHex').value = val;
+    }
+    updateLivePreview();
+  }
+
+  function syncColorPicker(type) {
+    if (type === 'primary') {
+      const val = document.getElementById('primaryColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('primaryColorPicker').value = val;
+    } else if (type === 'secondary') {
+      const val = document.getElementById('secondaryColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('secondaryColorPicker').value = val;
+    } else if (type === 'bg') {
+      const val = document.getElementById('bgColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('bgColorPicker').value = val;
+    } else if (type === 'text') {
+      const val = document.getElementById('textColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('textColorPicker').value = val;
+    }
+    updateLivePreview();
+  }
+
+  function selectPreset(presetName, primary, secondary, bg, text) {
+    document.getElementById('primaryColorPicker').value = primary;
+    document.getElementById('primaryColorHex').value = primary;
+    document.getElementById('secondaryColorPicker').value = secondary;
+    document.getElementById('secondaryColorHex').value = secondary;
+    document.getElementById('bgColorPicker').value = bg;
+    document.getElementById('bgColorHex').value = bg;
+    document.getElementById('textColorPicker').value = text;
+    document.getElementById('textColorHex').value = text;
+    updateLivePreview();
+  }
+
+  async function handleLogoFileSelect(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async function(evt) {
+      const base64Data = evt.target.result;
+      
+      const thumb = document.getElementById('logoPreviewThumb');
+      const prevImg = document.getElementById('prevLogoImg');
+      if (thumb) thumb.src = base64Data;
+      if (prevImg) prevImg.src = base64Data;
+
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64Data })
+        });
+        const data = await res.json();
+        if (data.success && data.url) {
+          document.getElementById('logoUrl').value = data.url;
+          showToast('Logo image uploaded successfully!');
+        } else {
+          document.getElementById('logoUrl').value = base64Data;
+        }
+      } catch (err) {
+        console.warn('Server upload failed, using Data URL fallback:', err);
+        document.getElementById('logoUrl').value = base64Data;
+      }
+      updateLivePreview();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetDefaultLogo() {
+    const defaultUrl = 'assets/imgs/logo/logo.png';
+    document.getElementById('logoUrl').value = defaultUrl;
+    const thumb = document.getElementById('logoPreviewThumb');
+    const prevImg = document.getElementById('prevLogoImg');
+    if (thumb) thumb.src = '../user/assets/imgs/logo/logo.png';
+    if (prevImg) prevImg.src = '../user/assets/imgs/logo/logo.png';
+    updateLivePreview();
+    showToast('Logo reset to default');
+  }
+
+  function updateLivePreview() {
+    const primary = document.getElementById('primaryColorHex')?.value || '#B18B5E';
+    const secondary = document.getElementById('secondaryColorHex')?.value || '#1A1A1A';
+    const bg = document.getElementById('bgColorHex')?.value || '#FFFFFF';
+    const text = document.getElementById('textColorHex')?.value || '#1A1A1A';
+    const brandName = document.getElementById('brandName')?.value || 'Eusta';
+    const logoUrl = document.getElementById('logoUrl')?.value;
+
+    const prevContainer = document.getElementById('previewContainer');
+    const prevHeader = document.getElementById('prevHeader');
+    const prevBrandText = document.getElementById('prevBrandText');
+    const prevLogoImg = document.getElementById('prevLogoImg');
+    const logoPreviewThumb = document.getElementById('logoPreviewThumb');
+    const prevActiveTab = document.getElementById('prevActiveTab');
+    const prevHeroCard = document.getElementById('prevHeroCard');
+    const prevBadge = document.getElementById('prevBadge');
+    const prevHeading = document.getElementById('prevHeading');
+    const prevBtn = document.getElementById('prevBtn');
+    const prevBtnSmall = document.getElementById('prevBtnSmall');
+    const prevPrice = document.getElementById('prevPrice');
+
+    if (prevContainer) prevContainer.style.background = bg;
+    if (prevBrandText) prevBrandText.textContent = brandName;
+    if (logoUrl) {
+      let resolvedSrc = logoUrl;
+      if (logoUrl.startsWith('assets/')) {
+        resolvedSrc = '../user/' + logoUrl;
+      } else if (!logoUrl.startsWith('data:') && !logoUrl.startsWith('/') && !logoUrl.startsWith('http') && !logoUrl.startsWith('../')) {
+        resolvedSrc = '../user/assets/imgs/logo/' + logoUrl;
+      }
+      if (prevLogoImg) prevLogoImg.src = resolvedSrc;
+      if (logoPreviewThumb) logoPreviewThumb.src = resolvedSrc;
+    }
+    
+    if (prevHeader) prevHeader.style.borderBottomColor = primary;
+    if (prevActiveTab) {
+      prevActiveTab.style.color = primary;
+      prevActiveTab.style.borderBottomColor = primary;
+    }
+
+    if (prevHeroCard) {
+      let hex = primary.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+      const num = parseInt(hex, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      prevHeroCard.style.background = `rgba(${r}, ${g}, ${b}, 0.08)`;
+    }
+
+    if (prevBadge) prevBadge.style.background = secondary;
+    if (prevHeading) prevHeading.style.color = text;
+    if (prevBtn) prevBtn.style.background = primary;
+    if (prevBtnSmall) prevBtnSmall.style.background = primary;
+    if (prevPrice) prevPrice.style.color = text;
+  }
+
+  async function loadSettings() {
+    try {
+      const res = await fetch('/api/settings');
+      const settings = await res.json();
+      
+      if (settings.businessName) {
+        document.getElementById('platformName').value = settings.businessName;
+        if (document.getElementById('brandName')) document.getElementById('brandName').value = settings.businessName;
+      }
+      if (settings.contactEmail) document.getElementById('contactEmail').value = settings.contactEmail;
+      if (settings.contactPhone) document.getElementById('contactPhone').value = settings.contactPhone;
+      if (settings.platformDesc) document.getElementById('platformDesc').value = settings.platformDesc;
+
+      if (settings.logoUrl && document.getElementById('logoUrl')) document.getElementById('logoUrl').value = settings.logoUrl;
+      if (settings.primaryColor && document.getElementById('primaryColorHex')) {
+        document.getElementById('primaryColorHex').value = settings.primaryColor;
+        document.getElementById('primaryColorPicker').value = settings.primaryColor;
+      }
+      if (settings.secondaryColor && document.getElementById('secondaryColorHex')) {
+        document.getElementById('secondaryColorHex').value = settings.secondaryColor;
+        document.getElementById('secondaryColorPicker').value = settings.secondaryColor;
+      }
+      if (settings.backgroundColor && document.getElementById('bgColorHex')) {
+        document.getElementById('bgColorHex').value = settings.backgroundColor;
+        document.getElementById('bgColorPicker').value = settings.backgroundColor;
+      }
+      if (settings.textColor && document.getElementById('textColorHex')) {
+        document.getElementById('textColorHex').value = settings.textColor;
+        document.getElementById('textColorPicker').value = settings.textColor;
+      }
+
+      updateLivePreview();
+    } catch (err) {
+      console.error('Error loading settings:', err);
+    }
+  }
+
+  document.getElementById('saveGeneralBtn').addEventListener('click', async () => {
+    const businessName = document.getElementById('platformName').value;
+    const contactEmail = document.getElementById('contactEmail').value;
+    const contactPhone = document.getElementById('contactPhone').value;
+    const platformDesc = document.getElementById('platformDesc').value;
+
+    const payload = {
+      businessName,
+      contactEmail,
+      contactPhone,
+      email: contactEmail,
+      phone: contactPhone,
+      whatsappNumber: contactPhone.replace(/[^0-9]/g, ''),
+      platformDesc
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('Settings saved successfully!');
+      } else {
+        alert('Failed to save settings');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error saving settings');
+    }
+  });
+
+  document.getElementById('saveBrandingBtn')?.addEventListener('click', async () => {
+    const logoUrl = document.getElementById('logoUrl').value;
+    const businessName = document.getElementById('brandName').value;
+    const primaryColor = document.getElementById('primaryColorHex').value;
+    const secondaryColor = document.getElementById('secondaryColorHex').value;
+    const backgroundColor = document.getElementById('bgColorHex').value;
+    const textColor = document.getElementById('textColorHex').value;
+
+    const payload = {
+      logoUrl,
+      businessName,
+      logoText: businessName,
+      primaryColor,
+      secondaryColor,
+      backgroundColor,
+      textColor,
+      headingColor: secondaryColor
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('Branding & Storefront colors saved successfully!');
+      } else {
+        alert('Failed to save branding settings');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error saving branding settings');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', loadSettings);
 </script>
 </body>
 </html>

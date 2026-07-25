@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.css">
   <link rel="stylesheet" href="assets/css/eusta-admin.css">
+  <script src="assets/js/admin-auth.js"></script>
 </head>
 <body>
 
@@ -304,6 +305,43 @@
     fill: { type: 'gradient', gradient: { shade: 'light', type: 'vertical', shadeIntensity: 0.3, gradientToColors: ['#D4A96A'], stops: [0, 100] } }
   });
   chart.render();
+
+  async function loadDashboardStats() {
+    try {
+      const [prodsRes, catsRes, enqsRes] = await Promise.all([
+        fetch('/api/products'),
+        fetch('/api/categories'),
+        fetch('/api/enquiries')
+      ]);
+      const products = await prodsRes.json();
+      const categories = await catsRes.json();
+      const enquiries = await enqsRes.json();
+
+      const prodCardVal = document.querySelector(".ea-stat-card[href='products.html'] .ea-stat-value");
+      if (prodCardVal) prodCardVal.textContent = products.length;
+
+      const catCardVal = document.querySelector(".ea-stat-card[href='categories.html'] .ea-stat-value");
+      if (catCardVal) catCardVal.textContent = categories.length;
+
+      const enqCardVal = document.querySelector(".ea-stat-card[href='contacts.html'] .ea-stat-value");
+      if (enqCardVal) enqCardVal.textContent = enquiries.length;
+
+      const unreadCount = enquiries.filter(e => e.status === 'Unread').length;
+      const topbarBadge = document.querySelector(".ea-topbar__badge");
+      if (topbarBadge) {
+        if (unreadCount > 0) {
+          topbarBadge.style.display = 'inline-block';
+          topbarBadge.textContent = unreadCount;
+        } else {
+          topbarBadge.style.display = 'none';
+        }
+      }
+    } catch (err) {
+      console.error('Error loading dashboard stats:', err);
+    }
+  }
+  document.addEventListener("DOMContentLoaded", loadDashboardStats);
 </script>
+<script src="assets/js/onboarding.js"></script>
 </body>
 </html>
