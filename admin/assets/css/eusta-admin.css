@@ -1243,7 +1243,8 @@ button, input, select, textarea {
 
   /* Categories Preset Grid on Mobile */
   #presetGrid {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
+    gap: 6px !important;
   }
 }
 
@@ -1258,7 +1259,8 @@ button, input, select, textarea {
     display: none;
   }
   #presetGrid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)) !important;
+    gap: 6px !important;
   }
 }
 
