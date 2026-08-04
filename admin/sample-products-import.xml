@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <name>Luxury Velvet Armchair</name>
+    <sku>EU-VL-01</sku>
+    <category>Furniture</category>
+    <price>15999</price>
+    <oldPrice>19999</oldPrice>
+    <stock>18</stock>
+    <status>Active</status>
+    <description>Premium high-density velvet armchair with brushed gold legs and ergonomic lumbar support.</description>
+    <image>assets/imgs/furniture/product/product3.png</image>
+    <images>
+      <image>assets/imgs/furniture/product/product3.png</image>
+      <image>assets/imgs/furniture/product/product6.png</image>
+      <image>assets/imgs/furniture/product/product1.png</image>
+    </images>
+  </product>
+  <product>
+    <name>Nordic Modern Pendant Light</name>
+    <sku>EU-LT-02</sku>
+    <category>Lighting</category>
+    <price>5499</price>
+    <oldPrice>7499</oldPrice>
+    <stock>30</stock>
+    <status>Active</status>
+    <description>Scandinavian hanging ceiling lamp with matte black metal shade and warm ambient LED glow.</description>
+    <image>assets/imgs/furniture/product/product4.png</image>
+    <images>
+      <image>assets/imgs/furniture/product/product4.png</image>
+      <image>assets/imgs/furniture/product/fs-01.png</image>
+      <image>assets/imgs/furniture/product/fs-02.png</image>
+    </images>
+  </product>
+  <product>
+    <name>Minimalist Solid Oak Sideboard</name>
+    <sku>EU-SB-03</sku>
+    <category>Furniture</category>
+    <price>24999</price>
+    <oldPrice>29999</oldPrice>
+    <stock>8</stock>
+    <status>Active</status>
+    <description>Elegant solid oak wooden storage cabinet with soft-close sliding doors and brass handles.</description>
+    <image>assets/imgs/furniture/product/product7.png</image>
+    <images>
+      <image>assets/imgs/furniture/product/product7.png</image>
+      <image>assets/imgs/furniture/product/product8.png</image>
+      <image>assets/imgs/furniture/product/off-01.png</image>
+    </images>
+  </product>
+</products>

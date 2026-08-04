@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Analyser | Eusta Admin</title>
+  <meta name="description" content="Eusta Admin Click Analyser: Product views, WhatsApp order clicks, and interest analytics.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.css">
+  <link rel="stylesheet" href="assets/css/eusta-admin.css">
+  <script src="assets/js/admin-auth.js"></script>
+</head>
+<body>
+
+<div class="ea-sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="ea-shell">
+
+  <!-- Sidebar -->
+  <aside class="ea-sidebar" id="sidebar">
+    <div class="ea-sidebar__logo">
+      <img src="assets/img/logo.png" alt="Eusta Logo">
+      <span class="ea-sidebar__logo-badge">Admin</span>
+      <button class="ea-sidebar__close-btn" id="sidebarCloseBtn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <nav class="ea-sidebar__nav">
+      <span class="ea-sidebar__section-label">Main Menu</span>
+      <a href="index.html" class="ea-nav-item" id="nav-dashboard">
+        <span class="material-symbols-outlined ea-nav-icon">dashboard</span>
+        <span class="ea-nav-label">Dashboard</span>
+      </a>
+      <a href="products.html" class="ea-nav-item" id="nav-products">
+        <span class="material-symbols-outlined ea-nav-icon">inventory_2</span>
+        <span class="ea-nav-label">Products</span>
+      </a>
+      <a href="categories.html" class="ea-nav-item" id="nav-categories">
+        <span class="material-symbols-outlined ea-nav-icon">category</span>
+        <span class="ea-nav-label">Categories</span>
+      </a>
+      <a href="contacts.html" class="ea-nav-item" id="nav-contacts">
+        <span class="material-symbols-outlined ea-nav-icon">forum</span>
+        <span class="ea-nav-label">Enquiries</span>
+      </a>
+      <a href="click-analyzer.html" class="ea-nav-item active" id="nav-click-analyzer">
+        <span class="material-symbols-outlined ea-nav-icon">insights</span>
+        <span class="ea-nav-label">Click Analyser</span>
+      </a>
+
+      <span class="ea-sidebar__section-label">System</span>
+      <a href="legal.html" class="ea-nav-item" id="nav-legal">
+        <span class="material-symbols-outlined ea-nav-icon">gavel</span>
+        <span class="ea-nav-label">Legal</span>
+      </a>
+      <a href="settings.html" class="ea-nav-item" id="nav-settings">
+        <span class="material-symbols-outlined ea-nav-icon">settings</span>
+        <span class="ea-nav-label">Settings</span>
+      </a>
+    </nav>
+    <div class="ea-sidebar__footer">
+      <div class="ea-sidebar__footer-card">
+        <p>Eusta Business Plan</p>
+        <strong>14 Days Left</strong>
+        <a href="settings.html" class="ea-btn ea-btn-primary ea-btn-sm" style="width:100%; justify-content:center;">Upgrade Plan</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="ea-content">
+
+    <header class="ea-topbar">
+      <div class="ea-topbar__left">
+        <button class="ea-topbar__toggle" id="sidebarToggle"><span class="material-symbols-outlined">menu</span></button>
+        <div class="ea-topbar__breadcrumb">
+          <span class="ea-topbar__title">Product Click Analyser</span>
+          <span class="ea-topbar__sub">Track customer interest & WhatsApp order intent</span>
+        </div>
+      </div>
+      <div class="ea-topbar__right">
+        <a href="../user/index.html" class="ea-topbar__btn" title="View Storefront" target="_blank">
+          <span class="material-symbols-outlined">open_in_new</span>
+        </a>
+        <div class="ea-user-menu" id="userMenu">
+          <div class="ea-user-trigger" id="userTrigger">
+            <div class="ea-user-avatar">EA</div>
+            <div class="ea-user-info">
+              <span class="ea-user-name">Eusta Admin</span>
+              <span class="ea-user-role">Administrator</span>
+            </div>
+            <span class="material-symbols-outlined ea-user-chevron">expand_more</span>
+          </div>
+          <div class="ea-user-dropdown">
+            <a href="settings.html" class="ea-dropdown-item"><span class="material-symbols-outlined">settings</span> Settings</a>
+            <a href="../user/index.html" class="ea-dropdown-item"><span class="material-symbols-outlined">store</span> View Store</a>
+            <div class="ea-dropdown-divider"></div>
+            <a href="signin.html" class="ea-dropdown-item danger"><span class="material-symbols-outlined">logout</span> Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="ea-main">
+
+      <!-- Stat Cards -->
+      <div class="ea-stats-grid">
+        <div class="ea-stat-card">
+          <div class="ea-stat-icon">
+            <span class="material-symbols-outlined">visibility</span>
+          </div>
+          <div class="ea-stat-content">
+            <div class="ea-stat-value" id="statTotalViews">0</div>
+            <div class="ea-stat-label">Total Product Views</div>
+          </div>
+        </div>
+
+        <div class="ea-stat-card">
+          <div class="ea-stat-icon">
+            <span class="material-symbols-outlined">chat</span>
+          </div>
+          <div class="ea-stat-content">
+            <div class="ea-stat-value" id="statTotalWhatsapp">0</div>
+            <div class="ea-stat-label">WhatsApp Order Clicks</div>
+          </div>
+        </div>
+
+        <div class="ea-stat-card">
+          <div class="ea-stat-icon">
+            <span class="material-symbols-outlined">ads_click</span>
+          </div>
+          <div class="ea-stat-content">
+            <div class="ea-stat-value" id="statConversionRate">0%</div>
+            <div class="ea-stat-label">WhatsApp Intent Rate</div>
+          </div>
+        </div>
+
+        <div class="ea-stat-card">
+          <div class="ea-stat-icon">
+            <span class="material-symbols-outlined">category</span>
+          </div>
+          <div class="ea-stat-content">
+            <div class="ea-stat-value" id="statTopCategory" style="font-size: 16px; padding-top:4px;">-</div>
+            <div class="ea-stat-label">Top Active Category</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row g-4 mb-4">
+        <!-- Top 5 Most Clicked Products -->
+        <div class="col-12 col-lg-7">
+          <div class="ea-card" style="height:100%;">
+            <div class="ea-card-header">
+              <div>
+                <div class="ea-card-title">Top Most Clicked Products</div>
+                <div class="ea-card-subtitle">Products with highest customer engagement</div>
+              </div>
+            </div>
+            <div class="ea-card-body">
+              <div id="topClickedChart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Interest Distribution -->
+        <div class="col-12 col-lg-5">
+          <div class="ea-card" style="height:100%;">
+            <div class="ea-card-header">
+              <div>
+                <div class="ea-card-title">Category Interest</div>
+                <div class="ea-card-subtitle">Click share by category</div>
+              </div>
+            </div>
+            <div class="ea-card-body d-flex justify-content-center align-items-center">
+              <div id="categoryDonutChart" style="width:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Actions Bar -->
+      <div class="ea-search-bar mb-4">
+        <div class="ea-search-wrap">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" class="ea-input" id="analyticsSearch" placeholder="Search product analytics by name, SKU...">
+        </div>
+        <select class="ea-select" id="analyticsCategoryFilter" style="width:auto; min-width:160px;">
+          <option value="">All Categories</option>
+        </select>
+        <select class="ea-select" id="analyticsSortFilter" style="width:auto; min-width:160px;">
+          <option value="most">Sort: Most Clicked</option>
+          <option value="least">Sort: Least Visited</option>
+          <option value="wa">Sort: Most WhatsApp Clicks</option>
+          <option value="rate">Sort: Highest Intent Rate %</option>
+        </select>
+        <button class="ea-btn ea-btn-ghost" id="exportCsvBtn" title="Export Analytics to CSV">
+          <span class="material-symbols-outlined">file_download</span> Export
+        </button>
+        <button class="ea-btn ea-btn-ghost danger" id="resetAnalyticsBtn" title="Reset Click Counters">
+          <span class="material-symbols-outlined">restart_alt</span> Reset Stats
+        </button>
+      </div>
+
+      <!-- Tabs for Most Clicked vs Least Visited -->
+      <div class="ea-card mb-4">
+        <div class="ea-card-header" style="flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div class="ea-card-title">Product Click Performance Breakdown</div>
+            <div class="ea-card-subtitle">Detailed product views, WhatsApp order button clicks, and conversion rates</div>
+          </div>
+          <ul class="nav nav-pills" id="analyticsTabs" role="tablist" style="gap: 6px;">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active ea-btn ea-btn-sm ea-btn-ghost" id="tab-all-btn" data-bs-toggle="pill" data-bs-target="#tab-all" type="button">All Products</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link ea-btn ea-btn-sm ea-btn-ghost" id="tab-top-btn" data-bs-toggle="pill" data-bs-target="#tab-top" type="button">🔥 Most Popular (Top 5)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link ea-btn ea-btn-sm ea-btn-ghost" id="tab-cold-btn" data-bs-toggle="pill" data-bs-target="#tab-cold" type="button">❄️ Cold / Least Visited</button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ea-card-body--no-pad">
+          <div class="table-responsive">
+            <table class="ea-table" id="analyticsTable">
+              <thead>
+                <tr>
+                  <th style="width:50px;">Rank</th>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th style="text-align:right;">Views</th>
+                  <th style="text-align:right;">WhatsApp Clicks</th>
+                  <th style="text-align:center;">Intent Rate</th>
+                  <th>Last Clicked</th>
+                  <th style="text-align:right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="analyticsTableBody">
+                <!-- Dynamically Rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="ea-toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.js"></script>
+
+<script>
+  // UI Controls (Sidebar & User Menu)
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggle  = document.getElementById('sidebarToggle');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('open'); }
+  function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+
+  if (toggle) toggle.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+
+  const userTrigger = document.getElementById('userTrigger');
+  const userMenu    = document.getElementById('userMenu');
+  if (userTrigger && userMenu) {
+    userTrigger.addEventListener('click', () => userMenu.classList.toggle('open'));
+    document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) userMenu.classList.remove('open'); });
+  }
+
+  function showToast(msg, type = 'success') {
+    const wrap = document.getElementById('toastWrap');
+    if (!wrap) return;
+    const toast = document.createElement('div');
+    toast.className = `ea-toast ea-toast-${type}`;
+    toast.innerHTML = `<span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : 'error'}</span> <span>${msg}</span>`;
+    wrap.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+  }
+
+  // Analytics Engine
+  let rawAnalyticsData = null;
+  let topClickedChartInstance = null;
+  let categoryDonutChartInstance = null;
+  let currentActiveTab = 'all';
+
+  async function fetchAnalytics() {
+    try {
+      const res = await fetch('/api/analytics');
+      if (!res.ok) throw new Error('Failed to load analytics');
+      rawAnalyticsData = await res.json();
+      renderDashboard(rawAnalyticsData);
+    } catch (err) {
+      console.error('Analytics load error:', err);
+      showToast('Error loading click analytics', 'danger');
+    }
+  }
+
+  function renderDashboard(data) {
+    if (!data) return;
+
+    // Stat Cards
+    document.getElementById('statTotalViews').textContent = (data.summary.totalViews || 0).toLocaleString();
+    document.getElementById('statTotalWhatsapp').textContent = (data.summary.totalWhatsappClicks || 0).toLocaleString();
+    document.getElementById('statConversionRate').textContent = `${data.summary.overallConversionRate}%`;
+
+    // Calculate Top Category
+    if (data.categoryStats && data.categoryStats.length > 0) {
+      const sortedCats = [...data.categoryStats].sort((a, b) => (b.views + b.whatsappClicks) - (a.views + a.whatsappClicks));
+      document.getElementById('statTopCategory').textContent = sortedCats[0].category || 'Furniture';
+    } else {
+      document.getElementById('statTopCategory').textContent = 'Furniture';
+    }
+
+    // Category Select Options
+    const catSelect = document.getElementById('analyticsCategoryFilter');
+    const existingCats = new Set(data.categoryStats.map(c => c.category));
+    catSelect.innerHTML = '<option value="">All Categories</option>';
+    existingCats.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      catSelect.appendChild(opt);
+    });
+
+    // Render Charts
+    renderTopClickedChart(data.mostClicked || []);
+    renderCategoryDonutChart(data.categoryStats || []);
+
+    // Render Table
+    renderTable();
+  }
+
+  function renderTopClickedChart(mostClicked) {
+    const categories = mostClicked.map(p => p.name.length > 18 ? p.name.substring(0, 16) + '…' : p.name);
+    const viewsData = mostClicked.map(p => p.views);
+    const waData = mostClicked.map(p => p.whatsappClicks);
+
+    const options = {
+      chart: { type: 'bar', height: 260, toolbar: { show: false }, fontFamily: 'Plus Jakarta Sans, sans-serif' },
+      colors: ['#3B82F6', '#22C55E'],
+      series: [
+        { name: 'Product Views', data: viewsData },
+        { name: 'WhatsApp Clicks', data: waData }
+      ],
+      xaxis: { categories: categories, labels: { style: { colors: '#9CA3AF', fontSize: '11px' } } },
+      yaxis: { labels: { style: { colors: '#9CA3AF', fontSize: '11px' } } },
+      grid: { borderColor: '#EBEBEB', strokeDashArray: 4 },
+      plotOptions: { bar: { borderRadius: 4, columnWidth: '55%' } },
+      legend: { position: 'top', labels: { colors: '#4B5563' } },
+      tooltip: { theme: 'light' },
+      dataLabels: { enabled: false }
+    };
+
+    if (topClickedChartInstance) {
+      topClickedChartInstance.destroy();
+    }
+    topClickedChartInstance = new ApexCharts(document.getElementById('topClickedChart'), options);
+    topClickedChartInstance.render();
+  }
+
+  function renderCategoryDonutChart(categoryStats) {
+    const labels = categoryStats.map(c => c.category);
+    const series = categoryStats.map(c => c.views + c.whatsappClicks);
+
+    const options = {
+      chart: { type: 'donut', height: 260, fontFamily: 'Plus Jakarta Sans, sans-serif' },
+      labels: labels.length > 0 ? labels : ['Furniture', 'Lighting'],
+      series: series.length > 0 ? series : [100, 20],
+      colors: ['#B18B5E', '#3B82F6', '#22C55E', '#A855F7', '#EC4899', '#F59E0B'],
+      legend: { position: 'bottom', labels: { colors: '#4B5563' } },
+      stroke: { show: false },
+      dataLabels: { enabled: true, style: { fontSize: '11px' } },
+      tooltip: { theme: 'light' }
+    };
+
+    if (categoryDonutChartInstance) {
+      categoryDonutChartInstance.destroy();
+    }
+    categoryDonutChartInstance = new ApexCharts(document.getElementById('categoryDonutChart'), options);
+    categoryDonutChartInstance.render();
+  }
+
+  function renderTable() {
+    if (!rawAnalyticsData || !rawAnalyticsData.products) return;
+
+    let items = [...rawAnalyticsData.products];
+
+    // Search filter
+    const searchVal = document.getElementById('analyticsSearch').value.toLowerCase().trim();
+    if (searchVal) {
+      items = items.filter(p => p.name.toLowerCase().includes(searchVal) || p.sku.toLowerCase().includes(searchVal));
+    }
+
+    // Category filter
+    const catVal = document.getElementById('analyticsCategoryFilter').value;
+    if (catVal) {
+      items = items.filter(p => p.category === catVal);
+    }
+
+    // Tab filter
+    if (currentActiveTab === 'top') {
+      items = [...items].sort((a, b) => b.totalClicks - a.totalClicks).slice(0, 5);
+    } else if (currentActiveTab === 'cold') {
+      items = [...items].sort((a, b) => a.views - b.views).slice(0, 5);
+    } else {
+      // Sort filter
+      const sortVal = document.getElementById('analyticsSortFilter').value;
+      if (sortVal === 'least') {
+        items.sort((a, b) => a.views - b.views);
+      } else if (sortVal === 'wa') {
+        items.sort((a, b) => b.whatsappClicks - a.whatsappClicks);
+      } else if (sortVal === 'rate') {
+        items.sort((a, b) => b.conversionRate - a.conversionRate);
+      } else {
+        items.sort((a, b) => b.totalClicks - a.totalClicks);
+      }
+    }
+
+    const tbody = document.getElementById('analyticsTableBody');
+    if (items.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">No product click records found</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = items.map((p, index) => {
+      let imgPath = p.image || '';
+      if (imgPath.startsWith('assets/imgs/') || imgPath.startsWith('assets/img/')) {
+        imgPath = '../user/' + imgPath;
+      } else if (!imgPath.startsWith('http') && !imgPath.startsWith('/')) {
+        imgPath = '../user/' + imgPath;
+      }
+
+      const lastClickStr = p.lastClicked ? new Date(p.lastClicked).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Never';
+
+      let rankBadge = `<span class="ea-badge ea-badge-ghost">#${index + 1}</span>`;
+      if (index === 0 && (currentActiveTab === 'all' || currentActiveTab === 'top')) {
+        rankBadge = `<span class="ea-badge ea-badge-gold">🥇 #1</span>`;
+      } else if (index === 1 && (currentActiveTab === 'all' || currentActiveTab === 'top')) {
+        rankBadge = `<span class="ea-badge ea-badge-blue">🥈 #2</span>`;
+      } else if (index === 2 && (currentActiveTab === 'all' || currentActiveTab === 'top')) {
+        rankBadge = `<span class="ea-badge ea-badge-green">🥉 #3</span>`;
+      }
+
+      let convBadge = `<span class="ea-badge ${p.conversionRate >= 20 ? 'ea-badge-green' : p.conversionRate >= 10 ? 'ea-badge-gold' : 'ea-badge-ghost'}">${p.conversionRate}%</span>`;
+
+      return `
+        <tr>
+          <td>${rankBadge}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <img src="${imgPath}" alt="${p.name}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;" onerror="this.src='../user/assets/imgs/furniture/product/product1.png'">
+              <div>
+                <strong>${p.name}</strong>
+                <div style="font-size:12px; color:#6B7280;">SKU: ${p.sku} | ₹${(p.price || 0).toLocaleString()}</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="ea-badge ea-badge-ghost">${p.category}</span></td>
+          <td style="text-align:right;"><strong>${p.views.toLocaleString()}</strong></td>
+          <td style="text-align:right;"><span style="color:#22C55E; font-weight:700;">${p.whatsappClicks.toLocaleString()}</span></td>
+          <td style="text-align:center;">${convBadge}</td>
+          <td style="font-size:12px; color:#6B7280;">${lastClickStr}</td>
+          <td style="text-align:right;">
+            <a href="../user/product-details.html?id=${p.id}" target="_blank" class="ea-btn ea-btn-ghost ea-btn-sm" title="View Store Product">
+              <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Event Handlers
+  document.getElementById('analyticsSearch').addEventListener('input', renderTable);
+  document.getElementById('analyticsCategoryFilter').addEventListener('change', renderTable);
+  document.getElementById('analyticsSortFilter').addEventListener('change', renderTable);
+
+  // Tab switching
+  document.getElementById('tab-all-btn').addEventListener('click', () => { currentActiveTab = 'all'; renderTable(); });
+  document.getElementById('tab-top-btn').addEventListener('click', () => { currentActiveTab = 'top'; renderTable(); });
+  document.getElementById('tab-cold-btn').addEventListener('click', () => { currentActiveTab = 'cold'; renderTable(); });
+
+  // Export CSV
+  document.getElementById('exportCsvBtn').addEventListener('click', () => {
+    if (!rawAnalyticsData || !rawAnalyticsData.products) return;
+    const headers = ['Rank', 'Product ID', 'Name', 'SKU', 'Category', 'Price', 'Views', 'WhatsApp Clicks', 'Conversion Rate %', 'Last Clicked'];
+    const rows = rawAnalyticsData.products.map((p, i) => [
+      i + 1,
+      `"${p.id}"`,
+      `"${p.name}"`,
+      `"${p.sku}"`,
+      `"${p.category}"`,
+      p.price,
+      p.views,
+      p.whatsappClicks,
+      p.conversionRate,
+      `"${p.lastClicked || ''}"`
+    ]);
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Eusta_Product_Click_Analytics_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showToast('Analytics exported to CSV');
+  });
+
+  // Reset Stats
+  document.getElementById('resetAnalyticsBtn').addEventListener('click', async () => {
+    if (confirm('Are you sure you want to reset all product click counters and logs to zero?')) {
+      try {
+        const res = await fetch('/api/analytics/reset', { method: 'POST' });
+        if (res.ok) {
+          showToast('Analytics reset successfully');
+          fetchAnalytics();
+        }
+      } catch (e) {
+        showToast('Error resetting analytics', 'danger');
+      }
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', fetchAnalytics);
+</script>
+</body>
+</html>

@@ -203,6 +203,9 @@ async function handleApi(req, res, pathname, searchParams) {
 
     if (req.method === 'POST') {
       const body = await getRequestBody(req);
+      const mainImg = body.image || 'assets/imgs/furniture/product/product1.png';
+      let imgList = Array.isArray(body.images) && body.images.length > 0 ? body.images : [mainImg];
+      
       const newProduct = {
         id: 'prod_' + Date.now(),
         name: body.name || 'New Product',
@@ -213,7 +216,8 @@ async function handleApi(req, res, pathname, searchParams) {
         stock: Number(body.stock) || 0,
         status: body.status || 'Active',
         description: body.description || '',
-        image: body.image || 'assets/imgs/furniture/product/product1.png',
+        image: mainImg,
+        images: imgList,
         onSale: body.onSale || false
       };
       products.push(newProduct);
@@ -226,6 +230,12 @@ async function handleApi(req, res, pathname, searchParams) {
       const body = await getRequestBody(req);
       const index = products.findIndex(p => p.id === body.id);
       if (index !== -1) {
+        const mainImg = body.image !== undefined ? body.image : products[index].image;
+        let imgList = products[index].images || [products[index].image];
+        if (Array.isArray(body.images)) {
+          imgList = body.images.length > 0 ? body.images : [mainImg];
+        }
+
         products[index] = {
           ...products[index],
           name: body.name !== undefined ? body.name : products[index].name,
@@ -236,7 +246,8 @@ async function handleApi(req, res, pathname, searchParams) {
           stock: body.stock !== undefined ? Number(body.stock) : products[index].stock,
           status: body.status !== undefined ? body.status : products[index].status,
           description: body.description !== undefined ? body.description : products[index].description,
-          image: body.image !== undefined ? body.image : products[index].image,
+          image: mainImg,
+          images: imgList,
           onSale: body.onSale !== undefined ? body.onSale : products[index].onSale
         };
         writeDb('products.json', products);
@@ -254,6 +265,54 @@ async function handleApi(req, res, pathname, searchParams) {
       sendJson(res, 200, { success: true });
       return;
     }
+  }
+
+  // --- BULK PRODUCT IMPORT ---
+  if (pathname === '/api/products/import' && req.method === 'POST') {
+    const body = await getRequestBody(req);
+    const itemsToImport = Array.isArray(body.products) ? body.products : (Array.isArray(body) ? body : []);
+
+    if (itemsToImport.length === 0) {
+      sendJson(res, 400, { success: false, message: 'No valid product data found to import' });
+      return;
+    }
+
+    const products = readDb('products.json');
+    const importedList = [];
+
+    itemsToImport.forEach((p, idx) => {
+      const mainImg = p.image || 'assets/imgs/furniture/product/product1.png';
+      let imgList = Array.isArray(p.images) && p.images.length > 0 ? p.images : [mainImg];
+
+      const price = Number(p.price) || 0;
+      const stock = Number(p.stock) || 0;
+
+      let status = p.status || 'Active';
+      if (stock === 0) status = 'Out of Stock';
+      else if (stock < 10 && !p.status) status = 'Low Stock';
+
+      const newProd = {
+        id: 'prod_' + (Date.now() + idx),
+        name: p.name || 'Imported Product',
+        sku: p.sku || ('EU-IMP-' + Math.floor(1000 + Math.random() * 9000)),
+        category: p.category || 'Furniture',
+        price,
+        oldPrice: p.oldPrice ? Number(p.oldPrice) : null,
+        stock,
+        status,
+        description: p.description || '',
+        image: mainImg,
+        images: imgList,
+        onSale: p.onSale || false
+      };
+
+      products.push(newProd);
+      importedList.push(newProd);
+    });
+
+    writeDb('products.json', products);
+    sendJson(res, 200, { success: true, count: importedList.length, products: importedList });
+    return;
   }
 
   // --- CATEGORIES ---
@@ -491,27 +550,135 @@ async function handleApi(req, res, pathname, searchParams) {
     }
   }
 
-  // --- SETTINGS ---
-  if (pathname === '/api/settings') {
-    let settings = readDb('settings.json');
-    if (Array.isArray(settings)) {
-      settings = settings[0] || {};
-    }
-    if (req.method === 'GET') {
-      sendJson(res, 200, settings);
+  // --- CLICK ANALYSER & PRODUCT ANALYTICS ---
+  if (pathname === '/api/analytics/track' && req.method === 'POST') {
+    const body = await getRequestBody(req);
+    const { productId, type } = body; // type: 'view' | 'whatsapp'
+    if (!productId) {
+      sendJson(res, 400, { success: false, message: 'Missing productId' });
       return;
     }
 
-    if (req.method === 'POST') {
-      const body = await getRequestBody(req);
-      const updatedSettings = {
-        ...settings,
-        ...body
+    let clickData = readDb('product_clicks.json');
+    if (!clickData || typeof clickData !== 'object' || Array.isArray(clickData)) {
+      clickData = { products: {}, logs: [] };
+    }
+    if (!clickData.products) clickData.products = {};
+    if (!clickData.logs) clickData.logs = [];
+
+    const products = readDb('products.json');
+    const prodObj = products.find(p => p.id === productId);
+
+    if (!clickData.products[productId]) {
+      clickData.products[productId] = {
+        id: productId,
+        name: prodObj ? prodObj.name : 'Unknown Product',
+        category: prodObj ? prodObj.category : 'General',
+        views: 0,
+        whatsappClicks: 0,
+        lastClicked: new Date().toISOString()
       };
-      writeDb('settings.json', updatedSettings);
-      sendJson(res, 200, updatedSettings);
+    }
+
+    const item = clickData.products[productId];
+    if (type === 'whatsapp') {
+      item.whatsappClicks = (item.whatsappClicks || 0) + 1;
+    } else {
+      item.views = (item.views || 0) + 1;
+    }
+    item.lastClicked = new Date().toISOString();
+
+    // Log recent event
+    clickData.logs.unshift({
+      productId,
+      productName: prodObj ? prodObj.name : item.name,
+      type: type || 'view',
+      timestamp: new Date().toISOString()
+    });
+    // Keep max 100 log entries
+    if (clickData.logs.length > 100) {
+      clickData.logs = clickData.logs.slice(0, 100);
+    }
+
+    writeDb('product_clicks.json', clickData);
+    sendJson(res, 200, { success: true, data: item });
+    return;
+  }
+
+  if (pathname === '/api/analytics') {
+    if (req.method === 'GET') {
+      let clickData = readDb('product_clicks.json');
+      if (!clickData || typeof clickData !== 'object' || Array.isArray(clickData)) {
+        clickData = { products: {}, logs: [] };
+      }
+      const products = readDb('products.json');
+      const clickProducts = clickData.products || {};
+
+      let totalViews = 0;
+      let totalWhatsappClicks = 0;
+      const categoryMap = {};
+
+      const fullList = products.map(p => {
+        const stats = clickProducts[p.id] || { views: 0, whatsappClicks: 0, lastClicked: null };
+        const views = Number(stats.views) || 0;
+        const waClicks = Number(stats.whatsappClicks) || 0;
+        totalViews += views;
+        totalWhatsappClicks += waClicks;
+
+        const convRate = views > 0 ? ((waClicks / views) * 100).toFixed(1) : '0.0';
+
+        // Category breakdown
+        const cat = p.category || 'Uncategorized';
+        if (!categoryMap[cat]) {
+          categoryMap[cat] = { category: cat, views: 0, whatsappClicks: 0, productCount: 0 };
+        }
+        categoryMap[cat].views += views;
+        categoryMap[cat].whatsappClicks += waClicks;
+        categoryMap[cat].productCount += 1;
+
+        return {
+          id: p.id,
+          name: p.name,
+          sku: p.sku || '',
+          category: p.category || 'General',
+          price: p.price || 0,
+          image: p.image || 'assets/imgs/furniture/product/product1.png',
+          status: p.status || 'Active',
+          views,
+          whatsappClicks: waClicks,
+          totalClicks: views + waClicks,
+          conversionRate: Number(convRate),
+          lastClicked: stats.lastClicked
+        };
+      });
+
+      // Sort lists
+      const sortedByClicks = [...fullList].sort((a, b) => (b.views + b.whatsappClicks) - (a.views + a.whatsappClicks));
+      const sortedByViewsAsc = [...fullList].sort((a, b) => a.views - b.views);
+
+      const overallConvRate = totalViews > 0 ? ((totalWhatsappClicks / totalViews) * 100).toFixed(1) : '0.0';
+
+      sendJson(res, 200, {
+        summary: {
+          totalProducts: products.length,
+          totalViews,
+          totalWhatsappClicks,
+          overallConversionRate: Number(overallConvRate)
+        },
+        mostClicked: sortedByClicks.slice(0, 5),
+        leastVisited: sortedByViewsAsc.slice(0, 5),
+        categoryStats: Object.values(categoryMap),
+        products: fullList,
+        logs: clickData.logs || []
+      });
       return;
     }
+  }
+
+  if (pathname === '/api/analytics/reset' && req.method === 'POST') {
+    writeDb('product_clicks.json', { products: {}, logs: [] });
+    sendJson(res, 200, { success: true, message: 'Analytics reset successfully' });
+    return;
   }
 
   sendJson(res, 404, { message: 'API Route Not Found' });

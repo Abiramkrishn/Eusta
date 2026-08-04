@@ -33,6 +33,7 @@
       <a href="products.html" class="ea-nav-item active"><span class="material-symbols-outlined ea-nav-icon">inventory_2</span><span class="ea-nav-label">Products</span></a>
       <a href="categories.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">category</span><span class="ea-nav-label">Categories</span></a>
       <a href="contacts.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">forum</span><span class="ea-nav-label">Enquiries</span></a>
+      <a href="click-analyzer.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">insights</span><span class="ea-nav-label">Click Analyser</span></a>
       <span class="ea-sidebar__section-label">System</span>
       <a href="legal.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">gavel</span><span class="ea-nav-label">Legal</span></a>
       <a href="settings.html" class="ea-nav-item"><span class="material-symbols-outlined ea-nav-icon">settings</span><span class="ea-nav-label">Settings</span></a>
@@ -96,8 +97,8 @@
             <div class="ea-card-subtitle">40 products total</div>
           </div>
           <div style="display:flex; gap:8px;">
-            <button class="ea-btn ea-btn-ghost ea-btn-sm"><span class="material-symbols-outlined">filter_list</span> Filter</button>
-            <button class="ea-btn ea-btn-ghost ea-btn-sm"><span class="material-symbols-outlined">file_download</span> Export</button>
+            <button class="ea-btn ea-btn-ghost ea-btn-sm" id="exportProductsBtn" onclick="exportProductsToCsv()"><span class="material-symbols-outlined">file_download</span> Export</button>
+            <button class="ea-btn ea-btn-ghost ea-btn-sm" id="openImportModalBtn" onclick="document.getElementById('importProductsModal').classList.add('open')"><span class="material-symbols-outlined">file_upload</span> Import</button>
           </div>
         </div>
         <div class="ea-card-body--no-pad">
@@ -217,6 +218,83 @@
   }
 </style>
 
+<!-- Import Products Modal -->
+<div class="ea-modal-overlay" id="importProductsModal">
+  <div class="ea-modal" style="max-width: 680px;">
+    
+    <div class="ea-modal-header" style="border-bottom: 1px solid #EBEBEB; padding: 18px 24px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:38px; height:38px; background:rgba(177,139,94,0.1); border:1px solid rgba(177,139,94,0.3); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#B18B5E;">
+          <span class="material-symbols-outlined" style="font-size:20px;">file_upload</span>
+        </div>
+        <div>
+          <div class="ea-modal-title" style="font-size:18px; font-weight:800; color:#111827;">Bulk Import Products</div>
+          <div style="font-size:12px; color:#6B7280;">Upload XML, CSV, or JSON product catalog file</div>
+        </div>
+      </div>
+      <button class="ea-modal-close" onclick="document.getElementById('importProductsModal').classList.remove('open')">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <div class="ea-modal-body" style="padding: 24px;">
+      
+      <!-- Template Banner -->
+      <div style="background:#FAF9F6; border:1px solid #E2D9CD; border-radius:12px; padding:14px 16px; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="material-symbols-outlined" style="color:#B18B5E; font-size:22px;">code</span>
+          <div>
+            <div style="font-size:13px; font-weight:700; color:#111827;">Shopify-Style XML Import Template</div>
+            <div style="font-size:11.5px; color:#6B7280;">Need the formatted XML sample file? Download it below.</div>
+          </div>
+        </div>
+        <a href="sample-products-import.xml" download="sample-products-import.xml" class="ea-btn ea-btn-ghost ea-btn-sm" style="white-space:nowrap; background:#ffffff; border:1px solid #E2D9CD; font-weight:600; font-size:12px;">
+          <span class="material-symbols-outlined" style="font-size:16px;">download</span> Download Sample XML
+        </a>
+      </div>
+
+      <!-- File Upload Dropzone -->
+      <div id="importDropzone" style="border:2px dashed #B18B5E; background:#ffffff; border-radius:12px; padding:24px 16px; text-align:center; cursor:pointer; margin-bottom:18px;" onclick="document.getElementById('importFileInput').click()">
+        <input type="file" id="importFileInput" accept=".xml,.csv,.json" style="display:none;" onchange="handleImportFileSelect(this)">
+        <div style="width:44px; height:44px; background:rgba(177,139,94,0.1); color:#B18B5E; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 8px auto;">
+          <span class="material-symbols-outlined" style="font-size:24px;">upload_file</span>
+        </div>
+        <div style="font-size:13.5px; font-weight:700; color:#111827; margin-bottom:2px;">Select or drop catalog file here</div>
+        <div style="font-size:11.5px; color:#6B7280;">Supports <strong style="color:#111827;">.XML</strong>, <strong style="color:#111827;">.CSV</strong>, and <strong style="color:#111827;">.JSON</strong> files</div>
+      </div>
+
+      <!-- Parsed Preview Table Container -->
+      <div id="importPreviewContainer" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div style="font-size:13px; font-weight:700; color:#111827;">Parsed Products Preview</div>
+          <span class="ea-badge ea-badge-green" id="importCountBadge">0 products ready</span>
+        </div>
+        <div style="max-height:220px; overflow-y:auto; border:1px solid #E5E7EB; border-radius:10px;">
+          <table class="ea-table" style="font-size:12px;">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th style="text-align:right;">Price</th>
+                <th style="text-align:right;">Stock</th>
+              </tr>
+            </thead>
+            <tbody id="importPreviewTbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ea-modal-footer">
+      <button class="ea-btn ea-btn-ghost" onclick="document.getElementById('importProductsModal').classList.remove('open')">Cancel</button>
+      <button class="ea-btn ea-btn-primary" id="confirmImportBtn" style="padding:10px 24px; font-weight:700;" disabled onclick="submitBulkImport()">Import Products</button>
+    </div>
+
+  </div>
+</div>
+
 <div class="ea-modal-overlay" id="addProductModal">
   <div class="ea-modal">
     
@@ -261,6 +339,11 @@
                 <span class="material-symbols-outlined" style="font-size:13px; color:#B18B5E;">category</span>
                 <span id="prevCatName">Furniture</span>
               </div>
+            </div>
+
+            <!-- Live Gallery Thumbnails Strip -->
+            <div id="prevGalleryStrip" style="display:flex; gap:6px; padding:8px 12px; background:#F9FAFB; border-bottom:1px solid #F3F4F6; overflow-x:auto;">
+              <!-- Dynamically populated -->
             </div>
 
             <!-- Details Area -->
@@ -317,19 +400,43 @@
             </select>
           </div>
 
-          <!-- Product Media (File Upload & Asset Path) -->
+          <!-- Shopify-Style Product Media Studio Card -->
           <div class="ea-form-group" style="margin:0;">
-            <label class="ea-label" style="font-weight:700;">Product Image Media</label>
-            
-            <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:10px;">
-              <div>
-                <label style="font-size:12px; font-weight:600; color:#374151; display:block; margin-bottom:4px;">Upload Image File (PNG, JPG, WebP)</label>
-                <input type="file" id="prodImgFile" accept="image/*" class="ea-input" style="background:#ffffff;" onchange="handleProductImgUpload(this)">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label class="ea-label" style="font-weight:700; margin:0; display:flex; align-items:center; gap:6px;">
+                <span class="material-symbols-outlined" style="font-size:18px; color:#B18B5E;">perm_media</span> Product Media Studio
+              </label>
+              <span style="font-size:12px; font-weight:600; color:#B18B5E; background:rgba(177,139,94,0.1); padding:2px 10px; border-radius:12px;" id="galleryCountLabel">0 items</span>
+            </div>
+
+            <!-- Hidden input for main primary image value compatibility -->
+            <input type="hidden" id="prodImg">
+
+            <!-- Drag & Drop Media Container -->
+            <div style="background:#FAF9F6; border:1.5px solid #E2D9CD; border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:14px;">
+              
+              <!-- Drag & Drop Dropzone -->
+              <div id="shopifyDropzone" style="border:2px dashed #B18B5E; background:#ffffff; border-radius:12px; padding:22px 16px; text-align:center; cursor:pointer; transition:all 0.2s ease; position:relative;" onclick="document.getElementById('shopifyFileInput').click()">
+                <input type="file" id="shopifyFileInput" accept="image/*" multiple style="display:none;" onchange="handleShopifyFilesUpload(this)">
+                
+                <div style="width:44px; height:44px; background:rgba(177,139,94,0.1); color:#B18B5E; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 8px auto;">
+                  <span class="material-symbols-outlined" style="font-size:24px;">cloud_upload</span>
+                </div>
+                <div style="font-size:13.5px; font-weight:700; color:#111827; margin-bottom:2px;">Drag & drop product images here</div>
+                <div style="font-size:11.5px; color:#6B7280;">or <span style="color:#B18B5E; text-decoration:underline; font-weight:600;">browse files</span> (PNG, JPG, WebP)</div>
               </div>
-              <div>
-                <label style="font-size:12px; font-weight:600; color:#374151; display:block; margin-bottom:4px;">OR Enter Image URL / Asset Path</label>
-                <input type="text" id="prodImg" class="ea-input" placeholder="assets/imgs/furniture/product/product1.png or https://..." oninput="updateProdImgPreview(this.value); updateLivePreview();">
+
+              <!-- Add Image URL Input Bar -->
+              <div style="display:flex; gap:8px; background:#ffffff; padding:6px; border-radius:10px; border:1px solid #E5E7EB;">
+                <input type="text" id="galleryUrlInput" class="ea-input" placeholder="OR paste image URL / asset path (e.g. assets/imgs/...)" style="border:none; background:transparent; font-size:12px; height:34px;" onkeypress="if(event.key==='Enter'){event.preventDefault(); addGalleryUrlFromInput();}">
+                <button type="button" class="ea-btn ea-btn-primary ea-btn-sm" onclick="addGalleryUrlFromInput()" style="white-space:nowrap; padding:0 14px; font-weight:600;">+ Add URL</button>
               </div>
+
+              <!-- Shopify-Style Media Gallery Grid -->
+              <div id="shopifyMediaGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap:10px; margin-top:2px;">
+                <!-- Dynamically Rendered Media Cards -->
+              </div>
+
             </div>
           </div>
 
@@ -431,19 +538,119 @@
       const prevImg = document.getElementById('prevImg');
       if (prevImg) prevImg.src = src;
     }
+
+    renderGalleryManager();
   }
 
-  function handleProductImgUpload(input) {
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUrl = e.target.result;
-        document.getElementById('prodImg').value = dataUrl;
-        updateProdImgPreview(dataUrl);
-        updateLivePreview();
-      };
-      reader.readAsDataURL(file);
+  let currentGalleryImages = [];
+
+  function setAsCoverImage(index) {
+    if (index > 0 && index < currentGalleryImages.length) {
+      const selected = currentGalleryImages.splice(index, 1)[0];
+      currentGalleryImages.unshift(selected);
+      renderGalleryManager();
+      updateLivePreview();
+    }
+  }
+
+  function renderGalleryManager() {
+    const grid = document.getElementById('shopifyMediaGrid');
+    const label = document.getElementById('galleryCountLabel');
+    const strip = document.getElementById('prevGalleryStrip');
+    const hiddenProdImg = document.getElementById('prodImg');
+
+    if (label) label.textContent = `${currentGalleryImages.length} item${currentGalleryImages.length === 1 ? '' : 's'}`;
+
+    if (hiddenProdImg) {
+      hiddenProdImg.value = currentGalleryImages[0] || '';
+    }
+
+    if (grid) {
+      if (currentGalleryImages.length === 0) {
+        grid.innerHTML = `<span style="font-size:12px; color:#9CA3AF; grid-column:1/-1; text-align:center; padding:12px 0;">No media uploaded yet. Drag & drop files or add URLs above.</span>`;
+      } else {
+        grid.innerHTML = currentGalleryImages.map((img, i) => {
+          let src = img;
+          if (src.startsWith('assets/imgs/')) src = '../user/' + src;
+          const isCover = i === 0;
+
+          return `
+            <div class="shopify-media-card" style="position:relative; width:100%; aspect-ratio:1; border-radius:10px; overflow:hidden; background:#ffffff; border:${isCover ? '2px solid #B18B5E' : '1px solid #E5E7EB'}; box-shadow:${isCover ? '0 4px 12px rgba(177,139,94,0.25)' : '0 2px 6px rgba(0,0,0,0.05)'}; transition:all 0.2s ease;">
+              <img src="${src}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/img/p1.png'">
+              
+              ${isCover ? `
+                <span style="position:absolute; top:4px; left:4px; background:#B18B5E; color:#ffffff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; letter-spacing:0.5px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">★ COVER</span>
+              ` : `
+                <button type="button" onclick="setAsCoverImage(${i})" style="position:absolute; top:4px; left:4px; background:rgba(177,139,94,0.9); color:#fff; border:none; border-radius:4px; font-size:9.5px; font-weight:700; padding:2px 6px; cursor:pointer;" title="Set as primary cover image">Make Cover</button>
+              `}
+              
+              <button type="button" onclick="removeGalleryImage(${i})" style="position:absolute; top:4px; right:4px; background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; box-shadow:0 2px 4px rgba(0,0,0,0.2);" title="Delete media">&times;</button>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Update Live Studio Preview Card & Strip
+    const prevImg = document.getElementById('prevImg');
+    if (prevImg) {
+      const cover = currentGalleryImages[0] || 'assets/img/p1.png';
+      let src = cover;
+      if (src.startsWith('assets/imgs/')) src = '../user/' + src;
+      prevImg.src = src;
+    }
+
+    if (strip) {
+      if (currentGalleryImages.length <= 1) {
+        strip.style.display = 'none';
+      } else {
+        strip.style.display = 'flex';
+        strip.innerHTML = currentGalleryImages.map((img, i) => {
+          let src = img;
+          if (src.startsWith('assets/imgs/')) src = '../user/' + src;
+          return `<img src="${src}" style="width:36px; height:36px; border-radius:6px; object-fit:cover; border:${i === 0 ? '2px solid #B18B5E' : '1px solid #E5E7EB'}; flex-shrink:0;">`;
+        }).join('');
+      }
+    }
+  }
+
+  function handleShopifyFilesUpload(input) {
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+      let loadedCount = 0;
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const dataUrl = e.target.result;
+          currentGalleryImages.push(dataUrl);
+          loadedCount++;
+          if (loadedCount === files.length) {
+            renderGalleryManager();
+            updateLivePreview();
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+      input.value = '';
+    }
+  }
+
+  function addGalleryUrlFromInput() {
+    const input = document.getElementById('galleryUrlInput');
+    const val = input ? input.value.trim() : '';
+    if (val) {
+      currentGalleryImages.push(val);
+      input.value = '';
+      renderGalleryManager();
+      updateLivePreview();
+    }
+  }
+
+  function removeGalleryImage(index) {
+    if (index >= 0 && index < currentGalleryImages.length) {
+      currentGalleryImages.splice(index, 1);
+      renderGalleryManager();
+      updateLivePreview();
     }
   }
 
@@ -458,6 +665,7 @@
 
   function openAddModal() {
     editingProductId = null;
+    currentGalleryImages = [];
     document.querySelector('.ea-modal-title').textContent = "Add New Product";
     document.getElementById('saveProductBtn').textContent = "Add Product";
     document.getElementById('prodName').value = "";
@@ -465,15 +673,17 @@
     document.getElementById('prodStock').value = "";
     document.getElementById('prodCat').value = "";
     document.getElementById('prodImg').value = "";
-    const fileInput = document.getElementById('prodImgFile');
+    const fileInput = document.getElementById('shopifyFileInput');
     if (fileInput) fileInput.value = "";
     document.getElementById('prodDesc').value = "";
+    renderGalleryManager();
     updateLivePreview();
     document.getElementById('addProductModal').classList.add('open');
   }
 
   function openEditModal(prod) {
     editingProductId = prod.id;
+    currentGalleryImages = Array.isArray(prod.images) && prod.images.length > 0 ? [...prod.images] : (prod.image ? [prod.image] : []);
     document.querySelector('.ea-modal-title').textContent = "Edit Product";
     document.getElementById('saveProductBtn').textContent = "Save Changes";
     document.getElementById('prodName').value = prod.name || "";
@@ -495,9 +705,10 @@
     }
 
     document.getElementById('prodImg').value = prod.image || "";
-    const fileInput = document.getElementById('prodImgFile');
+    const fileInput = document.getElementById('shopifyFileInput');
     if (fileInput) fileInput.value = "";
     document.getElementById('prodDesc').value = prod.description || "";
+    renderGalleryManager();
     updateLivePreview();
     document.getElementById('addProductModal').classList.add('open');
   }
@@ -654,7 +865,15 @@
     if (stock === 0) status = 'Out of Stock';
     else if (stock < 10) status = 'Low Stock';
 
-    const payload = { name, price, stock, category, image, description, status };
+    let imagesList = [...currentGalleryImages];
+    if (image && !imagesList.includes(image)) {
+      imagesList.unshift(image);
+    }
+    if (imagesList.length === 0 && image) {
+      imagesList = [image];
+    }
+
+    const payload = { name, price, stock, category, image, images: imagesList, description, status };
     
     try {
       let res;
@@ -686,10 +905,283 @@
     }
   });
 
-  // Initial load
+  // --- Export Products to CSV ---
+  function exportProductsToCsv() {
+    if (!allProductsList || allProductsList.length === 0) {
+      alert('No products to export');
+      return;
+    }
+    const headers = ['ID', 'Name', 'SKU', 'Category', 'Price', 'OldPrice', 'Stock', 'Status', 'Description', 'Image', 'Images'];
+    const rows = allProductsList.map(p => [
+      `"${p.id || ''}"`,
+      `"${p.name || ''}"`,
+      `"${p.sku || ''}"`,
+      `"${p.category || ''}"`,
+      p.price || 0,
+      p.oldPrice || '',
+      p.stock || 0,
+      `"${p.status || ''}"`,
+      `"${(p.description || '').replace(/"/g, '""')}"`,
+      `"${p.image || ''}"`,
+      `"${(Array.isArray(p.images) ? p.images.join(';') : (p.image || '')).replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Eusta_Products_Export_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  // --- Bulk Import Parsing Engine ---
+  let parsedImportProducts = [];
+
+  function handleImportFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const fileName = file.name.toLowerCase();
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const content = e.target.result;
+        parsedImportProducts = [];
+
+        try {
+          if (fileName.endsWith('.xml')) {
+            parseXmlProductCatalog(content);
+          } else if (fileName.endsWith('.json')) {
+            const json = JSON.parse(content);
+            parsedImportProducts = Array.isArray(json) ? json : (json.products || []);
+          } else if (fileName.endsWith('.csv')) {
+            parseCsvProductCatalog(content);
+          }
+          renderImportPreview();
+        } catch (err) {
+          alert('Error parsing catalog file: ' + err.message);
+        }
+      };
+
+      reader.readAsText(file);
+    }
+  }
+
+  function parseXmlProductCatalog(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    const productNodes = xmlDoc.querySelectorAll('product');
+
+    parsedImportProducts = [];
+    productNodes.forEach(pNode => {
+      const getText = (tag) => {
+        const el = pNode.querySelector(tag);
+        return el ? el.textContent.trim() : '';
+      };
+
+      const imagesList = [];
+      const imagesNode = pNode.querySelector('images');
+      if (imagesNode) {
+        imagesNode.querySelectorAll('image').forEach(imgEl => {
+          const url = imgEl.textContent.trim();
+          if (url) imagesList.push(url);
+        });
+      }
+
+      const mainImg = getText('image') || (imagesList.length > 0 ? imagesList[0] : '');
+
+      parsedImportProducts.push({
+        name: getText('name'),
+        sku: getText('sku'),
+        category: getText('category'),
+        price: Number(getText('price')) || 0,
+        oldPrice: Number(getText('oldPrice')) || null,
+        stock: Number(getText('stock')) || 0,
+        status: getText('status') || 'Active',
+        description: getText('description'),
+        image: mainImg,
+        images: imagesList.length > 0 ? imagesList : [mainImg]
+      });
+    });
+  }
+
+  function parseCsvProductCatalog(csvString) {
+    const lines = csvString.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    if (lines.length <= 1) return;
+
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+    parsedImportProducts = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+      if (values.length < headers.length) continue;
+
+      const row = {};
+      headers.forEach((h, idx) => { row[h] = values[idx]; });
+
+      parsedImportProducts.push({
+        name: row.name || row.title || 'CSV Product',
+        sku: row.sku || '',
+        category: row.category || 'Furniture',
+        price: Number(row.price) || 0,
+        oldPrice: row.oldprice ? Number(row.oldprice) : null,
+        stock: Number(row.stock) || 0,
+        status: row.status || 'Active',
+        description: row.description || '',
+        image: row.image || 'assets/imgs/furniture/product/product1.png',
+        images: row.images ? row.images.split(';').map(x => x.trim()) : [row.image || 'assets/imgs/furniture/product/product1.png']
+      });
+    }
+  }
+
+  function renderImportPreview() {
+    const container = document.getElementById('importPreviewContainer');
+    const tbody = document.getElementById('importPreviewTbody');
+    const badge = document.getElementById('importCountBadge');
+    const btn = document.getElementById('confirmImportBtn');
+
+    if (!parsedImportProducts || parsedImportProducts.length === 0) {
+      if (container) container.style.display = 'none';
+      if (btn) btn.disabled = true;
+      return;
+    }
+
+    if (container) container.style.display = 'block';
+    if (badge) badge.textContent = `${parsedImportProducts.length} product${parsedImportProducts.length === 1 ? '' : 's'} ready`;
+    if (btn) btn.disabled = false;
+
+    if (tbody) {
+      tbody.innerHTML = parsedImportProducts.map(p => {
+        const imgPath = p.image ? (p.image.startsWith('http') || p.image.startsWith('/') ? p.image : `../user/${p.image}`) : 'assets/img/p1.png';
+        return `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <img src="${imgPath}" style="width:30px; height:30px; object-fit:cover; border-radius:4px;" onerror="this.src='assets/img/p1.png'">
+                <div>
+                  <strong>${p.name}</strong>
+                  <div class="text-muted" style="font-size:11px;">SKU: ${p.sku || 'Auto-generated'}</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="ea-badge ea-badge-gray">${p.category || 'General'}</span></td>
+            <td style="text-align:right; font-weight:600; color:#B18B5E;">₹${(Number(p.price) || 0).toLocaleString('en-IN')}</td>
+            <td style="text-align:right;">${p.stock || 0}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+
+  async function submitBulkImport() {
+    if (!parsedImportProducts || parsedImportProducts.length === 0) return;
+
+    const btn = document.getElementById('confirmImportBtn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Importing...';
+    }
+
+    try {
+      const res = await fetch('/api/products/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ products: parsedImportProducts })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        alert(`Successfully imported ${data.count} products into your store catalog!`);
+        document.getElementById('importProductsModal').classList.remove('open');
+        parsedImportProducts = [];
+        renderImportPreview();
+        loadProducts();
+      } else {
+        alert('Failed to import products.');
+      }
+    } catch (err) {
+      console.error('Import error:', err);
+      alert('Error submitting bulk import');
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Import Products';
+      }
+    }
+  }
+
+  // Initial load & Drag & Drop Dropzone setup
   document.addEventListener("DOMContentLoaded", () => {
     loadCategoriesDropdown();
     loadProducts();
+
+    const dropzone = document.getElementById('shopifyDropzone');
+    if (dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = '#99754C';
+          dropzone.style.background = '#F7F3EE';
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = '#B18B5E';
+          dropzone.style.background = '#ffffff';
+        }, false);
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          const fileInput = document.getElementById('shopifyFileInput');
+          if (fileInput) {
+            fileInput.files = files;
+            handleShopifyFilesUpload(fileInput);
+          }
+        }
+      }, false);
+    }
+
+    // Import Dropzone drag & drop support
+    const importDropzone = document.getElementById('importDropzone');
+    if (importDropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        importDropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          importDropzone.style.borderColor = '#99754C';
+          importDropzone.style.background = '#F7F3EE';
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        importDropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          importDropzone.style.borderColor = '#B18B5E';
+          importDropzone.style.background = '#ffffff';
+        }, false);
+      });
+
+      importDropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          const fileInput = document.getElementById('importFileInput');
+          if (fileInput) {
+            fileInput.files = files;
+            handleImportFileSelect(fileInput);
+          }
+        }
+      }, false);
+    }
   });
 </script>
 <script src="assets/js/onboarding.js"></script>

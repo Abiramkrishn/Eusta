@@ -10,6 +10,11 @@
     "status": "Active",
     "description": "Ergonomically designed stylish grey accent chair with comfortable armrests and high durability wood frame. Perfect for office or living spaces.",
     "image": "assets/imgs/furniture/product/product1.png",
+    "images": [
+      "assets/imgs/furniture/product/product1.png",
+      "assets/imgs/furniture/product/product2.png",
+      "assets/imgs/furniture/product/product3.png"
+    ],
     "discount": "20% off"
   },
   {
@@ -23,6 +28,11 @@
     "status": "Active",
     "description": "Outdoor and indoor wicker hanging basket chair with soft white cushions. Relax in modern elegance.",
     "image": "assets/imgs/furniture/product/product2.png",
+    "images": [
+      "assets/imgs/furniture/product/product2.png",
+      "assets/imgs/furniture/product/product1.png",
+      "assets/imgs/furniture/product/product5.png"
+    ],
     "discount": "30% off"
   },
   {
@@ -36,6 +46,11 @@
     "status": "Active",
     "description": "Luxury brass-legged armchair upholstered in high quality velvet fabric.",
     "image": "assets/imgs/furniture/product/product3.png",
+    "images": [
+      "assets/imgs/furniture/product/product3.png",
+      "assets/imgs/furniture/product/product6.png",
+      "assets/imgs/furniture/product/product1.png"
+    ],
     "discount": "15% off"
   },
   {
@@ -49,6 +64,11 @@
     "status": "Active",
     "description": "Exquisitely polished brass designer lamp to elevate your living room displays.",
     "image": "assets/imgs/furniture/product/product4.png",
+    "images": [
+      "assets/imgs/furniture/product/product4.png",
+      "assets/imgs/furniture/product/fs-01.png",
+      "assets/imgs/furniture/product/fs-02.png"
+    ],
     "discount": "25% off"
   },
   {
@@ -62,6 +82,11 @@
     "status": "Active",
     "description": "Minimal wooden stool with velvet cushioned seat.",
     "image": "assets/imgs/furniture/product/product5.png",
+    "images": [
+      "assets/imgs/furniture/product/product5.png",
+      "assets/imgs/furniture/product/product1.png",
+      "assets/imgs/furniture/product/fs-03.png"
+    ],
     "discount": "35% off"
   },
   {
@@ -75,6 +100,11 @@
     "status": "Low Stock",
     "description": "Soft textured lounge chair for modern living rooms.",
     "image": "assets/imgs/furniture/product/product6.png",
+    "images": [
+      "assets/imgs/furniture/product/product6.png",
+      "assets/imgs/furniture/product/product3.png",
+      "assets/imgs/furniture/product/product8.png"
+    ],
     "discount": "24% off"
   },
   {
@@ -88,6 +118,11 @@
     "status": "Active",
     "description": "Solid oak wooden study and writing desk.",
     "image": "assets/imgs/furniture/product/product7.png",
+    "images": [
+      "assets/imgs/furniture/product/product7.png",
+      "assets/imgs/furniture/product/product8.png",
+      "assets/imgs/furniture/product/off-01.png"
+    ],
     "discount": "18% off"
   }
 ]

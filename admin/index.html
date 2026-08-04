@@ -51,6 +51,10 @@
         <span class="material-symbols-outlined ea-nav-icon">forum</span>
         <span class="ea-nav-label">Enquiries</span>
       </a>
+      <a href="click-analyzer.html" class="ea-nav-item" id="nav-click-analyzer">
+        <span class="material-symbols-outlined ea-nav-icon">insights</span>
+        <span class="ea-nav-label">Click Analyser</span>
+      </a>
 
       <span class="ea-sidebar__section-label">System</span>
       <a href="legal.html" class="ea-nav-item" id="nav-legal">
@@ -174,6 +178,18 @@
           <div class="ea-stat-content">
             <div class="ea-stat-value">33</div>
             <div class="ea-stat-label">Enquiries</div>
+          </div>
+          <div class="ea-stat-arrow">
+            <span class="material-symbols-outlined">north_east</span>
+          </div>
+        </a>
+        <a href="click-analyzer.html" class="ea-stat-card">
+          <div class="ea-stat-icon" style="background: rgba(177, 139, 94, 0.1); color: #B18B5E;">
+            <span class="material-symbols-outlined">insights</span>
+          </div>
+          <div class="ea-stat-content">
+            <div class="ea-stat-value" id="dashTotalClicks">0</div>
+            <div class="ea-stat-label">Product Clicks</div>
           </div>
           <div class="ea-stat-arrow">
             <span class="material-symbols-outlined">north_east</span>
@@ -308,10 +324,11 @@
 
   async function loadDashboardStats() {
     try {
-      const [prodsRes, catsRes, enqsRes] = await Promise.all([
+      const [prodsRes, catsRes, enqsRes, analyticsRes] = await Promise.all([
         fetch('/api/products'),
         fetch('/api/categories'),
-        fetch('/api/enquiries')
+        fetch('/api/enquiries'),
+        fetch('/api/analytics').catch(() => null)
       ]);
       const products = await prodsRes.json();
       const categories = await catsRes.json();
@@ -325,6 +342,15 @@
 
       const enqCardVal = document.querySelector(".ea-stat-card[href='contacts.html'] .ea-stat-value");
       if (enqCardVal) enqCardVal.textContent = enquiries.length;
+
+      if (analyticsRes && analyticsRes.ok) {
+        const analytics = await analyticsRes.json();
+        const clickVal = document.getElementById('dashTotalClicks');
+        if (clickVal && analytics.summary) {
+          const totalClicks = (analytics.summary.totalViews || 0) + (analytics.summary.totalWhatsappClicks || 0);
+          clickVal.textContent = totalClicks.toLocaleString();
+        }
+      }
 
       const unreadCount = enquiries.filter(e => e.status === 'Unread').length;
       const topbarBadge = document.querySelector(".ea-topbar__badge");

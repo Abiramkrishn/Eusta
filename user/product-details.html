@@ -654,6 +654,11 @@
             return;
           }
 
+          // Track Product View Analytics
+          if (window.trackProductClick) {
+            window.trackProductClick(prod.id, 'view');
+          }
+
           // Update product display fields
           document.getElementById('detailProductTitle').textContent = prod.name;
           document.getElementById('detailNewPrice').textContent = `₹${prod.price.toLocaleString('en-IN')}`;
@@ -670,21 +675,35 @@
           
           document.getElementById('detailDescriptionParagraph').textContent = prod.description || 'No description available for this item.';
 
-          // Images updates
-          const imageUrl = prod.image.startsWith('http') || prod.image.startsWith('/') ? prod.image : `../${prod.image}`;
-          const img1 = document.getElementById('detailMainImg1');
-          if (img1) img1.src = imageUrl;
-          const img2 = document.getElementById('detailMainImg2');
-          if (img2) img2.src = imageUrl;
-          const img3 = document.getElementById('detailMainImg3');
-          if (img3) img3.src = imageUrl;
+          // Multi-Images Gallery Updates
+          const imagesList = Array.isArray(prod.images) && prod.images.length > 0 ? prod.images : [prod.image];
+          const formatImgUrl = (img) => {
+            if (!img) return 'assets/imgs/furniture/product/product1.png';
+            return img.startsWith('http') || img.startsWith('/') ? img : `../${img}`;
+          };
 
-          const thumb1 = document.getElementById('detailThumbImg1');
-          if (thumb1) thumb1.src = imageUrl;
-          const thumb2 = document.getElementById('detailThumbImg2');
-          if (thumb2) thumb2.src = imageUrl;
-          const thumb3 = document.getElementById('detailThumbImg3');
-          if (thumb3) thumb3.src = imageUrl;
+          const thumbContent = document.getElementById('productthumbcontent');
+          const navTab = document.getElementById('nav-tab');
+
+          if (thumbContent && navTab) {
+            thumbContent.innerHTML = imagesList.map((img, i) => `
+              <div class="tab-pane fade ${i === 0 ? 'show active' : ''}" id="img-${i + 1}" role="tabpanel" aria-labelledby="img-${i + 1}-tab">
+                <div class="product__details-thumb-big w-img">
+                  <img src="${formatImgUrl(img)}" alt="${prod.name}">
+                </div>
+              </div>
+            `).join('');
+
+            navTab.innerHTML = imagesList.map((img, i) => `
+              <button class="nav-link ${i === 0 ? 'active' : ''}" id="img-${i + 1}-tab" data-bs-toggle="tab" data-bs-target="#img-${i + 1}" type="button" role="tab" aria-controls="img-${i + 1}" aria-selected="${i === 0 ? 'true' : 'false'}">
+                <img src="${formatImgUrl(img)}" alt="product-sm-thumb" style="width:70px; height:70px; object-fit:cover; border-radius:6px;">
+              </button>
+            `).join('');
+          } else {
+            const imageUrl = formatImgUrl(prod.image);
+            const img1 = document.getElementById('detailMainImg1');
+            if (img1) img1.src = imageUrl;
+          }
 
           // WhatsApp Enquiry Link generation
           const productName = prod.name;

@@ -265,3 +265,54 @@ window.getCategoryIconHTML = function(iconName) {
 
   return `<span class="material-symbols-outlined">${iconName}</span>`;
 };
+
+// --- Product Click Tracking Helper ---
+window.trackProductClick = function(productId, type) {
+  if (!productId) return;
+  try {
+    fetch('/api/analytics/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId: String(productId), type: type || 'view' })
+    }).catch(err => console.warn('[Click Tracker] Error sending analytics event:', err));
+  } catch (e) {
+    console.warn('[Click Tracker] Exception sending analytics event:', e);
+  }
+};
+
+// Global click delegate to automatically capture product clicks and WhatsApp enquiry clicks
+document.addEventListener('click', function(e) {
+  const productLink = e.target.closest('a[href*="product-details.html"]');
+  if (productLink) {
+    try {
+      const href = productLink.getAttribute('href');
+      const url = new URL(href, window.location.href);
+      const prodId = url.searchParams.get('id');
+      if (prodId) {
+        window.trackProductClick(prodId, 'view');
+      }
+    } catch(err) {}
+  }
+
+  const waLink = e.target.closest('a[href*="wa.me"]');
+  if (waLink) {
+    const card = waLink.closest('.product-card, .product-grid-item, .product__details-content');
+    if (card) {
+      // Find associated product ID
+      const cardProdLink = card.querySelector('a[href*="product-details.html"]');
+      let prodId = null;
+      if (cardProdLink) {
+        try {
+          const url = new URL(cardProdLink.getAttribute('href'), window.location.href);
+          prodId = url.searchParams.get('id');
+        } catch(err) {}
+      } else if (window.location.pathname.includes('product-details.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        prodId = urlParams.get('id');
+      }
+      if (prodId) {
+        window.trackProductClick(prodId, 'whatsapp');
+      }
+    }
+  }
+});

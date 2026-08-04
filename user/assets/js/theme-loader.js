@@ -12,7 +12,8 @@
     '/api/settings': 'db/settings.json',
     '/api/users': 'db/users.json',
     '/api/subscription-plans': 'db/subscription_plans.json',
-    '/api/subscriptions': 'db/subscriptions.json'
+    '/api/subscriptions': 'db/subscriptions.json',
+    '/api/analytics': 'db/product_clicks.json'
   };
 
   window.fetch = async function(resource, init) {
