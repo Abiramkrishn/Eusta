@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customization | Eusta Admin</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Bootstrap CSS & Scripts -->
+  <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
+  <script src="assets/js/admin-auth.js"></script>
+  <script src="../user/assets/js/premium.js"></script>
+  <link rel="stylesheet" href="../user/assets/css/premium.css?v=20">
+  <link rel="stylesheet" href="assets/css/eusta-admin.css">
+
+  <style>
+    [contenteditable="true"] {
+      transition: all 0.2s ease;
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    [contenteditable="true"]:hover {
+      outline: 2px dashed rgba(5, 150, 105, 0.6) !important;
+      outline-offset: 2px;
+      cursor: text;
+      background: rgba(5, 150, 105, 0.08);
+    }
+    [contenteditable="true"]:focus {
+      outline: 2px solid #059669 !important;
+      outline-offset: 2px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .he-cat-dragging {
+      opacity: 0.4 !important;
+      transform: scale(0.92);
+    }
+    .he-cat-over {
+      border-bottom: 3px solid #059669 !important;
+      transform: translateY(-4px);
+    }
+    .premium-category-item:hover {
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="ea-sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="ea-shell">
+
+  <!-- ── Sidebar ── -->
+  <aside class="ea-sidebar" id="sidebar">
+    <div class="ea-sidebar__logo">
+      <img src="assets/img/logo.png" alt="Eusta Logo">
+      <span class="ea-sidebar__logo-badge">Admin</span>
+      <button class="ea-sidebar__close-btn" id="sidebarCloseBtn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <nav class="ea-sidebar__nav">
+      <span class="ea-sidebar__section-label">Main Menu</span>
+      <a href="index.html" class="ea-nav-item" id="nav-dashboard"><span class="material-symbols-outlined ea-nav-icon">dashboard</span><span class="ea-nav-label">Dashboard</span></a>
+      <a href="products.html" class="ea-nav-item" id="nav-products"><span class="material-symbols-outlined ea-nav-icon">inventory_2</span><span class="ea-nav-label">Products</span></a>
+      <a href="categories.html" class="ea-nav-item" id="nav-categories"><span class="material-symbols-outlined ea-nav-icon">category</span><span class="ea-nav-label">Categories</span></a>
+      <a href="customization.html" class="ea-nav-item active" id="nav-customization"><span class="material-symbols-outlined ea-nav-icon">palette</span><span class="ea-nav-label">Customization</span></a>
+      <a href="contacts.html" class="ea-nav-item" id="nav-contacts"><span class="material-symbols-outlined ea-nav-icon">forum</span><span class="ea-nav-label">Enquiries</span></a>
+      <a href="click-analyzer.html" class="ea-nav-item" id="nav-click-analyzer"><span class="material-symbols-outlined ea-nav-icon">insights</span><span class="ea-nav-label">Click Analyser</span></a>
+
+      <span class="ea-sidebar__section-label">System</span>
+      <a href="legal.html" class="ea-nav-item" id="nav-legal"><span class="material-symbols-outlined ea-nav-icon">gavel</span><span class="ea-nav-label">Legal</span></a>
+      <a href="settings.html" class="ea-nav-item" id="nav-settings"><span class="material-symbols-outlined ea-nav-icon">settings</span><span class="ea-nav-label">Settings</span></a>
+    </nav>
+
+    <div class="ea-sidebar__footer">
+      <div class="ea-sidebar__footer-card">
+        <p>Eusta Business Plan</p>
+        <strong>14 Days Left</strong>
+        <a href="settings.html" class="ea-btn ea-btn-primary ea-btn-sm" style="width:100%; justify-content:center;">Upgrade Plan</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content Area ── -->
+  <div class="ea-content">
+
+    <!-- Top Bar -->
+    <header class="ea-topbar">
+      <div class="ea-topbar__left">
+        <button class="ea-topbar__toggle" id="sidebarToggle"><span class="material-symbols-outlined">menu</span></button>
+        <div class="ea-topbar__breadcrumb">
+          <span class="ea-topbar__title">Customization</span>
+          <span class="ea-topbar__sub">Configure storefront branding, theme colors, and visual page editors</span>
+        </div>
+      </div>
+      <div class="ea-topbar__right">
+        <a href="../user/index.html" target="_blank" class="ea-btn ea-btn-sm ea-btn-secondary" style="font-size:12px; font-weight:700; margin-right:12px;">
+          <span class="material-symbols-outlined">open_in_new</span> Live Storefront
+        </a>
+        <div class="ea-user-dropdown">
+          <div class="ea-avatar">EA</div>
+          <div><div class="ea-user-name">Eusta Admin</div><div class="ea-user-role">Administrator</div></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="ea-main">
+      <div class="ea-main-body">
+
+        <!-- Customization Tabs Navigation -->
+        <div class="ea-tabs mb-4">
+          <div class="ea-tab active" onclick="switchTab('branding', this)">
+            <span class="material-symbols-outlined">palette</span>
+            <span>Branding & Theme</span>
+          </div>
+          <div class="ea-tab" onclick="switchTab('homepage-editor', this)">
+            <span class="material-symbols-outlined">web</span>
+            <span>Homepage Editor</span>
+          </div>
+          <div class="ea-tab" onclick="switchTab('about-customizer', this)">
+            <span class="material-symbols-outlined">edit_note</span>
+            <span>About Page Editor</span>
+          </div>
+          <div class="ea-tab" onclick="switchTab('contact-customizer', this)">
+            <span class="material-symbols-outlined">contact_support</span>
+            <span>Contact Page Editor</span>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- TAB 0: BRANDING & THEME -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="ea-tab-panel active" id="tab-branding">
+          <div class="ea-card">
+            <div class="ea-card-header"><div class="ea-card-title">Storefront Branding & Visual Theme</div></div>
+            <div class="ea-card-body">
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Storefront Logo & Identity</h6>
+                  
+                  <div class="row g-3 mb-4">
+                    <div class="col-12">
+                      <div class="ea-form-group">
+                        <label class="ea-label">Upload Logo Image</label>
+                        <input type="file" id="logoFileInput" accept="image/*" style="display:none;" onchange="handleLogoFileSelect(event)">
+                        
+                        <div id="logoDropZone" onclick="document.getElementById('logoFileInput').click()" style="border:2px dashed var(--border); border-radius:12px; padding:16px 20px; text-align:center; background:var(--bg-body); cursor:pointer; transition:all 0.2s;">
+                          <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+                            <div id="logoPreviewBox" style="width:56px; height:56px; border-radius:10px; background:#F4F4F4; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); overflow:hidden;">
+                              <img id="logoPreviewThumb" src="../user/assets/imgs/logo/logo.png" alt="Logo Preview" style="max-width:100%; max-height:100%; object-fit:contain;">
+                            </div>
+                            <div style="text-align:left; flex:1;">
+                              <div style="font-size:13px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                                <span class="material-symbols-outlined" style="color:var(--gold); font-size:20px;">cloud_upload</span> Click to upload logo image
+                              </div>
+                              <div class="text-muted" style="font-size:11px; margin-top:2px;">Supports PNG, JPG, SVG, WebP (Recommended transparent PNG)</div>
+                            </div>
+                            <button type="button" class="ea-btn ea-btn-sm ea-btn-primary" style="pointer-events:none;">Choose File</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                      <div class="ea-form-group">
+                        <label class="ea-label">Logo Image Path / URL</label>
+                        <div style="display:flex; gap:6px;">
+                          <input type="text" id="logoUrl" class="ea-input" placeholder="assets/imgs/logo/logo.png" oninput="updateLivePreview()">
+                          <button type="button" class="ea-btn ea-btn-sm" style="border:1px solid var(--border);" onclick="resetDefaultLogo()" title="Reset to default logo">Reset</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                      <div class="ea-form-group">
+                        <label class="ea-label">Logo Text / Brand Name</label>
+                        <input type="text" id="brandName" class="ea-input" placeholder="Eusta" oninput="updateLivePreview()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ea-divider mb-4"></div>
+
+                  <!-- Theme Presets -->
+                  <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Color Theme Presets</h6>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-bottom:24px;">
+                    <button type="button" class="preset-btn" onclick="selectPreset('emerald', '#059669', '#064E3B', '#FFFFFF', '#064E3B')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left;">
+                      <div style="display:flex; gap:4px; margin-bottom:6px;">
+                        <span style="width:18px; height:18px; border-radius:50%; background:#059669; display:inline-block;"></span>
+                        <span style="width:18px; height:18px; border-radius:50%; background:#064E3B; display:inline-block;"></span>
+                      </div>
+                      <div style="font-size:12px; font-weight:600;">Emerald Green</div>
+                      <div class="text-muted" style="font-size:10px;">Fresh & Botanical</div>
+                    </button>
+
+                    <button type="button" class="preset-btn" onclick="selectPreset('gold', '#B18B5E', '#1A1A1A', '#FFFFFF', '#1A1A1A')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left;">
+                      <div style="display:flex; gap:4px; margin-bottom:6px;">
+                        <span style="width:18px; height:18px; border-radius:50%; background:#B18B5E; display:inline-block;"></span>
+                        <span style="width:18px; height:18px; border-radius:50%; background:#1A1A1A; display:inline-block;"></span>
+                      </div>
+                      <div style="font-size:12px; font-weight:600;">Eusta Gold</div>
+                      <div class="text-muted" style="font-size:10px;">Classic Luxury</div>
+                    </button>
+
+                    <button type="button" class="preset-btn" onclick="selectPreset('sapphire', '#2563EB', '#1E3A8A', '#FFFFFF', '#1E3A8A')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left;">
+                      <div style="display:flex; gap:4px; margin-bottom:6px;">
+                        <span style="width:18px; height:18px; border-radius:50%; background:#2563EB; display:inline-block;"></span>
+                        <span style="width:18px; height:18px; border-radius:50%; background:#1E3A8A; display:inline-block;"></span>
+                      </div>
+                      <div style="font-size:12px; font-weight:600;">Royal Sapphire</div>
+                      <div class="text-muted" style="font-size:10px;">Modern Corporate</div>
+                    </button>
+
+                    <button type="button" class="preset-btn" onclick="selectPreset('onyx', '#18181B', '#09090B', '#FFFFFF', '#09090B')" style="border:1px solid var(--border); padding:10px; border-radius:10px; background:var(--bg-body); cursor:pointer; text-align:left;">
+                      <div style="display:flex; gap:4px; margin-bottom:6px;">
+                        <span style="width:18px; height:18px; border-radius:50%; background:#18181B; display:inline-block;"></span>
+                        <span style="width:18px; height:18px; border-radius:50%; background:#09090B; display:inline-block;"></span>
+                      </div>
+                      <div style="font-size:12px; font-weight:600;">Dark Onyx</div>
+                      <div class="text-muted" style="font-size:10px;">Minimalist Dark</div>
+                    </button>
+                  </div>
+
+                  <div class="ea-divider mb-4"></div>
+
+                  <!-- Custom Color Palette -->
+                  <h6 style="font-weight:700; font-size:14px; margin-bottom:12px; color:var(--text-main);">Custom Theme Palette</h6>
+                  <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                      <div class="ea-form-group">
+                        <label class="ea-label">Primary Accent Color</label>
+                        <div style="display:flex; gap:8px;">
+                          <input type="color" id="primaryColorPicker" value="#059669" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('primary')">
+                          <input type="text" id="primaryColorHex" class="ea-input" value="#059669" oninput="syncColorPicker('primary')">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                      <div class="ea-form-group">
+                        <label class="ea-label">Secondary / Header Color</label>
+                        <div style="display:flex; gap:8px;">
+                          <input type="color" id="secondaryColorPicker" value="#064E3B" style="width:42px; height:38px; border:1px solid var(--border); border-radius:6px; padding:2px; cursor:pointer;" oninput="syncColorInput('secondary')">
+                          <input type="text" id="secondaryColorHex" class="ea-input" value="#064E3B" oninput="syncColorPicker('secondary')">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; justify-content:flex-end; margin-top:24px;">
+                    <button type="button" class="ea-btn ea-btn-primary" id="saveBrandingBtn">
+                      <span class="material-symbols-outlined">palette</span> Save Branding & Colors
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Live Preview Panel -->
+                <div class="col-12 col-lg-5">
+                  <div class="ea-card" style="position:sticky; top:20px;">
+                    <div class="ea-card-header" style="display:flex; align-items:center; justify-content:space-between;">
+                      <div class="ea-card-title">Live Storefront Preview</div>
+                      <span class="ea-badge ea-badge-gold">Real-time</span>
+                    </div>
+                    <div class="ea-card-body" id="previewContainer" style="background:#FFFFFF; border-radius:12px; padding:16px; border:1px solid #E5E7EB;">
+                      
+                      <div id="prevHeader" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#ffffff; border-radius:8px; border-bottom:1px solid #E5E7EB; margin-bottom:16px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                          <img id="prevLogoImg" src="../user/assets/imgs/logo/logo.png" alt="Logo" style="height:24px; object-fit:contain;">
+                          <span id="prevBrandText" style="font-weight:700; font-size:14px; color:#1A1A1A;">Eusta</span>
+                        </div>
+                        <div style="display:flex; gap:12px; font-size:11px; font-weight:600;">
+                          <span style="color:#1A1A1A;">Home</span>
+                          <span id="prevActiveTab" style="color:#059669; border-bottom:2px solid #059669; padding-bottom:2px;">Deals</span>
+                          <span style="color:#1A1A1A;">Shop</span>
+                        </div>
+                      </div>
+
+                      <div id="prevHeroCard" style="background:rgba(5,150,105,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+                        <span id="prevBadge" style="background:#064E3B; color:#FFFFFF; font-size:9px; font-weight:700; padding:3px 8px; border-radius:20px; text-transform:uppercase;">GET 30% OFF</span>
+                        <h5 id="prevHeading" style="font-size:15px; font-weight:700; color:#1A1A1A; margin-top:8px; margin-bottom:10px;">Wicker Hanging Chairs</h5>
+                        <button id="prevBtn" style="background:#059669; color:#FFFFFF; border:none; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer;">
+                          BUY NOW ›
+                        </button>
+                      </div>
+
+                      <div style="border:1px solid #E5E7EB; border-radius:12px; padding:12px; background:#ffffff;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                          <div style="width:50px; height:50px; background:#F4F4F4; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#059669;"><span class="material-symbols-outlined" style="font-size:24px;">chair</span></div>
+                          <div style="flex:1;">
+                            <div style="font-size:12px; font-weight:700; color:#1A1A1A;">Brasslegged Armchair</div>
+                            <div style="font-size:11px; color:#059669; font-weight:700;">₹12,499</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- TAB 1: HOMEPAGE EDITOR -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="ea-tab-panel" id="tab-homepage-editor">
+          <div class="ea-card">
+            <div class="ea-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <div class="ea-card-title" style="display:flex; align-items:center; gap:8px;">
+                  <span class="material-symbols-outlined" style="color:var(--gold);">wysiwyg</span>
+                  Visual Live Homepage Customizer
+                </div>
+                <div class="text-muted" style="font-size:12px; margin-top:2px;">
+                  Click text to edit inline. Drag and drop category circles to reorder them. Click Change Image to swap banners.
+                </div>
+              </div>
+              <button type="button" class="ea-btn ea-btn-primary" id="publishHomeBtn" style="padding:10px 20px; font-weight:700;">
+                <span class="material-symbols-outlined">rocket_launch</span> Publish & Save Homepage
+              </button>
+            </div>
+            <div class="ea-card-body" style="background:#fcfcfc;">
+
+              <div style="border: 2px dashed #E5E7EB; border-radius: 20px; padding: 32px 24px; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+
+                <!-- Category Strip -->
+                <div style="margin-bottom:35px; padding-bottom:25px; border-bottom:1px dashed #E2E8F0;">
+                  <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#888; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>Category Strip (Drag circle to reorder, click circle to upload logo)</span>
+                    <a href="categories.html" style="font-size:11px; color:var(--gold); font-weight:700; text-decoration:none;">Category Manager &rarr;</a>
+                  </div>
+
+                  <div class="premium-categories-wrapper premium-categories-wrapper--sm" style="background:#F8FAFC; border-radius:18px; padding:18px 20px; border:1px solid #E2E8F0;">
+                    <div class="premium-categories-container" id="heCategoriesContainer" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:flex-start; align-items:flex-start;">
+                      <!-- Active Storefront Category Circles Rendered Dynamically via JS -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Hero Offer Banners -->
+                <div style="margin-bottom:35px;" id="heSec_heroBanners">
+                  <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#888; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span class="material-symbols-outlined" style="font-size:18px; color:var(--gold);">view_carousel</span>
+                      <span>Hero Offer Banners (Click text to edit inline)</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <button type="button" class="ea-btn ea-btn-sm ea-btn-primary" onclick="addHeBanner()" style="font-size:11px; padding:4px 12px; font-weight:700;">
+                        <span class="material-symbols-outlined" style="font-size:15px;">add</span> Add Banner Card
+                      </button>
+                      <span style="font-size:11px; color:var(--gold); font-weight:600; background:rgba(139,94,52,0.08); padding:3px 10px; border-radius:12px;">Main Storefront Hero</span>
+                    </div>
+                  </div>
+
+                  <div class="row g-4" id="heBannersGrid">
+                    <!-- Rendered dynamically by JS -->
+                  </div>
+                </div>
+
+                <!-- Recent Collections / Products -->
+                <div style="margin-top:35px; padding-top:25px; border-top:1px solid #EEEEEE;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+                    <div>
+                      <span style="font-size:11px; font-weight:700; text-transform:uppercase; color:#888;">PRODUCTS SECTION TITLE</span>
+                      <h2 id="heProductsTitle" contenteditable="true" style="font-size:24px; font-weight:800; color:#1A1A1A; outline:none; margin:2px 0 0;" title="Click to edit section title">Recent Collections</h2>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <label style="font-size:12px; font-weight:600; color:#555;">Display Count:</label>
+                      <select id="heProductsCount" class="ea-select" style="width:130px; font-size:12px; padding:6px 10px;" onchange="renderHeProductsPreview()">
+                        <option value="4">4 Products</option>
+                        <option value="8" selected>8 Products</option>
+                        <option value="12">12 Products</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Product Grid Preview -->
+                  <div class="product-grid" id="heProductGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:16px;">
+                    <!-- Rendered dynamically by JS -->
+                  </div>
+                </div>
+
+                <!-- Service Promise Cards -->
+                <div style="margin-top:35px; padding-top:25px; border-top:1px solid #EEEEEE;">
+                  <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#888; margin-bottom:14px;">
+                    Service Guarantee Cards (Click text to edit inline)
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                      <div style="padding:16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; text-align:center;">
+                        <div style="width:40px; height:40px; background:rgba(5, 150, 105, 0.1); color:#059669; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">
+                          <span class="material-symbols-outlined">local_shipping</span>
+                        </div>
+                        <h5 id="heSvc1Title" contenteditable="true" style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:4px; outline:none;" title="Click to edit title">Free Delivery</h5>
+                        <p id="heSvc1Desc" contenteditable="true" style="font-size:11px; color:#64748B; margin:0; outline:none;" title="Click to edit description">Free shipping on all orders</p>
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                      <div style="padding:16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; text-align:center;">
+                        <div style="width:40px; height:40px; background:rgba(5, 150, 105, 0.1); color:#059669; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">
+                          <span class="material-symbols-outlined">credit_card</span>
+                        </div>
+                        <h5 id="heSvc2Title" contenteditable="true" style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:4px; outline:none;" title="Click to edit title">EMI Available</h5>
+                        <p id="heSvc2Desc" contenteditable="true" style="font-size:11px; color:#64748B; margin:0; outline:none;" title="Click to edit description">Set your flexible plan</p>
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                      <div style="padding:16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; text-align:center;">
+                        <div style="width:40px; height:40px; background:rgba(5, 150, 105, 0.1); color:#059669; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">
+                          <span class="material-symbols-outlined">headset_mic</span>
+                        </div>
+                        <h5 id="heSvc3Title" contenteditable="true" style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:4px; outline:none;" title="Click to edit title">24/7 Support</h5>
+                        <p id="heSvc3Desc" contenteditable="true" style="font-size:11px; color:#64748B; margin:0; outline:none;" title="Click to edit description">Support through call</p>
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                      <div style="padding:16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; text-align:center;">
+                        <div style="width:40px; height:40px; background:rgba(5, 150, 105, 0.1); color:#059669; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px;">
+                          <span class="material-symbols-outlined">verified</span>
+                        </div>
+                        <h5 id="heSvc4Title" contenteditable="true" style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:4px; outline:none;" title="Click to edit title">Trusted</h5>
+                        <p id="heSvc4Desc" contenteditable="true" style="font-size:11px; color:#64748B; margin:0; outline:none;" title="Click to edit description">Trusted by 100+ customers</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- TAB 2: ABOUT PAGE EDITOR -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="ea-tab-panel" id="tab-about-customizer">
+          <div class="ea-card">
+            <div class="ea-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <div class="ea-card-title" style="display:flex; align-items:center; gap:8px;">
+                  <span class="material-symbols-outlined" style="color:var(--gold);">info</span>
+                  Visual Live About Page Customizer
+                </div>
+                <div class="text-muted" style="font-size:12px; margin-top:2px;">
+                  Click directly on any headline, story paragraph, or stat number below to edit. Click image badges to upload photos.
+                </div>
+              </div>
+              <button type="button" class="ea-btn ea-btn-primary" id="publishAboutBtn" style="padding:10px 20px; font-weight:700;">
+                <span class="material-symbols-outlined">rocket_launch</span> Publish & Save About Page
+              </button>
+            </div>
+            <div class="ea-card-body" style="background:#fcfcfc;">
+
+              <div style="border: 2px dashed #E5E7EB; border-radius: 20px; padding: 32px 24px; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+
+                <!-- Hero Section -->
+                <div style="position:relative; background:#059669; border-radius:16px; padding:40px 32px; color:#ffffff; margin-bottom:35px; text-align:center; overflow:hidden;">
+                  <span style="font-size:11px; font-weight:800; letter-spacing:1px; background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:20px; text-transform:uppercase;">HERO BANNER</span>
+                  <h1 id="abHeroTitle" contenteditable="true" style="font-size:32px; font-weight:800; color:#ffffff; margin:16px 0 8px; outline:none;" title="Click to edit hero title">About EUSTA</h1>
+                  <p id="abHeroSubtitle" contenteditable="true" style="font-size:15px; opacity:0.9; max-width:600px; margin:0 auto; outline:none;" title="Click to edit hero subtitle">Crafting Timeless Furniture & Elevating Modern Workspaces Since 2018</p>
+                </div>
+
+                <!-- Company Story Section -->
+                <div style="margin-bottom:40px;">
+                  <span style="font-size:11px; font-weight:700; color:#888; text-transform:uppercase; display:block; margin-bottom:12px;">COMPANY STORY SECTION</span>
+                  <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                      <span id="abStoryBadge" contenteditable="true" style="font-size:12px; font-weight:800; color:#059669; text-transform:uppercase; outline:none;" title="Click to edit badge">OUR JOURNEY</span>
+                      <h2 id="abStoryTitle" contenteditable="true" style="font-size:26px; font-weight:800; color:#1E293B; margin:8px 0 16px; outline:none; line-height:1.3;" title="Click to edit title">Blending Traditional Craftsmanship with Ergonomic Perfection</h2>
+                      <p id="abStoryP1" contenteditable="true" style="font-size:14px; color:#475569; line-height:1.7; outline:none; margin-bottom:12px;" title="Click to edit paragraph 1">Founded in Malappuram, EUSTA started with a passionate vision: to build furniture that combines architectural elegance with lifelong durability. What began as a small woodworking studio has evolved into a premier commercial and residential furniture design house.</p>
+                      <p id="abStoryP2" contenteditable="true" style="font-size:14px; color:#475569; line-height:1.7; outline:none; margin:0;" title="Click to edit paragraph 2">Every sofa, dining set, and executive desk we produce is handcrafted by master artisans using sustainably sourced solid woods, premium fabrics, and precision hardware.</p>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="row g-3">
+                        <div class="col-6">
+                          <div style="position:relative; border-radius:14px; overflow:hidden; border:2px dashed #CBD5E1; height:200px; background:#F1F5F9; display:flex; align-items:center; justify-content:center;">
+                            <img id="abImg1Preview" src="../user/assets/imgs/furniture/about/about-image1.jpg" alt="About Image 1" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400x300?text=About+Image+1'">
+                            <button type="button" class="ea-btn ea-btn-sm" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:11px; background:rgba(0,0,0,0.7); color:#fff; border:none; backdrop-filter:blur(4px);" onclick="document.getElementById('abImg1File').click()">
+                              <span class="material-symbols-outlined" style="font-size:14px;">cloud_upload</span> Upload Photo
+                            </button>
+                            <input type="file" id="abImg1File" accept="image/*" style="display:none;" onchange="handleAboutImgUpload(event, 1)">
+                            <input type="hidden" id="abImg1Url" value="assets/imgs/furniture/about/about-image1.jpg">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div style="position:relative; border-radius:14px; overflow:hidden; border:2px dashed #CBD5E1; height:200px; background:#F1F5F9; display:flex; align-items:center; justify-content:center;">
+                            <img id="abImg2Preview" src="../user/assets/imgs/furniture/about/about-image2.jpg" alt="About Image 2" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400x300?text=About+Image+2'">
+                            <button type="button" class="ea-btn ea-btn-sm" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:11px; background:rgba(0,0,0,0.7); color:#fff; border:none; backdrop-filter:blur(4px);" onclick="document.getElementById('abImg2File').click()">
+                              <span class="material-symbols-outlined" style="font-size:14px;">cloud_upload</span> Upload Photo
+                            </button>
+                            <input type="file" id="abImg2File" accept="image/*" style="display:none;" onchange="handleAboutImgUpload(event, 2)">
+                            <input type="hidden" id="abImg2Url" value="assets/imgs/furniture/about/about-image2.jpg">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Key Achievements / Stats Section -->
+                <div style="background:#F8FAFC; border-radius:16px; padding:28px 24px; margin-bottom:35px; border:1px solid #E2E8F0;">
+                  <span style="font-size:11px; font-weight:700; color:#888; text-transform:uppercase; display:block; margin-bottom:16px; text-align:center;">KEY STATS & COUNTERS</span>
+                  <div class="row g-4 text-center">
+                    <div class="col-6 col-md-3">
+                      <h3 id="abStat1Val" contenteditable="true" style="font-size:32px; font-weight:800; color:#059669; margin-bottom:4px; outline:none;" title="Click to edit value">10,000+</h3>
+                      <p id="abStat1Lbl" contenteditable="true" style="font-size:13px; font-weight:600; color:#475569; margin:0; outline:none;" title="Click to edit label">Delivered Products</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <h3 id="abStat2Val" contenteditable="true" style="font-size:32px; font-weight:800; color:#059669; margin-bottom:4px; outline:none;" title="Click to edit value">150+</h3>
+                      <p id="abStat2Lbl" contenteditable="true" style="font-size:13px; font-weight:600; color:#475569; margin:0; outline:none;" title="Click to edit label">Custom Office Projects</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <h3 id="abStat3Val" contenteditable="true" style="font-size:32px; font-weight:800; color:#059669; margin-bottom:4px; outline:none;" title="Click to edit value">100%</h3>
+                      <p id="abStat3Lbl" contenteditable="true" style="font-size:13px; font-weight:600; color:#475569; margin:0; outline:none;" title="Click to edit label">Solid Teak Wood Quality</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <h3 id="abStat4Val" contenteditable="true" style="font-size:32px; font-weight:800; color:#059669; margin-bottom:4px; outline:none;" title="Click to edit value">99.4%</h3>
+                      <p id="abStat4Lbl" contenteditable="true" style="font-size:13px; font-weight:600; color:#475569; margin:0; outline:none;" title="Click to edit label">Customer Satisfaction</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- TAB 3: CONTACT PAGE EDITOR -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="ea-tab-panel" id="tab-contact-customizer">
+          <div class="ea-card">
+            <div class="ea-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <div class="ea-card-title" style="display:flex; align-items:center; gap:8px;">
+                  <span class="material-symbols-outlined" style="color:var(--gold);">contact_support</span>
+                  Visual Live Contact Page Customizer
+                </div>
+                <div class="text-muted" style="font-size:12px; margin-top:2px;">
+                  Click directly on any title, address, phone number, working hours, or form label below to edit.
+                </div>
+              </div>
+              <button type="button" class="ea-btn ea-btn-primary" id="publishContactBtn" style="padding:10px 20px; font-weight:700;">
+                <span class="material-symbols-outlined">rocket_launch</span> Publish & Save Contact Page
+              </button>
+            </div>
+            <div class="ea-card-body" style="background:#fcfcfc;">
+
+              <div style="border: 2px dashed #E5E7EB; border-radius: 20px; padding: 32px 24px; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+
+                <!-- Hero Section -->
+                <div style="position:relative; background:#059669; border-radius:16px; padding:40px 32px; color:#ffffff; margin-bottom:35px; text-align:center; overflow:hidden;">
+                  <span style="font-size:11px; font-weight:800; letter-spacing:1px; background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:20px; text-transform:uppercase;">HERO BANNER</span>
+                  <h1 id="ctHeroTitle" contenteditable="true" style="font-size:32px; font-weight:800; color:#ffffff; margin:16px 0 8px; outline:none;" title="Click to edit hero title">Get in Touch with EUSTA</h1>
+                  <p id="ctHeroSubtitle" contenteditable="true" style="font-size:15px; opacity:0.9; max-width:600px; margin:0 auto; outline:none;" title="Click to edit hero subtitle">Have a question about our handcrafted furniture collections, custom design consultations, or order shipping? Our customer care specialists are always here to help.</p>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="row g-4">
+                  <div class="col-lg-5">
+                    <div style="background:#F8FAFC; border-radius:16px; padding:24px; border:1px solid #E2E8F0; height:100%;">
+                      <span style="font-size:11px; font-weight:700; color:#888; text-transform:uppercase; display:block; margin-bottom:12px;">DIRECT CONTACT</span>
+                      <h3 id="ctSecTitle" contenteditable="true" style="font-size:20px; font-weight:800; color:#1E293B; margin-bottom:8px; outline:none;" title="Click to edit section title">We’re Here for You</h3>
+                      <p id="ctSecDesc" contenteditable="true" style="font-size:13px; color:#64748B; margin-bottom:24px; outline:none;" title="Click to edit section description">Reach out to us through any of our support channels below.</p>
+
+                      <div style="background:#ffffff; border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid #E2E8F0; display:flex; gap:14px;">
+                        <div style="width:36px; height:36px; background:rgba(139,94,52,0.1); color:var(--gold); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                          <span class="material-symbols-outlined">location_on</span>
+                        </div>
+                        <div>
+                          <h5 style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:2px;">Showroom / Store Location</h5>
+                          <p id="ctAddressText" contenteditable="true" style="font-size:12px; color:#475569; margin:0; outline:none;" title="Click to edit address">House #5, Street Number #98, Malappuram, Kerala, India</p>
+                        </div>
+                      </div>
+
+                      <div style="background:#ffffff; border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid #E2E8F0; display:flex; gap:14px;">
+                        <div style="width:36px; height:36px; background:rgba(139,94,52,0.1); color:var(--gold); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                          <span class="material-symbols-outlined">mail</span>
+                        </div>
+                        <div>
+                          <h5 style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:2px;">Support & Sales Email</h5>
+                          <p id="ctEmailPrimary" contenteditable="true" style="font-size:12px; color:#059669; font-weight:700; margin:0; outline:none;" title="Click to edit primary email">info@eusta.com</p>
+                          <p id="ctEmailSecondary" contenteditable="true" style="font-size:12px; color:#64748B; margin:2px 0 0; outline:none;" title="Click to edit secondary email">support@eusta.in</p>
+                        </div>
+                      </div>
+
+                      <div style="background:#ffffff; border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid #E2E8F0; display:flex; gap:14px;">
+                        <div style="width:36px; height:36px; background:rgba(139,94,52,0.1); color:var(--gold); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                          <span class="material-symbols-outlined">call</span>
+                        </div>
+                        <div>
+                          <h5 style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:2px;">Helpline Phone</h5>
+                          <p id="ctPhonePrimary" contenteditable="true" style="font-size:12px; color:#059669; font-weight:700; margin:0; outline:none;" title="Click to edit primary phone">+91 98765 43210</p>
+                          <p id="ctPhoneSecondary" contenteditable="true" style="font-size:12px; color:#64748B; margin:2px 0 0; outline:none;" title="Click to edit secondary phone">+91 91234 56789</p>
+                        </div>
+                      </div>
+
+                      <div style="background:#ffffff; border-radius:12px; padding:16px; border:1px solid #E2E8F0; display:flex; gap:14px;">
+                        <div style="width:36px; height:36px; background:rgba(139,94,52,0.1); color:var(--gold); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                          <span class="material-symbols-outlined">schedule</span>
+                        </div>
+                        <div>
+                          <h5 style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:2px;">Store Working Hours</h5>
+                          <p id="ctHoursText" contenteditable="true" style="font-size:12px; color:#475569; margin:0; outline:none;" title="Click to edit working hours">Monday – Saturday: 9:00 AM – 8:00 PM (Sunday Closed)</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <div style="background:#ffffff; border-radius:16px; padding:24px; border:1px solid #E2E8F0; height:100%;">
+                      <span style="font-size:11px; font-weight:700; color:#888; text-transform:uppercase; display:block; margin-bottom:12px;">SEND A MESSAGE</span>
+                      <h3 id="ctFormTitle" contenteditable="true" style="font-size:20px; font-weight:800; color:#1E293B; margin-bottom:6px; outline:none;" title="Click to edit form title">Connect with Our Team</h3>
+                      <p id="ctFormSubtitle" contenteditable="true" style="font-size:13px; color:#64748B; margin-bottom:20px; outline:none;" title="Click to edit form subtitle">Fill in your details below and we will get back to you within 24 hours.</p>
+
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label style="font-size:11px; font-weight:700; color:#64748B;">Full Name Label</label>
+                          <input type="text" id="ctLabelName" class="ea-input" value="Your Full Name">
+                        </div>
+                        <div class="col-md-6">
+                          <label style="font-size:11px; font-weight:700; color:#64748B;">Email Address Label</label>
+                          <input type="text" id="ctLabelEmail" class="ea-input" value="Email Address">
+                        </div>
+                        <div class="col-12">
+                          <label style="font-size:11px; font-weight:700; color:#64748B;">Subject Label</label>
+                          <input type="text" id="ctLabelSubject" class="ea-input" value="Subject / Furniture Enquiry">
+                        </div>
+                        <div class="col-12">
+                          <label style="font-size:11px; font-weight:700; color:#64748B;">Message Textarea Label</label>
+                          <input type="text" id="ctLabelMsg" class="ea-input" value="How can we help you?">
+                        </div>
+                        <div class="col-12">
+                          <label style="font-size:11px; font-weight:700; color:#64748B;">Submit Button Text</label>
+                          <input type="text" id="ctBtnText" class="ea-input" value="Send Message">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Banner Image Quick Modal -->
+<div class="modal fade" id="heBannerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px; border:none; box-shadow:0 20px 40px rgba(0,0,0,0.2); overflow:hidden;">
+      <div class="modal-header" style="border-bottom:1px solid #E2E8F0; padding:18px 24px; background:#F8FAFC;">
+        <h5 class="modal-title" style="font-size:16px; font-weight:700; color:#1E293B;" id="heBannerModalTitle">
+          <span class="material-symbols-outlined" style="vertical-align:middle; color:var(--gold); margin-right:6px;">photo_camera</span>
+          Change Hero Banner Image
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="padding:24px;">
+        <input type="hidden" id="heActiveBannerNum" value="1">
+        <div class="mb-3">
+          <label class="form-label" style="font-size:12px; font-weight:700; color:#475569;">Upload Image File</label>
+          <input type="file" id="heModalBannerFile" class="form-control" accept="image/*" style="font-size:12px;">
+        </div>
+        <div class="text-center my-3 text-muted" style="font-size:11px; font-weight:700; letter-spacing:1px;">— OR PASTE IMAGE URL —</div>
+        <div>
+          <label class="form-label" style="font-size:12px; font-weight:700; color:#475569;">Image URL</label>
+          <input type="text" id="heModalBannerUrl" class="ea-input" placeholder="e.g. assets/imgs/furniture/product/off-01.png">
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:1px solid #E2E8F0; padding:14px 24px; background:#F8FAFC;">
+        <button type="button" class="ea-btn ea-btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="ea-btn ea-btn-primary" onclick="applyHeBannerModal()">Apply Image</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="ea-toast-container" id="toastContainer"></div>
+
+<!-- Bootstrap & Admin Scripts -->
+<script src="assets/vendor/js/bootstrap/bootstrap.bundle.js"></script>
+
+<script>
+  // ── Tab Switching Logic ──
+  function switchTab(tabId, el) {
+    document.querySelectorAll('.ea-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ea-tab-panel').forEach(p => p.classList.remove('active'));
+    if (el) el.classList.add('active');
+    const panel = document.getElementById('tab-' + tabId);
+    if (panel) panel.classList.add('active');
+  }
+
+  function showToast(msg) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'ea-toast ea-toast--success';
+    toast.innerHTML = `<span class="material-symbols-outlined">check_circle</span><span>${msg}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // Branding & Theme Logic
+  // ═══════════════════════════════════════════════════════════════
+  function handleLogoFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('logoUrl').value = e.target.result;
+      document.getElementById('logoPreviewThumb').src = e.target.result;
+      document.getElementById('prevLogoImg').src = e.target.result;
+      showToast('Logo image uploaded! Click Save to apply.');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetDefaultLogo() {
+    document.getElementById('logoUrl').value = 'assets/imgs/logo/logo.png';
+    document.getElementById('logoPreviewThumb').src = '../user/assets/imgs/logo/logo.png';
+    document.getElementById('prevLogoImg').src = '../user/assets/imgs/logo/logo.png';
+  }
+
+  function updateLivePreview() {
+    const name = document.getElementById('brandName')?.value || 'Eusta';
+    const logo = document.getElementById('logoUrl')?.value || '../user/assets/imgs/logo/logo.png';
+    if (document.getElementById('prevBrandText')) document.getElementById('prevBrandText').textContent = name;
+    if (document.getElementById('prevLogoImg')) document.getElementById('prevLogoImg').src = fixPath(logo);
+  }
+
+  function selectPreset(name, primary, secondary, bg, text) {
+    document.getElementById('primaryColorPicker').value = primary;
+    document.getElementById('primaryColorHex').value = primary;
+    document.getElementById('secondaryColorPicker').value = secondary;
+    document.getElementById('secondaryColorHex').value = secondary;
+
+    if (document.getElementById('prevBtn')) document.getElementById('prevBtn').style.background = primary;
+    if (document.getElementById('prevActiveTab')) {
+      document.getElementById('prevActiveTab').style.color = primary;
+      document.getElementById('prevActiveTab').style.borderBottomColor = primary;
+    }
+    if (document.getElementById('prevBadge')) document.getElementById('prevBadge').style.background = secondary;
+    showToast(`Theme preset '${name}' selected! Click Save to apply.`);
+  }
+
+  function syncColorInput(type) {
+    if (type === 'primary') {
+      const val = document.getElementById('primaryColorPicker').value;
+      document.getElementById('primaryColorHex').value = val;
+      if (document.getElementById('prevBtn')) document.getElementById('prevBtn').style.background = val;
+      if (document.getElementById('prevActiveTab')) {
+        document.getElementById('prevActiveTab').style.color = val;
+        document.getElementById('prevActiveTab').style.borderBottomColor = val;
+      }
+    } else if (type === 'secondary') {
+      const val = document.getElementById('secondaryColorPicker').value;
+      document.getElementById('secondaryColorHex').value = val;
+      if (document.getElementById('prevBadge')) document.getElementById('prevBadge').style.background = val;
+    }
+  }
+
+  function syncColorPicker(type) {
+    if (type === 'primary') {
+      const val = document.getElementById('primaryColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('primaryColorPicker').value = val;
+    } else if (type === 'secondary') {
+      const val = document.getElementById('secondaryColorHex').value;
+      if (/^#[0-9A-F]{6}$/i.test(val)) document.getElementById('secondaryColorPicker').value = val;
+    }
+  }
+
+  document.getElementById('saveBrandingBtn')?.addEventListener('click', async () => {
+    const branding = {
+      logoUrl: document.getElementById('logoUrl')?.value || 'assets/imgs/logo/logo.png',
+      brandName: document.getElementById('brandName')?.value || 'Eusta',
+      primaryColor: document.getElementById('primaryColorHex')?.value || '#059669',
+      secondaryColor: document.getElementById('secondaryColorHex')?.value || '#064E3B'
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ branding })
+      });
+      if (res.ok) {
+        showToast('Branding & Theme colors saved successfully!');
+      } else {
+        alert('Failed to save branding');
+      }
+    } catch(e) {
+      alert('Error saving branding settings');
+    }
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // Homepage Visual Customizer Logic
+  // ═══════════════════════════════════════════════════════════════
+  let heLoadedCategories = [];
+  let heLoadedProducts = [];
+  let heBannersList = [
+    { discount: 'GET 30% OFF', title: 'Wicker Hanging Chairs', buttonText: 'Buy Now', image: 'assets/imgs/furniture/product/off-01.png' },
+    { discount: 'GET 15% OFF', title: 'Brasslegged Armchair', buttonText: 'Buy Now', image: 'assets/imgs/furniture/product/off-02.png' }
+  ];
+
+  function fixPath(url) {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+    if (url.startsWith('../')) return url;
+    if (url.startsWith('/')) return '..' + url;
+    return '../user/' + url;
+  }
+
+  function updateHeBannerBg(num) {
+    const card = document.getElementById(`heBanner${num}Card`);
+    const url = document.getElementById(`heBanner${num}Url`)?.value || '';
+    if (card && url) {
+      card.style.backgroundImage = `linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%), url('${fixPath(url)}')`;
+    }
+  }
+
+  function renderHeBanners() {
+    const grid = document.getElementById('heBannersGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    heBannersList.forEach((b, idx) => {
+      const bannerNum = idx + 1;
+      const col = document.createElement('div');
+      col.className = 'col-lg-6';
+      col.innerHTML = `
+        <div id="heBanner${bannerNum}Card" style="position:relative; background-size:cover; background-position:center; background-image:linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%), url('${fixPath(b.image)}'); border-radius:20px; padding:32px 28px; border:1px solid rgba(0,0,0,0.08); overflow:hidden; min-height:250px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 12px 28px rgba(0,0,0,0.1); transition:all 0.3s;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:2;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="heBanner${bannerNum}Discount" contenteditable="true" style="display:inline-block; padding:5px 14px; background:#059669; color:#ffffff; font-size:11px; font-weight:800; border-radius:20px; outline:none;" title="Click to edit discount badge">${b.discount || 'GET 20% OFF'}</span>
+              <span style="font-size:10px; font-weight:700; color:rgba(255,255,255,0.7); background:rgba(0,0,0,0.4); padding:2px 8px; border-radius:10px;">#${bannerNum}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button type="button" class="ea-btn ea-btn-sm" style="background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.6); color:#1E293B; font-weight:700; font-size:11px; border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onclick="openHeBannerModal(${bannerNum})">
+                <span class="material-symbols-outlined" style="font-size:15px; vertical-align:middle;">photo_camera</span> Change Image
+              </button>
+              ${heBannersList.length > 1 ? `
+                <button type="button" class="ea-btn ea-btn-sm" style="background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:20px; padding:4px 8px; cursor:pointer;" onclick="removeHeBanner(${idx})" title="Remove Banner Card">
+                  <span class="material-symbols-outlined" style="font-size:15px;">delete</span>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+          <div style="position:relative; z-index:2; margin-top:20px;">
+            <h3 id="heBanner${bannerNum}Title" contenteditable="true" style="font-size:24px; font-weight:800; color:#ffffff !important; margin-bottom:16px; outline:none; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.5);" title="Click to edit title">${b.title || 'Special Collection'}</h3>
+            <button type="button" class="ea-btn ea-btn-sm ea-btn-primary" style="pointer-events:none; border-radius:25px; padding:8px 20px; font-weight:700;">
+              <span id="heBanner${bannerNum}Btn" contenteditable="true" style="outline:none;" title="Click to edit button text">${b.buttonText || 'Buy Now'}</span>
+              <span class="material-symbols-outlined" style="font-size:15px;">arrow_forward</span>
+            </button>
+          </div>
+          <input type="hidden" id="heBanner${bannerNum}Url" value="${b.image}">
+        </div>
+      `;
+      grid.appendChild(col);
+    });
+  }
+
+  function addHeBanner() {
+    if (heBannersList.length >= 6) {
+      alert('Maximum 6 Hero Banners allowed.');
+      return;
+    }
+    syncBannersFromDOM();
+    heBannersList.push({
+      discount: 'NEW OFFER',
+      title: 'Luxury Living Collection',
+      buttonText: 'Explore Now',
+      image: 'assets/imgs/furniture/product/off-01.png'
+    });
+    renderHeBanners();
+    showToast('New Banner Card added! Click Publish to save.');
+  }
+
+  function removeHeBanner(idx) {
+    if (heBannersList.length <= 1) return;
+    syncBannersFromDOM();
+    heBannersList.splice(idx, 1);
+    renderHeBanners();
+    showToast('Banner Card removed! Click Publish to save.');
+  }
+
+  function syncBannersFromDOM() {
+    heBannersList.forEach((b, idx) => {
+      const bannerNum = idx + 1;
+      const discEl = document.getElementById(`heBanner${bannerNum}Discount`);
+      const titleEl = document.getElementById(`heBanner${bannerNum}Title`);
+      const btnEl = document.getElementById(`heBanner${bannerNum}Btn`);
+      const urlEl = document.getElementById(`heBanner${bannerNum}Url`);
+      if (discEl) b.discount = discEl.textContent.trim();
+      if (titleEl) b.title = titleEl.textContent.trim();
+      if (btnEl) b.buttonText = btnEl.textContent.trim();
+      if (urlEl) b.image = urlEl.value.trim();
+    });
+  }
+
+  function handleHeCatLogoUpload(event, catId) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const iconInput = document.getElementById(`heCatIcon_${catId}`);
+      if (iconInput) iconInput.value = e.target.result;
+      const previewEl = document.getElementById(`heCatPreview_${catId}`);
+      if (previewEl) {
+        previewEl.innerHTML = `
+          <img src="${e.target.result}" alt="Category" style="width:28px; height:28px; object-fit:contain;">
+          <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; opacity:0; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+            <span class="material-symbols-outlined" style="font-size:16px;">cloud_upload</span>
+          </div>
+        `;
+      }
+      showToast('Category logo image updated! Click Publish to save.');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  let dragCatSrcEl = null;
+
+  function handleCatDragStart(e) {
+    dragCatSrcEl = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    this.style.opacity = '0.4';
+    this.classList.add('he-cat-dragging');
+  }
+
+  function handleCatDragOver(e) {
+    if (e.preventDefault) e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    this.classList.add('he-cat-over');
+    return false;
+  }
+
+  function handleCatDragLeave(e) {
+    this.classList.remove('he-cat-over');
+  }
+
+  function handleCatDrop(e) {
+    if (e.stopPropagation) e.stopPropagation();
+    this.classList.remove('he-cat-over');
+    if (dragCatSrcEl && dragCatSrcEl !== this) {
+      const container = document.getElementById('heCategoriesContainer');
+      const allItems = [...container.querySelectorAll('.premium-category-item:not(.active)')];
+      const srcIdx = allItems.indexOf(dragCatSrcEl);
+      const targetIdx = allItems.indexOf(this);
+      if (srcIdx > -1 && targetIdx > -1) {
+        const moved = heLoadedCategories.splice(srcIdx, 1)[0];
+        heLoadedCategories.splice(targetIdx, 0, moved);
+        renderHeCategories();
+        showToast('Category sequence updated! Click Publish to save.');
+      }
+    }
+    return false;
+  }
+
+  function handleCatDragEnd(e) {
+    this.style.opacity = '1';
+    document.querySelectorAll('.premium-category-item').forEach(item => {
+      item.classList.remove('he-cat-over');
+      item.classList.remove('he-cat-dragging');
+    });
+  }
+
+  function renderHeCategories() {
+    const container = document.getElementById('heCategoriesContainer');
+    if (!container || !Array.isArray(heLoadedCategories)) return;
+    container.innerHTML = '';
+
+    const forYouItem = document.createElement('div');
+    forYouItem.className = 'premium-category-item active';
+    forYouItem.style.cssText = 'width:70px; text-align:center; display:flex; flex-direction:column; align-items:center; opacity:0.95;';
+    forYouItem.innerHTML = `
+      <div class="premium-category-circle" style="width:56px; height:56px; border-radius:50%; background:#ffffff; box-shadow:0 0 0 2.5px #059669, 0 8px 20px rgba(5,150,105,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+        <i class="fa-solid fa-heart" style="color:#059669; font-size:20px;"></i>
+      </div>
+      <span class="premium-category-name" style="font-size:11px; font-weight:700; color:#059669;">For You</span>
+    `;
+    container.appendChild(forYouItem);
+
+    const catImages = {
+      'sofas': 'assets/imgs/Categories/sofa.png', 'sofa': 'assets/imgs/Categories/sofa.png',
+      'beds': 'assets/imgs/Categories/bed.png', 'bed': 'assets/imgs/Categories/bed.png',
+      'dining': 'assets/imgs/Categories/dining-table.png', 'wardrobes': 'assets/imgs/Categories/wardrobe.png',
+      'coffee tables': 'assets/imgs/Categories/coffee-table.png', 'coffee-tables': 'assets/imgs/Categories/coffee-table.png',
+      'office chairs': 'assets/imgs/Categories/office-chair.png', 'office-chairs': 'assets/imgs/Categories/office-chair.png',
+      'recliners': 'assets/imgs/Categories/sofa.png'
+    };
+
+    const iconMap = {
+      'chair': 'fa-chair', 'furniture': 'fa-chair', 'sofa': 'fa-couch', 'bed': 'fa-bed',
+      'dining': 'fa-utensils', 'wardrobes': 'fa-door-closed', 'door_sliding': 'fa-door-closed',
+      'coffee_table': 'fa-mug-hot', 'table_bar': 'fa-mug-hot', 'decor': 'fa-wand-magic-sparkles',
+      'auto_awesome': 'fa-wand-magic-sparkles', 'lighting': 'fa-lightbulb', 'lightbulb': 'fa-lightbulb',
+      'textiles': 'fa-layer-group', 'texture': 'fa-layer-group', 'kitchen': 'fa-utensils', 'countertops': 'fa-utensils'
+    };
+
+    heLoadedCategories.forEach((cat, idx) => {
+      const item = document.createElement('div');
+      item.className = 'premium-category-item';
+      item.setAttribute('draggable', 'true');
+      item.setAttribute('data-cat-idx', idx);
+      item.style.cssText = 'width:72px; text-align:center; display:flex; flex-direction:column; align-items:center; position:relative; cursor:grab; transition:all 0.2s;';
+
+      item.addEventListener('dragstart', handleCatDragStart);
+      item.addEventListener('dragover', handleCatDragOver);
+      item.addEventListener('dragleave', handleCatDragLeave);
+      item.addEventListener('drop', handleCatDrop);
+      item.addEventListener('dragend', handleCatDragEnd);
+
+      let iconVal = cat.icon || '';
+      const catLower = (cat.name || '').toLowerCase();
+      if (!iconVal && catImages[catLower]) iconVal = catImages[catLower];
+
+      let iconHTML = '';
+      if (iconVal.startsWith('http') || iconVal.startsWith('data:') || iconVal.startsWith('assets/') || iconVal.startsWith('/')) {
+        iconHTML = `<img src="${fixPath(iconVal)}" alt="${cat.name}" style="width:28px; height:28px; object-fit:contain;">`;
+      } else if (catImages[catLower]) {
+        iconHTML = `<img src="${fixPath(catImages[catLower])}" alt="${cat.name}" style="width:28px; height:28px; object-fit:contain;">`;
+      } else if (iconMap[iconVal]) {
+        iconHTML = `<i class="fa-solid ${iconMap[iconVal]}" style="font-size:20px; color:#059669;"></i>`;
+      } else {
+        iconHTML = `<i class="fa-solid fa-shapes" style="font-size:20px; color:#059669;"></i>`;
+      }
+
+      item.innerHTML = `
+        <div class="premium-category-circle" id="heCatPreview_${cat.id}" style="width:56px; height:56px; border-radius:50%; background:#ffffff; box-shadow:0 4px 12px rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center; margin-bottom:6px; cursor:pointer; position:relative; border:1px solid rgba(0,0,0,0.05);" onclick="document.getElementById('heCatFile_${cat.id}').click()" title="Click to upload logo image">
+          ${iconHTML}
+          <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; opacity:0; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+            <span class="material-symbols-outlined" style="font-size:16px;">cloud_upload</span>
+          </div>
+        </div>
+        <input type="file" id="heCatFile_${cat.id}" accept="image/*" style="display:none;" onchange="handleHeCatLogoUpload(event, '${cat.id}')">
+        <span id="heCatName_${cat.id}" class="premium-category-name" contenteditable="true" style="outline:none; font-size:11px; font-weight:600; color:#1A1A1A; line-height:1.2; display:block;" title="Click to edit category name">${cat.name}</span>
+        <span class="material-symbols-outlined" style="font-size:13px; color:#94A3B8; margin-top:2px;" title="Drag to reorder category">drag_indicator</span>
+        <input type="hidden" id="heCatIcon_${cat.id}" value="${cat.icon || ''}">
+      `;
+      container.appendChild(item);
+    });
+  }
+
+  function renderHeProductsPreview() {
+    const grid = document.getElementById('heProductGrid');
+    if (!grid || !Array.isArray(heLoadedProducts)) return;
+    const count = parseInt(document.getElementById('heProductsCount')?.value || '8');
+    grid.innerHTML = '';
+    const slice = heLoadedProducts.slice(0, count);
+    slice.forEach(p => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#ffffff; border:1px solid #E2E8F0; border-radius:16px; padding:14px; box-shadow:0 4px 14px rgba(0,0,0,0.04); transition:all 0.3s; position:relative; display:flex; flex-direction:column; justify-content:space-between;';
+      const rawImg = p.image || (p.images && p.images[0]) || 'assets/imgs/furniture/product/product1.png';
+      const imgSrc = fixPath(rawImg);
+      card.innerHTML = `
+        <div>
+          <div style="height:140px; border-radius:12px; overflow:hidden; background:#F8FAFC; margin-bottom:10px; display:flex; align-items:center; justify-content:center; padding:8px;">
+            <img src="${imgSrc}" alt="${p.name}" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="this.onerror=null; this.src='../user/assets/imgs/furniture/product/product1.png'">
+          </div>
+          <div style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:6px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${p.name}</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:14px; font-weight:800; color:#059669;">₹${Number(p.price || 0).toLocaleString()}</span>
+            ${p.oldPrice ? `<span style="font-size:11px; color:#94A3B8; text-decoration:line-through;">₹${Number(p.oldPrice).toLocaleString()}</span>` : ''}
+          </div>
+          <span style="font-size:10px; font-weight:700; background:rgba(5,150,105,0.1); color:#059669; padding:2px 8px; border-radius:12px;">Active</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  async function loadHomepageCustomizerData() {
+    try {
+      const catRes = await fetch('/api/categories');
+      if (catRes.ok) {
+        heLoadedCategories = await catRes.json();
+        renderHeCategories();
+      }
+    } catch(e) {}
+
+    try {
+      const prodRes = await fetch('/api/products');
+      if (prodRes.ok) {
+        heLoadedProducts = await prodRes.json();
+        renderHeProductsPreview();
+      }
+    } catch(e) {}
+
+    try {
+      const res = await fetch('/api/settings');
+      const settings = await res.json();
+      const layout = settings.homepageLayout;
+      if (!layout) return;
+
+      const banners = layout.sections?.heroBanners?.banners;
+      if (Array.isArray(banners) && banners.length > 0) {
+        heBannersList = banners.map(b => ({
+          discount: b.discount || 'GET 20% OFF',
+          title: b.title || 'Special Collection',
+          buttonText: b.buttonText || 'Buy Now',
+          image: b.image || 'assets/imgs/furniture/product/off-01.png'
+        }));
+      }
+      renderHeBanners();
+
+      const prodSec = layout.sections?.recentProducts;
+      if (prodSec) {
+        if (prodSec.title && document.getElementById('heProductsTitle')) document.getElementById('heProductsTitle').textContent = prodSec.title;
+        if (prodSec.count && document.getElementById('heProductsCount')) {
+          document.getElementById('heProductsCount').value = String(prodSec.count);
+          renderHeProductsPreview();
+        }
+      }
+
+      const cards = layout.sections?.services?.cards || [];
+      if (cards[0]) {
+        if (cards[0].title && document.getElementById('heSvc1Title')) document.getElementById('heSvc1Title').textContent = cards[0].title;
+        if (cards[0].description && document.getElementById('heSvc1Desc')) document.getElementById('heSvc1Desc').textContent = cards[0].description;
+      }
+      if (cards[1]) {
+        if (cards[1].title && document.getElementById('heSvc2Title')) document.getElementById('heSvc2Title').textContent = cards[1].title;
+        if (cards[1].description && document.getElementById('heSvc2Desc')) document.getElementById('heSvc2Desc').textContent = cards[1].description;
+      }
+      if (cards[2]) {
+        if (cards[2].title && document.getElementById('heSvc3Title')) document.getElementById('heSvc3Title').textContent = cards[2].title;
+        if (cards[2].description && document.getElementById('heSvc3Desc')) document.getElementById('heSvc3Desc').textContent = cards[2].description;
+      }
+      if (cards[3]) {
+        if (cards[3].title && document.getElementById('heSvc4Title')) document.getElementById('heSvc4Title').textContent = cards[3].title;
+        if (cards[3].description && document.getElementById('heSvc4Desc')) document.getElementById('heSvc4Desc').textContent = cards[3].description;
+      }
+    } catch(e) {
+      renderHeBanners();
+    }
+  }
+
+  document.getElementById('publishHomeBtn')?.addEventListener('click', async () => {
+    if (Array.isArray(heLoadedCategories) && heLoadedCategories.length > 0) {
+      heLoadedCategories.forEach((cat, idx) => {
+        cat.order = idx + 1;
+        const nameEl = document.getElementById(`heCatName_${cat.id}`);
+        const iconEl = document.getElementById(`heCatIcon_${cat.id}`);
+        if (nameEl) cat.name = nameEl.textContent.trim();
+        if (iconEl) cat.icon = iconEl.value.trim();
+      });
+      try {
+        await fetch('/api/categories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(heLoadedCategories)
+        });
+        localStorage.setItem('eusta_static_categories', JSON.stringify(heLoadedCategories));
+      } catch(e) {}
+    }
+
+    syncBannersFromDOM();
+    const finalBanners = heBannersList.map(b => ({
+      image: b.image || 'assets/imgs/furniture/product/off-01.png',
+      title: b.title || 'Special Offer',
+      discount: b.discount || 'GET 20% OFF',
+      buttonText: b.buttonText || 'Buy Now',
+      link: 'product-details.html'
+    }));
+
+    const productsTitle   = document.getElementById('heProductsTitle')?.textContent.trim() || 'Recent Collections';
+    const productsCount   = parseInt(document.getElementById('heProductsCount')?.value || '8');
+
+    const svc1Title = document.getElementById('heSvc1Title')?.textContent.trim() || 'Free Delivery';
+    const svc1Desc  = document.getElementById('heSvc1Desc')?.textContent.trim() || 'Free shipping on all orders';
+    const svc2Title = document.getElementById('heSvc2Title')?.textContent.trim() || 'EMI Available';
+    const svc2Desc  = document.getElementById('heSvc2Desc')?.textContent.trim() || 'Set your flexible plan';
+    const svc3Title = document.getElementById('heSvc3Title')?.textContent.trim() || '24/7 Support';
+    const svc3Desc  = document.getElementById('heSvc3Desc')?.textContent.trim() || 'Support through call';
+    const svc4Title = document.getElementById('heSvc4Title')?.textContent.trim() || 'Trusted';
+    const svc4Desc  = document.getElementById('heSvc4Desc')?.textContent.trim() || 'Trusted by 100+ customers';
+
+    const homepageLayout = {
+      sectionOrder: ['categories', 'heroBanners', 'recentProducts', 'services'],
+      sections: {
+        categories: { visible: true },
+        heroBanners: { visible: true, banners: finalBanners },
+        recentProducts: { visible: true, title: productsTitle, count: productsCount },
+        services: {
+          visible: true,
+          cards: [
+            { icon: 'fa-truck-fast', title: svc1Title, description: svc1Desc },
+            { icon: 'fa-credit-card', title: svc2Title, description: svc2Desc },
+            { icon: 'fa-headset', title: svc3Title, description: svc3Desc },
+            { icon: 'fa-shield-halved', title: svc4Title, description: svc4Desc }
+          ]
+        }
+      }
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ homepageLayout })
+      });
+      if (res.ok) {
+        showToast('Homepage layout, banner cards & category sequence published!');
+      } else {
+        alert('Failed to publish homepage');
+      }
+    } catch(err) {
+      alert('Error publishing homepage');
+    }
+  });
+
+  function openHeBannerModal(num) {
+    document.getElementById('heActiveBannerNum').value = String(num);
+    const currUrl = document.getElementById(`heBanner${num}Url`)?.value || '';
+    document.getElementById('heModalBannerUrl').value = currUrl;
+    const modalEl = document.getElementById('heBannerModal');
+    if (modalEl) {
+      const bsModal = new bootstrap.Modal(modalEl);
+      bsModal.show();
+    }
+  }
+
+  function applyHeBannerModal() {
+    const num = document.getElementById('heActiveBannerNum').value;
+    const fileInput = document.getElementById('heModalBannerFile');
+    const urlInput = document.getElementById('heModalBannerUrl');
+
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById(`heBanner${num}Url`).value = e.target.result;
+        updateHeBannerBg(num);
+        showToast(`Banner ${num} image updated! Click Publish to save.`);
+        const modalEl = document.getElementById('heBannerModal');
+        const bsModal = bootstrap.Modal.getInstance(modalEl);
+        if (bsModal) bsModal.hide();
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    } else if (urlInput && urlInput.value.trim()) {
+      document.getElementById(`heBanner${num}Url`).value = urlInput.value.trim();
+      updateHeBannerBg(num);
+      showToast(`Banner ${num} image updated! Click Publish to save.`);
+      const modalEl = document.getElementById('heBannerModal');
+      const bsModal = bootstrap.Modal.getInstance(modalEl);
+      if (bsModal) bsModal.hide();
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // About Page Customizer Logic
+  // ═══════════════════════════════════════════════════════════════
+  function handleAboutImgUpload(event, imgNum) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById(`abImg${imgNum}Url`).value = e.target.result;
+      document.getElementById(`abImg${imgNum}Preview`).src = e.target.result;
+      showToast(`About image ${imgNum} updated! Click Publish to save.`);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function loadAboutCustomizerData() {
+    try {
+      const res = await fetch('/api/settings');
+      const settings = await res.json();
+      const ab = settings.aboutCustomizer;
+      if (!ab) return;
+
+      if (ab.heroTitle && document.getElementById('abHeroTitle')) document.getElementById('abHeroTitle').textContent = ab.heroTitle;
+      if (ab.heroSubtitle && document.getElementById('abHeroSubtitle')) document.getElementById('abHeroSubtitle').textContent = ab.heroSubtitle;
+
+      if (ab.storyBadge && document.getElementById('abStoryBadge')) document.getElementById('abStoryBadge').textContent = ab.storyBadge;
+      if (ab.storyTitle && document.getElementById('abStoryTitle')) document.getElementById('abStoryTitle').textContent = ab.storyTitle;
+      if (ab.storyP1 && document.getElementById('abStoryP1')) document.getElementById('abStoryP1').textContent = ab.storyP1;
+      if (ab.storyP2 && document.getElementById('abStoryP2')) document.getElementById('abStoryP2').textContent = ab.storyP2;
+
+      if (ab.image1 && document.getElementById('abImg1Url')) {
+        document.getElementById('abImg1Url').value = ab.image1;
+        document.getElementById('abImg1Preview').src = fixPath(ab.image1);
+      }
+      if (ab.image2 && document.getElementById('abImg2Url')) {
+        document.getElementById('abImg2Url').value = ab.image2;
+        document.getElementById('abImg2Preview').src = fixPath(ab.image2);
+      }
+
+      if (ab.stat1Val && document.getElementById('abStat1Val')) document.getElementById('abStat1Val').textContent = ab.stat1Val;
+      if (ab.stat1Lbl && document.getElementById('abStat1Lbl')) document.getElementById('abStat1Lbl').textContent = ab.stat1Lbl;
+
+      if (ab.stat2Val && document.getElementById('abStat2Val')) document.getElementById('abStat2Val').textContent = ab.stat2Val;
+      if (ab.stat2Lbl && document.getElementById('abStat2Lbl')) document.getElementById('abStat2Lbl').textContent = ab.stat2Lbl;
+
+      if (ab.stat3Val && document.getElementById('abStat3Val')) document.getElementById('abStat3Val').textContent = ab.stat3Val;
+      if (ab.stat3Lbl && document.getElementById('abStat3Lbl')) document.getElementById('abStat3Lbl').textContent = ab.stat3Lbl;
+
+      if (ab.stat4Val && document.getElementById('abStat4Val')) document.getElementById('abStat4Val').textContent = ab.stat4Val;
+      if (ab.stat4Lbl && document.getElementById('abStat4Lbl')) document.getElementById('abStat4Lbl').textContent = ab.stat4Lbl;
+    } catch(e) {}
+  }
+
+  document.getElementById('publishAboutBtn')?.addEventListener('click', async () => {
+    const aboutCustomizer = {
+      heroTitle: document.getElementById('abHeroTitle')?.textContent.trim() || 'About EUSTA',
+      heroSubtitle: document.getElementById('abHeroSubtitle')?.textContent.trim() || 'Crafting Timeless Furniture & Elevating Modern Workspaces Since 2018',
+      storyBadge: document.getElementById('abStoryBadge')?.textContent.trim() || 'OUR JOURNEY',
+      storyTitle: document.getElementById('abStoryTitle')?.textContent.trim() || 'Blending Traditional Craftsmanship with Ergonomic Perfection',
+      storyP1: document.getElementById('abStoryP1')?.textContent.trim() || '',
+      storyP2: document.getElementById('abStoryP2')?.textContent.trim() || '',
+      image1: document.getElementById('abImg1Url')?.value || 'assets/imgs/furniture/about/about-image1.jpg',
+      image2: document.getElementById('abImg2Url')?.value || 'assets/imgs/furniture/about/about-image2.jpg',
+      stat1Val: document.getElementById('abStat1Val')?.textContent.trim() || '10,000+',
+      stat1Lbl: document.getElementById('abStat1Lbl')?.textContent.trim() || 'Delivered Products',
+      stat2Val: document.getElementById('abStat2Val')?.textContent.trim() || '150+',
+      stat2Lbl: document.getElementById('abStat2Lbl')?.textContent.trim() || 'Custom Office Projects',
+      stat3Val: document.getElementById('abStat3Val')?.textContent.trim() || '100%',
+      stat3Lbl: document.getElementById('abStat3Lbl')?.textContent.trim() || 'Solid Teak Wood Quality',
+      stat4Val: document.getElementById('abStat4Val')?.textContent.trim() || '99.4%',
+      stat4Lbl: document.getElementById('abStat4Lbl')?.textContent.trim() || 'Customer Satisfaction'
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ aboutCustomizer })
+      });
+      if (res.ok) {
+        showToast('About Page customizer settings published!');
+      } else {
+        alert('Failed to publish About page settings');
+      }
+    } catch(e) {
+      alert('Error publishing About page settings');
+    }
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // Contact Page Customizer Logic
+  // ═══════════════════════════════════════════════════════════════
+  async function loadContactCustomizerData() {
+    try {
+      const res = await fetch('/api/settings');
+      const settings = await res.json();
+      const ct = settings.contactCustomizer;
+      if (!ct) return;
+
+      if (ct.heroTitle && document.getElementById('ctHeroTitle')) document.getElementById('ctHeroTitle').textContent = ct.heroTitle;
+      if (ct.heroSubtitle && document.getElementById('ctHeroSubtitle')) document.getElementById('ctHeroSubtitle').textContent = ct.heroSubtitle;
+
+      if (ct.secTitle && document.getElementById('ctSecTitle')) document.getElementById('ctSecTitle').textContent = ct.secTitle;
+      if (ct.secDesc && document.getElementById('ctSecDesc')) document.getElementById('ctSecDesc').textContent = ct.secDesc;
+
+      if (ct.addressText && document.getElementById('ctAddressText')) document.getElementById('ctAddressText').textContent = ct.addressText;
+      if (ct.emailPrimary && document.getElementById('ctEmailPrimary')) document.getElementById('ctEmailPrimary').textContent = ct.emailPrimary;
+      if (ct.emailSecondary && document.getElementById('ctEmailSecondary')) document.getElementById('ctEmailSecondary').textContent = ct.emailSecondary;
+      if (ct.phonePrimary && document.getElementById('ctPhonePrimary')) document.getElementById('ctPhonePrimary').textContent = ct.phonePrimary;
+      if (ct.phoneSecondary && document.getElementById('ctPhoneSecondary')) document.getElementById('ctPhoneSecondary').textContent = ct.phoneSecondary;
+      if (ct.hoursText && document.getElementById('ctHoursText')) document.getElementById('ctHoursText').textContent = ct.hoursText;
+
+      if (ct.formTitle && document.getElementById('ctFormTitle')) document.getElementById('ctFormTitle').textContent = ct.formTitle;
+      if (ct.formSubtitle && document.getElementById('ctFormSubtitle')) document.getElementById('ctFormSubtitle').textContent = ct.formSubtitle;
+
+      if (ct.labelName && document.getElementById('ctLabelName')) document.getElementById('ctLabelName').value = ct.labelName;
+      if (ct.labelEmail && document.getElementById('ctLabelEmail')) document.getElementById('ctLabelEmail').value = ct.labelEmail;
+      if (ct.labelSubject && document.getElementById('ctLabelSubject')) document.getElementById('ctLabelSubject').value = ct.labelSubject;
+      if (ct.labelMsg && document.getElementById('ctLabelMsg')) document.getElementById('ctLabelMsg').value = ct.labelMsg;
+      if (ct.btnText && document.getElementById('ctBtnText')) document.getElementById('ctBtnText').value = ct.btnText;
+    } catch(e) {}
+  }
+
+  document.getElementById('publishContactBtn')?.addEventListener('click', async () => {
+    const contactCustomizer = {
+      heroTitle: document.getElementById('ctHeroTitle')?.textContent.trim() || 'Get in Touch with EUSTA',
+      heroSubtitle: document.getElementById('ctHeroSubtitle')?.textContent.trim() || 'Have a question about our handcrafted furniture collections...',
+      secTitle: document.getElementById('ctSecTitle')?.textContent.trim() || 'We’re Here for You',
+      secDesc: document.getElementById('ctSecDesc')?.textContent.trim() || 'Reach out to us through any of our support channels below.',
+      addressText: document.getElementById('ctAddressText')?.textContent.trim() || '',
+      emailPrimary: document.getElementById('ctEmailPrimary')?.textContent.trim() || '',
+      emailSecondary: document.getElementById('ctEmailSecondary')?.textContent.trim() || '',
+      phonePrimary: document.getElementById('ctPhonePrimary')?.textContent.trim() || '',
+      phoneSecondary: document.getElementById('ctPhoneSecondary')?.textContent.trim() || '',
+      hoursText: document.getElementById('ctHoursText')?.textContent.trim() || '',
+      formTitle: document.getElementById('ctFormTitle')?.textContent.trim() || 'Connect with Our Team',
+      formSubtitle: document.getElementById('ctFormSubtitle')?.textContent.trim() || 'Fill in your details below...',
+      labelName: document.getElementById('ctLabelName')?.value.trim() || 'Your Full Name',
+      labelEmail: document.getElementById('ctLabelEmail')?.value.trim() || 'Email Address',
+      labelSubject: document.getElementById('ctLabelSubject')?.value.trim() || 'Subject / Furniture Enquiry',
+      labelMsg: document.getElementById('ctLabelMsg')?.value.trim() || 'How can we help you?',
+      btnText: document.getElementById('ctBtnText')?.value.trim() || 'Send Message'
+    };
+
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contactCustomizer })
+      });
+      if (res.ok) {
+        showToast('Contact Page customizer settings published!');
+      } else {
+        alert('Failed to publish Contact page settings');
+      }
+    } catch(e) {
+      alert('Error publishing Contact page settings');
+    }
+  });
+
+  // Load customizer data on DOM load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadHomepageCustomizerData();
+    loadAboutCustomizerData();
+    loadContactCustomizerData();
+  });
+</script>
+
+</body>
+</html>

@@ -24,7 +24,7 @@
    <script src="assets/js/theme-loader.js"></script>
    <style>
       .about-hero {
-         background: linear-gradient(135deg, rgba(26,26,26,0.85) 0%, rgba(177,139,94,0.75) 100%), url('assets/imgs/furniture/banner/bg.png') center/cover no-repeat;
+         background: linear-gradient(135deg, var(--clr-premium-dark, #1a1a1a) 0%, var(--clr-brand-gold, #B18B5E) 100%), url('assets/imgs/furniture/banner/bg.png') center/cover no-repeat;
          padding: 80px 0;
          border-radius: 24px;
          color: #ffffff;
@@ -370,8 +370,8 @@
                <span>/</span>
                <span>About Us</span>
             </div>
-            <h1 class="about-hero-title">Crafting Timeless Living Spaces</h1>
-            <p class="about-hero-desc">
+            <h1 class="about-hero-title" id="dynAboutHeroTitle">Crafting Timeless Living Spaces</h1>
+            <p class="about-hero-desc" id="dynAboutHeroDesc">
                Discover the passion, heritage, and precision craftsmanship behind Eusta Furniture. We blend contemporary design with sustainable luxury to create spaces you love coming home to.
             </p>
          </div>
@@ -381,16 +381,16 @@
       <section class="container mb-80">
          <div class="row align-items-center g-5">
             <div class="col-lg-6">
-               <div class="about-badge">CRAFTED WITH PRECISION</div>
-               <h2 style="font-size:36px; font-weight:800; line-height:1.25; margin-bottom:20px;">Redefining Modern Living Through Exceptional Furniture</h2>
-               <p style="font-size:15px; line-height:1.7; color:#555555; margin-bottom:20px;">
+               <div class="about-badge" id="dynAboutBadge">CRAFTED WITH PRECISION</div>
+               <h2 id="dynAboutHeading" style="font-size:36px; font-weight:800; line-height:1.25; margin-bottom:20px;">Redefining Modern Living Through Exceptional Furniture</h2>
+               <p id="dynAboutDesc" style="font-size:15px; line-height:1.7; color:#555555; margin-bottom:20px;">
                   At <strong>EUSTA Furniture</strong>, we believe that every home deserves a touch of elegance and absolute comfort. Our master artisans merge centuries-old wood craftsmanship with contemporary design principles to create furniture that is built to last generations.
                </p>
-               <p style="font-size:15px; line-height:1.7; color:#555555; margin-bottom:24px;">
+               <p id="dynAboutP2" style="font-size:15px; line-height:1.7; color:#555555; margin-bottom:24px;">
                   From bespoke living room seating to ergonomic bedroom and dining collections, every piece undergoes rigorous quality assurance to ensure flawless finish, superior ergonomics, and enduring aesthetic value.
                </p>
 
-               <ul class="feature-check-list">
+               <ul class="feature-check-list" id="dynAboutBullets">
                   <li><i class="fa-solid fa-circle-check"></i> 100% Sustainably Sourced Hardwoods & Fabrics</li>
                   <li><i class="fa-solid fa-circle-check"></i> Master Artisan Hand-Finished Precision</li>
                   <li><i class="fa-solid fa-circle-check"></i> 5-Year Comprehensive Structural Warranty</li>
@@ -407,15 +407,15 @@
                <div class="row g-3">
                   <div class="col-6">
                      <div class="about-img-wrap" style="height: 380px;">
-                        <img src="assets/imgs/furniture/about/about-image1.jpg" alt="Eusta Craftsmanship Pink Chair">
+                        <img id="dynAboutImg1" src="assets/imgs/furniture/about/about-image1.jpg" alt="Eusta Craftsmanship Pink Chair">
                      </div>
                   </div>
                   <div class="col-6">
                      <div class="about-img-wrap" style="height: 380px;">
-                        <img src="assets/imgs/furniture/about/about-image2.jpg" alt="Eusta Yellow Accent Sofa">
+                        <img id="dynAboutImg2" src="assets/imgs/furniture/about/about-image2.jpg" alt="Eusta Yellow Accent Sofa">
                         <div class="about-exp-card">
-                           <div class="about-exp-num">15+</div>
-                           <div class="about-exp-text">Years of Design<br>Excellence</div>
+                           <div class="about-exp-num" id="dynAboutExpYears">15+</div>
+                           <div class="about-exp-text" id="dynAboutExpText">Years of Design<br>Excellence</div>
                         </div>
                      </div>
                   </div>
@@ -426,7 +426,7 @@
 
       <!-- Key Metrics & Stats Section -->
       <section class="container mb-80">
-         <div class="row g-4">
+         <div class="row g-4" id="dynAboutStats">
             <div class="col-6 col-md-3">
                <div class="stat-card text-center">
                   <div class="stat-number">12.5k+</div>
@@ -457,22 +457,22 @@
       <!-- Core Brand Pillars Section -->
       <section class="container mb-80">
          <div class="text-center mb-50">
-            <div class="about-badge">OUR CORE PILLARS</div>
-            <h2 style="font-size:34px; font-weight:800; margin-bottom:12px;">What Sets EUSTA Apart</h2>
-            <p style="font-size:15px; color:#666666; max-width:600px; margin:0 auto;">
+            <div class="about-badge" id="dynPillarsBadge">OUR CORE PILLARS</div>
+            <h2 id="dynPillarsHeading" style="font-size:34px; font-weight:800; margin-bottom:12px;">What Sets EUSTA Apart</h2>
+            <p id="dynPillarsSub" style="font-size:15px; color:#666666; max-width:600px; margin:0 auto;">
                Our core philosophy drives everything we create—from material selection to final delivery.
             </p>
          </div>
 
-         <div class="row g-4">
+         <div class="row g-4" id="dynPillarsContainer">
             <div class="col-md-6 col-lg-3">
                <div class="pillar-card">
                   <div class="pillar-icon">
-                     <i class="fa-solid fa-paintbrush"></i>
+                     <i class="fa-solid fa-palette"></i>
                   </div>
-                  <h3 class="pillar-title">Artisanal Design</h3>
+                  <h3 class="pillar-title">Premium Design</h3>
                   <p class="pillar-desc">
-                     Clean lines, contemporary silhouettes, and timeless aesthetics engineered to harmonize with modern interiors.
+                     Crafted with attention to detail, contemporary aesthetics, and premium materials.
                   </p>
                </div>
             </div>
@@ -484,7 +484,7 @@
                   </div>
                   <h3 class="pillar-title">Eco-Conscious</h3>
                   <p class="pillar-desc">
-                     Responsibly sourced timber, organic fabrics, and eco-friendly finishes that protect both your home and planet.
+                     Ethically sourced materials and environmentally conscious processes for a better future.
                   </p>
                </div>
             </div>
@@ -492,11 +492,11 @@
             <div class="col-md-6 col-lg-3">
                <div class="pillar-card">
                   <div class="pillar-icon">
-                     <i class="fa-solid fa-couch"></i>
+                     <i class="fa-solid fa-truck-fast"></i>
                   </div>
-                  <h3 class="pillar-title">Ergonomic Luxury</h3>
+                  <h3 class="pillar-title">Reliable Fulfillment</h3>
                   <p class="pillar-desc">
-                     Anatomically tested seating and support structures engineered for maximum daily comfort and relaxation.
+                     Fast dispatch, safe packaging, and nationwide tracking to your doorstep.
                   </p>
                </div>
             </div>
@@ -508,7 +508,7 @@
                   </div>
                   <h3 class="pillar-title">Unmatched Quality</h3>
                   <p class="pillar-desc">
-                     Every product is stress-tested to surpass global standards for durability, load capacity, and resilience.
+                     Every product is thoroughly inspected to surpass global standards for durability and excellence.
                   </p>
                </div>
             </div>
@@ -518,12 +518,12 @@
       <!-- CTA Banner Section -->
       <section class="container mb-80">
          <div class="cta-banner text-center">
-            <h2>Ready to Elevate Your Living Spaces?</h2>
-            <p class="mx-auto">
+            <h2 id="dynCtaTitle">Ready to Elevate Your Living Spaces?</h2>
+            <p class="mx-auto" id="dynCtaSub">
                Explore our handcrafted collections and discover the perfect balance of luxury, durability, and comfort for your home.
             </p>
             <a href="product.html" class="cta-btn">
-               <span>Shop All Products</span>
+               <span id="dynCtaBtnText">Shop All Products</span>
                <i class="fa-solid fa-arrow-right"></i>
             </a>
          </div>
@@ -674,6 +674,123 @@
             if (footerEmail && emailVal) {
               footerEmail.href = `mailto:${emailVal}`;
               footerEmail.textContent = emailVal;
+            }
+
+            if (settings.aboutData) {
+              const d = typeof settings.aboutData === 'string' ? JSON.parse(settings.aboutData) : settings.aboutData;
+              if (d.heroTitle) {
+                const htEl = document.getElementById('dynAboutHeroTitle');
+                if (htEl) htEl.textContent = d.heroTitle;
+              }
+              if (d.heroDesc) {
+                const hdEl = document.getElementById('dynAboutHeroDesc');
+                if (hdEl) hdEl.textContent = d.heroDesc;
+              }
+              if (d.badge) {
+                const bEl = document.getElementById('dynAboutBadge');
+                if (bEl) bEl.textContent = d.badge;
+              }
+              if (d.heading) {
+                const hEl = document.getElementById('dynAboutHeading');
+                if (hEl) hEl.textContent = d.heading;
+              }
+              if (d.p1) {
+                const p1El = document.getElementById('dynAboutDesc');
+                if (p1El) p1El.textContent = d.p1;
+              }
+              if (d.p2) {
+                const p2El = document.getElementById('dynAboutP2');
+                if (p2El) p2El.textContent = d.p2;
+              }
+              if (d.img1) {
+                const img1El = document.getElementById('dynAboutImg1');
+                if (img1El) img1El.src = d.img1;
+              }
+              if (d.img2) {
+                const img2El = document.getElementById('dynAboutImg2');
+                if (img2El) img2El.src = d.img2;
+              }
+              if (d.expYears) {
+                const eyEl = document.getElementById('dynAboutExpYears');
+                if (eyEl) eyEl.textContent = d.expYears;
+              }
+              if (d.expText) {
+                const etEl = document.getElementById('dynAboutExpText');
+                if (etEl) etEl.innerHTML = d.expText;
+              }
+              if (Array.isArray(d.bullets) && d.bullets.length) {
+                const bUl = document.getElementById('dynAboutBullets');
+                if (bUl) {
+                  bUl.innerHTML = d.bullets.map(b => `<li><i class="fa-solid fa-circle-check"></i> ${b}</li>`).join('');
+                }
+              }
+              if (Array.isArray(d.stats) && d.stats.length) {
+                const sRow = document.getElementById('dynAboutStats');
+                if (sRow) {
+                  sRow.innerHTML = d.stats.map(s => `
+                    <div class="col-6 col-md-3">
+                      <div class="stat-card text-center">
+                        <div class="stat-number">${s.number}</div>
+                        <div class="stat-label">${s.label}</div>
+                      </div>
+                    </div>
+                  `).join('');
+                }
+              }
+              if (d.pillarsBadge) {
+                const pbEl = document.getElementById('dynPillarsBadge');
+                if (pbEl) pbEl.textContent = d.pillarsBadge;
+              }
+              if (d.pillarsHeading) {
+                const phEl = document.getElementById('dynPillarsHeading');
+                if (phEl) phEl.textContent = d.pillarsHeading;
+              }
+              if (d.pillarsSub) {
+                const psEl = document.getElementById('dynPillarsSub');
+                if (psEl) psEl.textContent = d.pillarsSub;
+              }
+              if (Array.isArray(d.pillars) && d.pillars.length) {
+                const pRow = document.getElementById('dynPillarsContainer');
+                if (pRow) {
+                  const iconsMap = ['fa-palette', 'fa-leaf', 'fa-truck-fast', 'fa-shield-halved', 'fa-gem', 'fa-star'];
+                  pRow.innerHTML = d.pillars.map((p, i) => `
+                    <div class="col-md-6 col-lg-3">
+                      <div class="pillar-card">
+                        <div class="pillar-icon">
+                          <i class="fa-solid ${iconsMap[i % iconsMap.length]}"></i>
+                        </div>
+                        <h3 class="pillar-title">${p.title}</h3>
+                        <p class="pillar-desc">${p.desc}</p>
+                      </div>
+                    </div>
+                  `).join('');
+                }
+              }
+              if (d.ctaTitle) {
+                const ctEl = document.getElementById('dynCtaTitle');
+                if (ctEl) ctEl.textContent = d.ctaTitle;
+              }
+              if (d.ctaSub) {
+                const csEl = document.getElementById('dynCtaSub');
+                if (csEl) csEl.textContent = d.ctaSub;
+              }
+              if (d.ctaBtnText) {
+                const cbEl = document.getElementById('dynCtaBtnText');
+                if (cbEl) cbEl.textContent = d.ctaBtnText;
+              }
+            } else {
+              if (settings.aboutBadgeText) {
+                const bEl = document.getElementById('dynAboutBadge');
+                if (bEl) bEl.textContent = settings.aboutBadgeText;
+              }
+              if (settings.aboutHeading) {
+                const hEl = document.getElementById('dynAboutHeading');
+                if (hEl) hEl.textContent = settings.aboutHeading;
+              }
+              if (settings.aboutDescription) {
+                const dEl = document.getElementById('dynAboutDesc');
+                if (dEl) dEl.textContent = settings.aboutDescription;
+              }
             }
           }
         } catch(err) {

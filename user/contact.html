@@ -24,7 +24,7 @@
    <script src="assets/js/theme-loader.js"></script>
    <style>
       .contact-hero {
-         background: linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(177,139,94,0.75) 100%), url('assets/imgs/furniture/banner/bg.png') center/cover no-repeat;
+         background: linear-gradient(135deg, var(--clr-premium-dark, #1a1a1a) 0%, var(--clr-brand-gold, #B18B5E) 100%), url('assets/imgs/furniture/banner/bg.png') center/cover no-repeat;
          padding: 75px 0;
          border-radius: 24px;
          color: #ffffff;
@@ -346,8 +346,8 @@
                <span>/</span>
                <span>Contact Us</span>
             </div>
-            <h1 class="contact-hero-title">Get in Touch with EUSTA</h1>
-            <p class="contact-hero-desc">
+            <h1 class="contact-hero-title" id="dynContactHeroTitle">Get in Touch with EUSTA</h1>
+            <p class="contact-hero-desc" id="dynContactHeroDesc">
                Have a question about our handcrafted furniture collections, custom design consultations, or order shipping? Our customer care specialists are always here to help.
             </p>
          </div>
@@ -360,9 +360,9 @@
             <!-- Left Info Cards -->
             <div class="col-lg-4">
                <div class="mb-20">
-                  <div class="contact-badge">DIRECT CONTACT</div>
-                  <h3 style="font-size:26px; font-weight:800; color:#1A1A1A;">We’re Here for You</h3>
-                  <p style="font-size:14px; color:#666666;">Reach out to us through any of our support channels below.</p>
+                  <div class="contact-badge" id="dynContactBadge">DIRECT CONTACT</div>
+                  <h3 id="dynContactHeading" style="font-size:26px; font-weight:800; color:#1A1A1A;">We’re Here for You</h3>
+                  <p id="dynContactSub" style="font-size:14px; color:#666666;">Reach out to us through any of our support channels below.</p>
                </div>
 
                <!-- Location Card -->
@@ -413,7 +413,7 @@
                   </div>
                   <div>
                      <h4 class="contact-card-title">Operating Hours</h4>
-                     <p class="contact-card-text">
+                     <p class="contact-card-text" id="dynWorkingHours">
                         Monday – Saturday: 9:00 AM – 8:00 PM<br>
                         Sunday: Closed
                      </p>
@@ -425,9 +425,9 @@
             <div class="col-lg-8">
                <div class="contact-form-card">
                   <div class="mb-30">
-                     <div class="contact-badge">SEND A MESSAGE</div>
-                     <h3 style="font-size:28px; font-weight:800; color:#1A1A1A; margin-bottom:8px;">Connect with Our Team</h3>
-                     <p style="font-size:14px; color:#666666;">Fill in your details below and we will get back to you within 24 hours.</p>
+                     <div class="contact-badge" id="dynContactFormBadge">SEND A MESSAGE</div>
+                     <h3 id="dynContactFormHeading" style="font-size:28px; font-weight:800; color:#1A1A1A; margin-bottom:8px;">Connect with Our Team</h3>
+                     <p id="dynContactFormSub" style="font-size:14px; color:#666666;">Fill in your details below and we will get back to you within 24 hours.</p>
                   </div>
 
                   <form id="contactForm">
@@ -478,7 +478,7 @@
 
       <!-- Support Features Section -->
       <section class="container mb-80">
-         <div class="row g-4">
+         <div class="row g-4" id="dynContactFeaturesContainer">
             <div class="col-md-4">
                <div class="feature-pill-card">
                   <div class="feature-pill-icon"><i class="fa-solid fa-bolt"></i></div>
@@ -488,16 +488,16 @@
             </div>
             <div class="col-md-4">
                <div class="feature-pill-card">
-                  <div class="feature-pill-icon"><i class="fa-solid fa-couch"></i></div>
-                  <h4 class="feature-pill-title">Bespoke Consultations</h4>
-                  <p class="feature-pill-desc">Book a 1-on-1 virtual design consultation with our interior furniture experts.</p>
+                  <div class="feature-pill-icon"><i class="fa-solid fa-headset"></i></div>
+                  <h4 class="feature-pill-title">Expert Customer Care</h4>
+                  <p class="feature-pill-desc">Get personalized guidance and assistance from our dedicated support specialists.</p>
                </div>
             </div>
             <div class="col-md-4">
                <div class="feature-pill-card">
-                  <div class="feature-pill-icon"><i class="fa-solid fa-shield-check"></i></div>
-                  <h4 class="feature-pill-title">Dedicated Warranty Claims</h4>
-                  <p class="feature-pill-desc">Hassle-free direct assistance for 5-year structural product warranty support.</p>
+                  <div class="feature-pill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                  <h4 class="feature-pill-title">Satisfaction Guarantee</h4>
+                  <p class="feature-pill-desc">Hassle-free direct assistance, replacement, and structural product support.</p>
                </div>
             </div>
          </div>
@@ -671,6 +671,94 @@
             if (settings.address) {
               const locEl = document.getElementById('contactLocationText');
               if (locEl) locEl.textContent = settings.address;
+            }
+
+            if (settings.contactData) {
+              const cd = typeof settings.contactData === 'string' ? JSON.parse(settings.contactData) : settings.contactData;
+              if (cd.heroTitle) {
+                const htEl = document.getElementById('dynContactHeroTitle');
+                if (htEl) htEl.textContent = cd.heroTitle;
+              }
+              if (cd.heroDesc) {
+                const hdEl = document.getElementById('dynContactHeroDesc');
+                if (hdEl) hdEl.textContent = cd.heroDesc;
+              }
+              if (cd.badge) {
+                const bEl = document.getElementById('dynContactBadge');
+                if (bEl) bEl.textContent = cd.badge;
+              }
+              if (cd.heading) {
+                const hEl = document.getElementById('dynContactHeading');
+                if (hEl) hEl.textContent = cd.heading;
+              }
+              if (cd.sub) {
+                const sEl = document.getElementById('dynContactSub');
+                if (sEl) sEl.textContent = cd.sub;
+              }
+              if (cd.location) {
+                const locEl = document.getElementById('contactLocationText');
+                if (locEl) locEl.textContent = cd.location;
+              }
+              if (cd.email1) {
+                const emailEl1 = document.getElementById('contactEmailLink1');
+                if (emailEl1) { emailEl1.href = `mailto:${cd.email1}`; emailEl1.textContent = cd.email1; }
+              }
+              if (cd.email2) {
+                const emailEl2 = document.getElementById('contactEmailLink2');
+                if (emailEl2) { emailEl2.href = `mailto:${cd.email2}`; emailEl2.textContent = cd.email2; }
+              }
+              if (cd.phone1) {
+                const phoneEl1 = document.getElementById('contactPhoneLink1');
+                if (phoneEl1) { phoneEl1.href = `tel:${cd.phone1}`; phoneEl1.textContent = cd.phone1; }
+              }
+              if (cd.phone2) {
+                const phoneEl2 = document.getElementById('contactPhoneLink2');
+                if (phoneEl2) { phoneEl2.href = `tel:${cd.phone2}`; phoneEl2.textContent = cd.phone2; }
+              }
+              if (cd.hours1 || cd.hours2) {
+                const hoursEl = document.getElementById('dynWorkingHours');
+                if (hoursEl) hoursEl.innerHTML = `${cd.hours1 || ''}<br>${cd.hours2 || ''}`;
+              }
+              if (cd.formBadge) {
+                const fbEl = document.getElementById('dynContactFormBadge');
+                if (fbEl) fbEl.textContent = cd.formBadge;
+              }
+              if (cd.formHeading) {
+                const fhEl = document.getElementById('dynContactFormHeading');
+                if (fhEl) fhEl.textContent = cd.formHeading;
+              }
+              if (cd.formSub) {
+                const fsEl = document.getElementById('dynContactFormSub');
+                if (fsEl) fsEl.textContent = cd.formSub;
+              }
+              if (Array.isArray(cd.features) && cd.features.length) {
+                const fRow = document.getElementById('dynContactFeaturesContainer');
+                if (fRow) {
+                  const iconsMap = ['fa-bolt', 'fa-headset', 'fa-shield-halved', 'fa-comments', 'fa-truck-fast', 'fa-award'];
+                  fRow.innerHTML = cd.features.map((f, i) => `
+                    <div class="col-md-4">
+                      <div class="feature-pill-card">
+                        <div class="feature-pill-icon"><i class="fa-solid ${iconsMap[i % iconsMap.length]}"></i></div>
+                        <h4 class="feature-pill-title">${f.title}</h4>
+                        <p class="feature-pill-desc">${f.desc}</p>
+                      </div>
+                    </div>
+                  `).join('');
+                }
+              }
+            } else {
+              if (settings.contactHeading) {
+                const chEl = document.getElementById('dynContactHeading');
+                if (chEl) chEl.textContent = settings.contactHeading;
+              }
+              if (settings.workingHours) {
+                const whEl = document.getElementById('dynWorkingHours');
+                if (whEl) whEl.innerHTML = settings.workingHours;
+              }
+              if (settings.address) {
+                const locEl = document.getElementById('contactLocationText');
+                if (locEl) locEl.textContent = settings.address;
+              }
             }
           }
         } catch(err) {

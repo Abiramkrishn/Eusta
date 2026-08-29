@@ -2,68 +2,7 @@ $(function () {
 	"use strict";
 
 
-	// chart 1
-	var options = {
-		series: [{
-			name: 'Sales Overview',
-			data: [10, 25, 42, 12, 55, 30, 63, 27, 20]
-		}],
-		chart: {
-			foreColor: '#9ba7b2',
-			height: 330,
-			type: 'bar',
-			zoom: {
-				enabled: false
-			},
-			toolbar: {
-				show: false
-			},
-		},
-		stroke: {
-			width: 0,
-			curve: 'smooth'
-		},
-		plotOptions: {
-			bar: {
-				horizontal: !1,
-				columnWidth: "30%",
-				endingShape: "rounded"
-			}
-		},
-		grid: {
-			borderColor: 'rgba(177, 139, 94, 0.09)',
-			strokeDashArray: 4,
-			yaxis: {
-				lines: {
-					show: true
-				}
-			}
-		},
-		fill: {
-			type: 'gradient',
-			gradient: {
-			  shade: 'light',
-			  type: 'vertical',
-			  shadeIntensity: 0.5,
-			  gradientToColors: ['#99754C'],
-			  inverseColors: true,
-			  opacityFrom: 1,
-			  opacityTo: 1,
-			}
-		  },
-		colors: ['#B18B5E'],
-		dataLabels: {
-			enabled: false,
-			enabledOnSeries: [1]
-		},
-		xaxis: {
-			categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-		},
-	};
-	if (document.querySelector("#chart1")) {
-		var chart = new ApexCharts(document.querySelector("#chart1"), options);
-		chart.render();
-	}
+	// chart 1 - Rendered dynamically via API in super-admin/index.html
 	
 
 

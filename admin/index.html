@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="assets/vendor/css/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.css">
-  <link rel="stylesheet" href="assets/css/eusta-admin.css">
   <script src="assets/js/admin-auth.js"></script>
+  <link rel="stylesheet" href="assets/css/eusta-admin.css">
 </head>
 <body>
 
@@ -46,6 +46,10 @@
       <a href="categories.html" class="ea-nav-item" id="nav-categories">
         <span class="material-symbols-outlined ea-nav-icon">category</span>
         <span class="ea-nav-label">Categories</span>
+      </a>
+      <a href="customization.html" class="ea-nav-item" id="nav-customization">
+        <span class="material-symbols-outlined ea-nav-icon">palette</span>
+        <span class="ea-nav-label">Customization</span>
       </a>
       <a href="contacts.html" class="ea-nav-item" id="nav-contacts">
         <span class="material-symbols-outlined ea-nav-icon">forum</span>
@@ -221,8 +225,7 @@
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <div style="display:flex; align-items:baseline; gap:6px;">
-                  <span style="font-size:22px; font-weight:800; color:var(--text-head);">9,125</span>
-                  <span class="ea-badge ea-badge-green">+2.5%</span>
+                  <span id="dashTotalVisitors" style="font-size:22px; font-weight:800; color:var(--text-head);">0</span>
                 </div>
               </div>
             </div>
@@ -251,26 +254,9 @@
                       <th>Subject</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="dashRecentEnquiriesBody">
                     <tr>
-                      <td><strong>David Millar</strong><br><small class="text-muted">+8801265648289</small></td>
-                      <td><span class="ea-badge ea-badge-gold">General</span></td>
-                    </tr>
-                    <tr>
-                      <td><strong>Brian Pfeffer</strong><br><small class="text-muted">+880121238789</small></td>
-                      <td><span class="ea-badge ea-badge-blue">Product</span></td>
-                    </tr>
-                    <tr>
-                      <td><strong>Tamim Iqbal</strong><br><small class="text-muted">+880125968789</small></td>
-                      <td><span class="ea-badge ea-badge-green">Support</span></td>
-                    </tr>
-                    <tr>
-                      <td><strong>Mehadi Meraj</strong><br><small class="text-muted">+880123235419</small></td>
-                      <td><span class="ea-badge ea-badge-gold">General</span></td>
-                    </tr>
-                    <tr>
-                      <td><strong>Sakib al Hasan</strong><br><small class="text-muted">+880123464239</small></td>
-                      <td><span class="ea-badge ea-badge-blue">Billing</span></td>
+                      <td colspan="2" class="text-center py-3 text-muted">Loading enquiries...</td>
                     </tr>
                   </tbody>
                 </table>
@@ -307,20 +293,7 @@
   userTrigger.addEventListener('click', () => userMenu.classList.toggle('open'));
   document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) userMenu.classList.remove('open'); });
 
-  // ApexCharts Visitor Column
-  const chart = new ApexCharts(document.getElementById('visitorsChart'), {
-    chart: { type: 'bar', height: 240, toolbar: { show: false }, fontFamily: 'Plus Jakarta Sans, sans-serif' },
-    colors: ['#B18B5E'],
-    series: [{ name: 'Visitors', data: [980, 1240, 1100, 1380, 1520, 1200, 1705] }],
-    xaxis: { categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { colors: '#9CA3AF', fontSize: '12px' } } },
-    yaxis: { labels: { style: { colors: '#9CA3AF', fontSize: '12px' } } },
-    grid: { borderColor: '#EBEBEB', strokeDashArray: 4 },
-    plotOptions: { bar: { borderRadius: 6, columnWidth: '50%' } },
-    tooltip: { theme: 'light' },
-    dataLabels: { enabled: false },
-    fill: { type: 'gradient', gradient: { shade: 'light', type: 'vertical', shadeIntensity: 0.3, gradientToColors: ['#D4A96A'], stops: [0, 100] } }
-  });
-  chart.render();
+  let visitorChart = null;
 
   async function loadDashboardStats() {
     try {
@@ -343,6 +316,9 @@
       const enqCardVal = document.querySelector(".ea-stat-card[href='contacts.html'] .ea-stat-value");
       if (enqCardVal) enqCardVal.textContent = enquiries.length;
 
+      let totalTraffic = 0;
+      let weeklyData = [0, 0, 0, 0, 0, 0, 0];
+
       if (analyticsRes && analyticsRes.ok) {
         const analytics = await analyticsRes.json();
         const clickVal = document.getElementById('dashTotalClicks');
@@ -350,6 +326,44 @@
           const totalClicks = (analytics.summary.totalViews || 0) + (analytics.summary.totalWhatsappClicks || 0);
           clickVal.textContent = totalClicks.toLocaleString();
         }
+        if (analytics.summary) {
+          totalTraffic = analytics.summary.totalViews || 0;
+        }
+
+        // Process daily logs if present
+        if (Array.isArray(analytics.logs)) {
+          analytics.logs.forEach(log => {
+            if (log.timestamp) {
+              const d = new Date(log.timestamp);
+              if (!isNaN(d.getTime())) {
+                const dayIdx = (d.getDay() + 6) % 7; // Mon=0, Sun=6
+                weeklyData[dayIdx] += 1;
+              }
+            }
+          });
+        }
+      }
+
+      const totalVisEl = document.getElementById('dashTotalVisitors');
+      if (totalVisEl) totalVisEl.textContent = totalTraffic.toLocaleString();
+
+      // Render Visitor Column Chart
+      const chartElem = document.getElementById('visitorsChart');
+      if (chartElem) {
+        chartElem.innerHTML = '';
+        visitorChart = new ApexCharts(chartElem, {
+          chart: { type: 'bar', height: 240, toolbar: { show: false }, fontFamily: 'Plus Jakarta Sans, sans-serif' },
+          colors: ['#B18B5E'],
+          series: [{ name: 'Page Views', data: weeklyData }],
+          xaxis: { categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { colors: '#9CA3AF', fontSize: '12px' } } },
+          yaxis: { labels: { style: { colors: '#9CA3AF', fontSize: '12px' } } },
+          grid: { borderColor: '#EBEBEB', strokeDashArray: 4 },
+          plotOptions: { bar: { borderRadius: 6, columnWidth: '50%' } },
+          tooltip: { theme: 'light' },
+          dataLabels: { enabled: false },
+          fill: { type: 'gradient', gradient: { shade: 'light', type: 'vertical', shadeIntensity: 0.3, gradientToColors: ['#D4A96A'], stops: [0, 100] } }
+        });
+        visitorChart.render();
       }
 
       const unreadCount = enquiries.filter(e => e.status === 'Unread').length;
@@ -360,6 +374,21 @@
           topbarBadge.textContent = unreadCount;
         } else {
           topbarBadge.style.display = 'none';
+        }
+      }
+
+      // Populate recent 5 enquiries
+      const tbody = document.getElementById('dashRecentEnquiriesBody');
+      if (tbody && Array.isArray(enquiries)) {
+        if (enquiries.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="2" class="text-center py-3 text-muted">No enquiries found</td></tr>';
+        } else {
+          tbody.innerHTML = enquiries.slice(0, 5).map(e => `
+            <tr>
+              <td><strong>${e.name || 'Anonymous'}</strong><br><small class="text-muted">${e.phone || e.email || 'N/A'}</small></td>
+              <td><span class="ea-badge ${e.status === 'Unread' ? 'ea-badge-gold' : 'ea-badge-green'}">${e.subject || 'General'}</span></td>
+            </tr>
+          `).join('');
         }
       }
     } catch (err) {

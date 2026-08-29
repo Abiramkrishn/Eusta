@@ -20,38 +20,5 @@
     "plan": "Enterprise",
     "status": "Active",
     "joinedDate": "Jan 01, 2025"
-  },
-  {
-    "id": "u_3",
-    "name": "Andrew Carry",
-    "email": "andrew.c@gmail.com",
-    "password": "password123",
-    "role": "admin",
-    "phone": "9087654321",
-    "plan": "6 Months",
-    "status": "Active",
-    "joinedDate": "Jul 10, 2025"
-  },
-  {
-    "id": "u_4",
-    "name": "Sarah Jenkins",
-    "email": "sarah.j@gmail.com",
-    "password": "password123",
-    "role": "admin",
-    "phone": "9876543210",
-    "plan": "12 Months",
-    "status": "Active",
-    "joinedDate": "Jul 12, 2025"
-  },
-  {
-    "id": "u_5",
-    "name": "Michael Brown",
-    "email": "michael.b@gmail.com",
-    "password": "password123",
-    "role": "admin",
-    "phone": "8765432109",
-    "plan": "3 Months",
-    "status": "Inactive",
-    "joinedDate": "Jun 01, 2025"
   }
 ]

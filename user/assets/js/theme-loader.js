@@ -184,6 +184,13 @@
         border-color: ${primary} !important;
         box-shadow: 0 0 0 3.5px ${hexToRgba(primary, 0.15)} !important;
       }
+      .header-search button {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: auto !important;
+        height: auto !important;
+      }
       .header-search button, .header-search button i, .header-search button svg {
         color: ${primary} !important;
         stroke: ${primary} !important;
@@ -191,15 +198,35 @@
       .header-search button svg path {
         stroke: ${primary} !important;
       }
-      .product__details-tag a {
-        background-color: ${hexToRgba(primary, 0.08)} !important;
-        border-color: ${hexToRgba(primary, 0.35)} !important;
+      .about-hero, .contact-hero, .page-hero-banner {
+        background: linear-gradient(135deg, ${secondary} 0%, ${primary} 90%), url('assets/imgs/furniture/banner/bg.png') center/cover no-repeat !important;
+      }
+      .about-badge, .contact-badge, .section-badge, .feature-badge {
+        background-color: ${hexToRgba(primary, 0.12)} !important;
+        color: ${primary} !important;
+        border-color: ${hexToRgba(primary, 0.28)} !important;
+      }
+      .submit-btn, .custom-submit-btn, form:not(.header-search form) button[type="submit"]:not(.header-search button) {
+        background-color: ${primary} !important;
+        color: #ffffff !important;
+        box-shadow: 0 8px 22px ${hexToRgba(primary, 0.35)} !important;
+      }
+      .submit-btn:hover, .custom-submit-btn:hover {
+        background-color: ${secondary} !important;
+        box-shadow: 0 12px 28px ${hexToRgba(primary, 0.45)} !important;
+      }
+      .custom-input-field:focus, .form-control:focus, input:focus, textarea:focus, select:focus {
+        border-color: ${primary} !important;
+        box-shadow: 0 0 0 3.5px ${hexToRgba(primary, 0.15)} !important;
+      }
+      .stat-number, .stat-card:hover, .pillar-card:hover, .feature-pill-card:hover, .feature-pill-icon {
         color: ${primary} !important;
       }
-      .product__details-tag a:hover {
-        background-color: ${primary} !important;
+      .stat-card:hover, .pillar-card:hover, .feature-pill-card:hover {
         border-color: ${primary} !important;
-        color: #ffffff !important;
+      }
+      .feature-check-list li i {
+        color: ${primary} !important;
       }
     `;
 
@@ -224,6 +251,9 @@
         logoImgs.forEach(img => {
           img.src = logoSrc;
           img.alt = storeName;
+          img.onerror = function() {
+            this.src = 'assets/imgs/logo/logo.png';
+          };
         });
       }
 

@@ -15,5 +15,87 @@
   "backgroundColor": "#FFFFFF",
   "textColor": "#064E3B",
   "headingColor": "#064E3B",
-  "themePreset": "gold"
+  "themePreset": "gold",
+  "homepageLayout": {
+    "sectionOrder": [
+      "categories",
+      "heroBanners",
+      "recentProducts",
+      "services"
+    ],
+    "sections": {
+      "categories": {
+        "visible": true
+      },
+      "heroBanners": {
+        "visible": true,
+        "banners": [
+          {
+            "image": "assets/imgs/furniture/product/off-01.png",
+            "title": "Wicker Hanging Chairs",
+            "discount": "GET 30% OFF",
+            "buttonText": "Buy Now",
+            "link": "product-details.html"
+          },
+          {
+            "image": "assets/imgs/furniture/product/off-02.png",
+            "title": "Brasslegged Armchair",
+            "discount": "GET 15% OFF",
+            "buttonText": "Buy Now",
+            "link": "product-details.html"
+          },
+          {
+            "image": "assets/imgs/furniture/product/off-01.png",
+            "title": "Luxury Living Collection",
+            "discount": "NEW OFFER",
+            "buttonText": "Explore Now",
+            "link": "product-details.html"
+          },
+          {
+            "image": "assets/imgs/furniture/product/off-01.png",
+            "title": "Luxury Living Collection",
+            "discount": "NEW OFFER",
+            "buttonText": "Explore Now",
+            "link": "product-details.html"
+          }
+        ]
+      },
+      "recentProducts": {
+        "visible": true,
+        "title": "Recent Collections",
+        "count": 8
+      },
+      "services": {
+        "visible": true,
+        "cards": [
+          {
+            "icon": "fa-truck-fast",
+            "title": "Free Delivery",
+            "description": "Free shipping on all orders"
+          },
+          {
+            "icon": "fa-credit-card",
+            "title": "EMI Available",
+            "description": "Set your flexible plan"
+          },
+          {
+            "icon": "fa-headset",
+            "title": "24/7 Support",
+            "description": "Support through call"
+          },
+          {
+            "icon": "fa-shield-halved",
+            "title": "Trusted",
+            "description": "Trusted by 100+ customers"
+          }
+        ]
+      }
+    }
+  },
+  "branding": {
+    "logoUrl": "assets/imgs/logo/logo.png",
+    "brandName": "Eusta",
+    "primaryColor": "#B18B5E",
+    "secondaryColor": "#1A1A1A"
+  }
 }

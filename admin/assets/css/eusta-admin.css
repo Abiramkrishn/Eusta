@@ -381,6 +381,44 @@ img { max-width: 100%; }
   padding: 28px;
 }
 
+/* ── Plan Banner ─────────────────────────────────────────── */
+.ea-plan-banner {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover, var(--gold)) 100%);
+  border-radius: var(--radius-lg, 16px);
+  padding: 24px 28px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.ea-plan-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+.ea-plan-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 10px;
+}
+.ea-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
 /* ── 7. Stat Cards ───────────────────────────────────────── */
 .ea-stats-grid {
   display: grid;
@@ -844,7 +882,8 @@ img { max-width: 100%; }
 
 /* ── 17. Settings Tabs ───────────────────────────────────── */
 .ea-tabs {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
   background: var(--bg-body, #F9FAFB);
@@ -852,12 +891,7 @@ img { max-width: 100%; }
   border-radius: 14px;
   padding: 6px;
   margin-bottom: 28px;
-  max-width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.ea-tabs::-webkit-scrollbar {
-  display: none;
+  width: 100%;
 }
 
 .ea-tab {
@@ -904,7 +938,7 @@ img { max-width: 100%; }
 }
 
 .ea-tab-panel { display: none; }
-.ea-tab-panel.active { display: block; }
+.ea-tab-panel.active { display: block !important; }
 
 /* ── 18. Category Cards ──────────────────────────────────── */
 .ea-cat-grid {
@@ -1343,3 +1377,191 @@ button, input, select, textarea {
 .gap-12       { gap: 12px; }
 .gap-16       { gap: 16px; }
 .flex-1       { flex: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Homepage Editor (HPE)
+   ═══════════════════════════════════════════════════════════════ */
+
+.hpe-editor-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+  min-height: 600px;
+}
+@media (max-width: 1100px) {
+  .hpe-editor-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Controls Column ── */
+.hpe-controls {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Section List (Drag & Drop) ── */
+.hpe-section-list {
+  display: flex;
+  flex-direction: column;
+}
+.hpe-section-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: grab;
+  transition: background 0.2s, opacity 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+.hpe-section-card:last-child {
+  border-bottom: none;
+}
+.hpe-section-card:hover {
+  background: var(--gold-light, rgba(177,139,94,0.06));
+}
+.hpe-section-card.hpe-dragging {
+  opacity: 0.4;
+  background: var(--gold-light);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.hpe-section-card.hpe-section-disabled {
+  opacity: 0.45;
+}
+.hpe-section-card.hpe-section-disabled .hpe-section-label {
+  text-decoration: line-through;
+}
+.hpe-section-drag {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+.hpe-section-drag .material-symbols-outlined {
+  font-size: 20px;
+}
+.hpe-section-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hpe-section-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ── Toggle Switch ── */
+.hpe-toggle {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+}
+.hpe-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.hpe-toggle-slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #CBD5E1;
+  border-radius: 24px;
+  transition: background 0.25s;
+}
+.hpe-toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.hpe-toggle input:checked + .hpe-toggle-slider {
+  background: var(--gold);
+}
+.hpe-toggle input:checked + .hpe-toggle-slider::before {
+  transform: translateX(18px);
+}
+
+/* ── Preview Frame ── */
+.hpe-preview {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+.hpe-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg-body);
+  border-bottom: 1px solid var(--border);
+}
+.hpe-preview-dots {
+  display: flex;
+  gap: 6px;
+}
+.hpe-preview-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+}
+.hpe-preview-dots span:nth-child(1) { background: #EF4444; }
+.hpe-preview-dots span:nth-child(2) { background: #F59E0B; }
+.hpe-preview-dots span:nth-child(3) { background: #22C55E; }
+.hpe-preview-url {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.hpe-preview-frame-wrap {
+  flex: 1;
+  position: relative;
+  min-height: 500px;
+}
+.hpe-preview-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border: none;
+  display: block;
+}
+
+/* ── Collapsible Card Body ── */
+.collapsed {
+  display: none !important;
+}
+
+/* ── Banner & Service Items ── */
+.hpe-banner-item {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  margin-bottom: 10px;
+  background: var(--bg-body);
+}
+.hpe-service-item {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  margin-bottom: 8px;
+  background: var(--bg-body);
+}

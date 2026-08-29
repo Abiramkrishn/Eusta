@@ -68,5 +68,12 @@
     "icon": "table_bar",
     "status": "Active",
     "created": "2025-02-12"
+  },
+  {
+    "id": "cat_1786136167190",
+    "name": "New Category",
+    "icon": "chair",
+    "status": "Active",
+    "created": "2026-08-07"
   }
 ]

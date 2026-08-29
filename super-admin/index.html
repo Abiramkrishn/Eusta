@@ -469,8 +469,71 @@
               expiringTableBody.insertAdjacentHTML("beforeend", rowHtml);
             });
           }
+          // Dynamic Client Onboarding Chart (#chart1)
+          const monthsList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const monthlyCounts = new Array(12).fill(0);
+
+          clientUsers.forEach(u => {
+            if (u.joinedDate) {
+              const d = new Date(u.joinedDate);
+              if (!isNaN(d.getTime())) {
+                monthlyCounts[d.getMonth()] += 1;
+              }
+            }
+          });
+
+          if (document.querySelector("#chart1")) {
+            const chartElem = document.querySelector("#chart1");
+            chartElem.innerHTML = ""; // Clear static render
+
+            const chartOptions = {
+              series: [{
+                name: 'Clients Onboarded',
+                data: monthlyCounts
+              }],
+              chart: {
+                foreColor: '#9ba7b2',
+                height: 330,
+                type: 'bar',
+                zoom: { enabled: false },
+                toolbar: { show: false }
+              },
+              stroke: { width: 0, curve: 'smooth' },
+              plotOptions: {
+                bar: {
+                  horizontal: false,
+                  columnWidth: "30%",
+                  borderRadius: 6
+                }
+              },
+              grid: {
+                borderColor: 'rgba(177, 139, 94, 0.09)',
+                strokeDashArray: 4
+              },
+              fill: {
+                type: 'gradient',
+                gradient: {
+                  shade: 'light',
+                  type: 'vertical',
+                  shadeIntensity: 0.5,
+                  gradientToColors: ['#99754C'],
+                  inverseColors: true,
+                  opacityFrom: 1,
+                  opacityTo: 1
+                }
+              },
+              colors: ['#B18B5E'],
+              dataLabels: { enabled: false },
+              xaxis: {
+                categories: monthsList
+              }
+            };
+
+            const chartObj = new ApexCharts(chartElem, chartOptions);
+            chartObj.render();
+          }
         } catch (err) {
-          console.error(err);
+          console.error('Error rendering dashboard:', err);
         }
       });
     </script>

@@ -240,7 +240,7 @@
       
 
       <!-- category start -->
-            <div class="container mt-3">
+            <div class="container mt-3" data-section="categories">
                <div class="category-scroll-hint" id="categoryHint">
                   <div class="premium-categories-wrapper premium-categories-wrapper--sm" id="autoScrollCategories">
                      <div class="premium-categories-container" id="categoriesContainer">
@@ -310,7 +310,7 @@
 
 
                <!-- Banner Section -->
-<section class="furniture-off pt-10">
+<section class="furniture-off pt-10" data-section="heroBanners">
    <div class="container">
 
       <!-- Swiper -->
@@ -403,7 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <!-- Recent Products start -->
 
-      <section class="fruniture-trendy mt-3 mb-4">
+      <section class="fruniture-trendy mt-3 mb-4" data-section="recentProducts">
          <div class="container">
             <div class="furniture-trendy__header">
                <div class="section-title-wrapper-4 mb-10 d-flex justify-content-between align-items-center w-100">
@@ -679,7 +679,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
       <!-- Service area start -->
-      <section class="furniture-service pb-20">
+      <section class="furniture-service pb-20" data-section="services">
          <div class="container">
             <div class="row g-4">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
@@ -950,10 +950,123 @@ document.addEventListener("DOMContentLoaded", function () {
               footerEmail.href = `mailto:${emailVal}`;
               footerEmail.textContent = emailVal;
             }
+
+            // ── Apply Homepage Layout ──
+            applyHomepageLayout(settings, products);
           }
 
         } catch (err) {
           console.error(err);
+        }
+      }
+
+      function applyHomepageLayout(settings, products) {
+        const layout = settings.homepageLayout;
+        if (!layout) return;
+
+        const mainEl = document.querySelector('main');
+        if (!mainEl) return;
+
+        // 1. Section visibility
+        const sectionEls = mainEl.querySelectorAll('[data-section]');
+        sectionEls.forEach(el => {
+          const id = el.dataset.section;
+          const sec = layout.sections && layout.sections[id];
+          if (sec && sec.visible === false) {
+            el.style.display = 'none';
+          } else {
+            el.style.display = '';
+          }
+        });
+
+        // 2. Section reorder
+        if (layout.sectionOrder && layout.sectionOrder.length > 0) {
+          const sectionMap = {};
+          sectionEls.forEach(el => {
+            sectionMap[el.dataset.section] = el;
+          });
+          // Find the first section's parent to insert before footer etc.
+          const firstSection = sectionEls[0];
+          if (firstSection) {
+            const parent = firstSection.parentNode;
+            // Collect non-section children to preserve them
+            layout.sectionOrder.forEach(id => {
+              if (sectionMap[id]) {
+                parent.appendChild(sectionMap[id]);
+              }
+            });
+          }
+        }
+
+        // 3. Hero Banners content
+        const bannerConfig = layout.sections && layout.sections.heroBanners;
+        if (bannerConfig && bannerConfig.banners && bannerConfig.banners.length > 0) {
+          const swiperWrapper = document.querySelector('[data-section="heroBanners"] .swiper-wrapper');
+          if (swiperWrapper) {
+            swiperWrapper.innerHTML = '';
+            bannerConfig.banners.forEach(b => {
+              const slide = document.createElement('div');
+              slide.className = 'swiper-slide';
+              slide.innerHTML = `
+                <a href="${b.link || 'product-details.html'}" class="furniture-off__item bg-image d-block custm-offer-section" data-background="${b.image || ''}">
+                  <span class="fo-discount">${b.discount || ''}</span>
+                  <h4 class="text-capitalize">${(b.title || '').replace(/\n/g, '<br>')}</h4>
+                  <div class="solid-btn mt-30">Buy Now<span><i class="fa-regular fa-angle-right"></i></span></div>
+                </a>
+              `;
+              swiperWrapper.appendChild(slide);
+            });
+            // Re-apply background images
+            swiperWrapper.querySelectorAll('[data-background]').forEach(el => {
+              el.style.backgroundImage = `url(${el.dataset.background})`;
+            });
+            // Reinit swiper
+            try {
+              const swiperEl = document.querySelector('[data-section="heroBanners"] .offerSwiper');
+              if (swiperEl && swiperEl.swiper) swiperEl.swiper.update();
+            } catch(e) {}
+          }
+        }
+
+        // 4. Recent Products config
+        const prodConfig = layout.sections && layout.sections.recentProducts;
+        if (prodConfig) {
+          // Update title
+          const titleEl = document.querySelector('[data-section="recentProducts"] .section-title-4');
+          if (titleEl && prodConfig.title) titleEl.textContent = prodConfig.title;
+          // Limit product count
+          if (prodConfig.count && products && products.length > 0) {
+            const grid = document.getElementById('dynamicProductGrid');
+            if (grid) {
+              const items = grid.querySelectorAll('.product-grid-item');
+              items.forEach((item, idx) => {
+                item.style.display = idx < prodConfig.count ? '' : 'none';
+              });
+            }
+          }
+        }
+
+        // 5. Service Cards content
+        const svcConfig = layout.sections && layout.sections.services;
+        if (svcConfig && svcConfig.cards && svcConfig.cards.length > 0) {
+          const serviceRow = document.querySelector('[data-section="services"] .row');
+          if (serviceRow) {
+            serviceRow.innerHTML = '';
+            svcConfig.cards.forEach(c => {
+              const col = document.createElement('div');
+              col.className = 'col-xl-3 col-lg-3 col-md-6 col-sm-6';
+              col.innerHTML = `
+                <div class="premium-service-card">
+                  <div class="premium-service-icon"><i class="fa-solid ${c.icon || 'fa-truck-fast'}"></i></div>
+                  <div class="premium-service-content">
+                    <h5>${c.title || ''}</h5>
+                    <p>${c.description || ''}</p>
+                  </div>
+                </div>
+              `;
+              serviceRow.appendChild(col);
+            });
+          }
         }
       }
 
